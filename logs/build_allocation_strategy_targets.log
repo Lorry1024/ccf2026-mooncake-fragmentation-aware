@@ -1,0 +1,661 @@
+[1/80] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store.dir/client_service.cpp.o
+FAILED: mooncake-store/src/CMakeFiles/mooncake_store.dir/client_service.cpp.o 
+/usr/bin/g++-10 -DASIO_DYN_LINK -DASIO_SEPARATE_COMPILATION -DCONFIG_ERDMA -DGFLAGS_IS_A_DLL=0 -DGLOG_USE_GLOG_EXPORT -DUSE_HTTP -DUSE_TCP -DWITH_METRICS -DYLT_ENABLE_DL -DYLT_ENABLE_IBV -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-common/etcd -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-common/k8s-lease -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-common/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-transfer-engine/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/cachelib_memory_allocator/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/cachelib_memory_allocator/fake_include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/cachelib_memory_allocator -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/mooncake-store/proto -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/build-ccf-final3/mooncake-store/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/../mooncake-transfer-engine/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-common/src/../include -isystem /usr/include/jsoncpp -isystem /mnt/c/CCFOpenSource/Work/local/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone -I/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty -UYLT_ENABLE_IBV -Wall -Wextra -Wno-unused-parameter -fPIC -g -fcoroutines -O2 -g -DNDEBUG -std=gnu++2a -fno-tree-slp-vectorize -MD -MT mooncake-store/src/CMakeFiles/mooncake_store.dir/client_service.cpp.o -MF mooncake-store/src/CMakeFiles/mooncake_store.dir/client_service.cpp.o.d -o mooncake-store/src/CMakeFiles/mooncake_store.dir/client_service.cpp.o -c /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/coro_rpc_client.hpp:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:11,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:19,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp: In member function ‘async_simple::coro::Lazy<async_simple::coro::Lazy<tl::expected<coro_rpc::async_rpc_result_value_t<decltype (get_return_type<func>())>, coro_rpc::rpc_error> > > coro_rpc::coro_rpc_client::send_request_with_attachment(std::string_view, Args&& ...)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1643:66: warning: missing initializer for member ‘coro_rpc::request_config_t::request_timeout_duration’ [-Wmissing-field-initializers]
+ 1643 |         request_config_t{.request_attachment = request_attachment},
+      |                                                                  ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:1643:66: warning: missing initializer for member ‘coro_rpc::request_config_t::resp_attachment_buf’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:31,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:44,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:13,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:19,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp: In constructor ‘coro_io::ib_buffer_pool_t::ib_buffer_impl_t::ib_buffer_impl_t(std::unique_ptr<ibv_mr, coro_io::ib_deleter>&&, memory_owner_t&&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:159:41: warning: ‘coro_io::ib_buffer_pool_t::ib_buffer_impl_t::mr_’ will be initialized after [-Wreorder]
+  159 |     std::unique_ptr<ibv_mr, ib_deleter> mr_;
+      |                                         ^~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:158:20: warning:   ‘memory_owner_t coro_io::ib_buffer_pool_t::ib_buffer_impl_t::memory_owner_’ [-Wreorder]
+  158 |     memory_owner_t memory_owner_;
+      |                    ^~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:166:5: warning:   when initialized here [-Wreorder]
+  166 |     ib_buffer_impl_t(std::unique_ptr<ibv_mr, ib_deleter>&& mr,
+      |     ^~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp: In constructor ‘coro_io::ib_buffer_pool_t::ib_buffer_pool_t(coro_io::ib_buffer_pool_t::private_construct_token, coro_io::ib_device_t&, const coro_io::ib_buffer_pool_t::config_t&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:347:16: warning: ‘coro_io::ib_buffer_pool_t::device_’ will be initialized after [-Wreorder]
+  347 |   ib_device_t& device_;
+      |                ^~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:346:44: warning:   ‘std::shared_ptr<coro_io::ib_buffer_pool_t::ib_buffer_mem_control_t> coro_io::ib_buffer_pool_t::memory_usage_recorder_’ [-Wreorder]
+  346 |   std::shared_ptr<ib_buffer_mem_control_t> memory_usage_recorder_;
+      |                                            ^~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:325:3: warning:   when initialized here [-Wreorder]
+  325 |   ib_buffer_pool_t(private_construct_token, ib_device_t& device,
+      |   ^~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp: In constructor ‘coro_io::ib_buffer_t::ib_buffer_t(std::unique_ptr<ibv_mr, coro_io::ib_deleter>, memory_owner_t, coro_io::ib_buffer_pool_t&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:106:39: warning: ‘coro_io::ib_buffer_t::mr_’ will be initialized after [-Wreorder]
+  106 |   std::unique_ptr<ibv_mr, ib_deleter> mr_;
+      |                                       ^~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:105:18: warning:   ‘memory_owner_t coro_io::ib_buffer_t::memory_owner_’ [-Wreorder]
+  105 |   memory_owner_t memory_owner_;
+      |                  ^~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:351:8: warning:   when initialized here [-Wreorder]
+  351 | inline ib_buffer_t::ib_buffer_t(std::unique_ptr<ibv_mr, ib_deleter> mr,
+      |        ^~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:105:18: warning: ‘coro_io::ib_buffer_t::memory_owner_’ will be initialized after [-Wreorder]
+  105 |   memory_owner_t memory_owner_;
+      |                  ^~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:104:35: warning:   ‘std::weak_ptr<coro_io::ib_buffer_pool_t> coro_io::ib_buffer_t::owner_pool_’ [-Wreorder]
+  104 |   std::weak_ptr<ib_buffer_pool_t> owner_pool_;
+      |                                   ^~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_buffer.hpp:351:8: warning:   when initialized here [-Wreorder]
+  351 | inline ib_buffer_t::ib_buffer_t(std::unique_ptr<ibv_mr, ib_deleter> mr,
+      |        ^~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:44,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:13,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:19,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp: In member function ‘int coro_io::ib_device_t::find_best_gid_index(int)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:369:5: error: ‘ibv_gid_entry’ was not declared in this scope
+  369 |     ibv_gid_entry gid_entry;
+      |     ^~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:371:62: error: ‘gid_entry’ was not declared in this scope
+  371 |       if (auto ret = ibv_query_gid_ex(ctx_.get(), port_, i, &gid_entry, 0)) {
+      |                                                              ^~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:371:22: error: ‘ibv_query_gid_ex’ was not declared in this scope; did you mean ‘ibv_query_gid’?
+  371 |       if (auto ret = ibv_query_gid_ex(ctx_.get(), port_, i, &gid_entry, 0)) {
+      |                      ^~~~~~~~~~~~~~~~
+      |                      ibv_query_gid
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:374:49: error: ‘gid_entry’ was not declared in this scope
+  374 |       if ((ipv6_addr_v4mapped((struct in6_addr*)gid_entry.gid.raw) &&
+      |                                                 ^~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:375:34: error: ‘IBV_GID_TYPE_ROCE_V2’ was not declared in this scope
+  375 |            gid_entry.gid_type == IBV_GID_TYPE_ROCE_V2) ||
+      |                                  ^~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_device.hpp:376:33: error: ‘IBV_GID_TYPE_IB’ was not declared in this scope; did you mean ‘IBV_MW_TYPE_2’?
+  376 |           gid_entry.gid_type == IBV_GID_TYPE_IB) {
+      |                                 ^~~~~~~~~~~~~~~
+      |                                 IBV_MW_TYPE_2
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:13,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:19,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp: In constructor ‘coro_io::detail::ib_socket_shared_state_t::ib_socket_shared_state_t(std::shared_ptr<coro_io::ib_device_t>, coro_io::ExecutorWrapper<>*, std::size_t, std::size_t, std::size_t, std::size_t)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:112:32: warning: ‘coro_io::detail::ib_socket_shared_state_t::device_’ will be initialized after [-Wreorder]
+  112 |   std::shared_ptr<ib_device_t> device_;
+      |                                ^~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:111:31: warning:   ‘coro_io::ExecutorWrapper<>* coro_io::detail::ib_socket_shared_state_t::executor_’ [-Wreorder]
+  111 |   coro_io::ExecutorWrapper<>* executor_;
+      |                               ^~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:135:3: warning:   when initialized here [-Wreorder]
+  135 |   ib_socket_shared_state_t(std::shared_ptr<ib_device_t> device,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:126:25: warning: ‘coro_io::detail::ib_socket_shared_state_t::soc_’ will be initialized after [-Wreorder]
+  126 |   asio::ip::tcp::socket soc_;
+      |                         ^~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:114:15: warning:   ‘std::size_t coro_io::detail::ib_socket_shared_state_t::recv_buffer_cnt_’ [-Wreorder]
+  114 |   std::size_t recv_buffer_cnt_;
+      |               ^~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:135:3: warning:   when initialized here [-Wreorder]
+  135 |   ib_socket_shared_state_t(std::shared_ptr<ib_device_t> device,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:114:15: warning: ‘coro_io::detail::ib_socket_shared_state_t::recv_buffer_cnt_’ will be initialized after [-Wreorder]
+  114 |   std::size_t recv_buffer_cnt_;
+      |               ^~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:113:19: warning:   ‘coro_io::detail::ib_buffer_queue coro_io::detail::ib_socket_shared_state_t::recv_queue_’ [-Wreorder]
+  113 |   ib_buffer_queue recv_queue_, send_queue_;
+      |                   ^~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:135:3: warning:   when initialized here [-Wreorder]
+  135 |   ib_socket_shared_state_t(std::shared_ptr<ib_device_t> device,
+      |   ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_ptr.hpp:2,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_names.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_value.hpp:7,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/util.hpp:21,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/common.hpp:4,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/json_util.hpp:6,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/json_reader.hpp:4,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_json/json_reader.h:18,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/types.h:15,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/rpc_types.h:3,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/utils.h:14,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_metric.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_io::ib_socket_t::ib_socket_info, ylt::reflection::internal::UniversalType, void>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_io::ib_socket_t::ib_socket_info, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_io::ib_socket_t::ib_socket_info; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   required from ‘constexpr std::size_t ylt::reflection::members_count() [with T = coro_io::ib_socket_t::ib_socket_info; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:209:57:   required from ‘constexpr const size_t ylt::reflection::members_count_v<coro_io::ib_socket_t::ib_socket_info>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:958:29:   required from ‘constexpr std::size_t struct_pack::detail::members_count() [with T = coro_io::ib_socket_t::ib_socket_info; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   required from ‘constexpr const size_t struct_pack::members_count<coro_io::ib_socket_t::ib_socket_info>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_io::ib_socket_t::ib_socket_info; Visitor = struct_pack::detail::get_types<coro_io::ib_socket_t::ib_socket_info>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_io::ib_socket_t::ib_socket_info]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:525:40:   required from ‘constexpr uint32_t struct_pack::detail::get_types_code() [with T = coro_io::ib_socket_t::ib_socket_info; uint32_t = unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:84:44:   required from ‘constexpr uint32_t struct_pack::get_type_code() [with Args = {coro_io::ib_socket_t::ib_socket_info}; uint32_t = unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:724:62:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::lid’ [-Wmissing-field-initializers]
+  151 |     : std::true_type {};
+      |                      ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::buffer_size’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::qp_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::lid’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::buffer_size’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::qp_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_io::ib_socket_t::ib_socket_info, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_io::ib_socket_t::ib_socket_info, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_io::ib_socket_t::ib_socket_info; Args = {ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_io::ib_socket_t::ib_socket_info; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   required from ‘constexpr std::size_t ylt::reflection::members_count() [with T = coro_io::ib_socket_t::ib_socket_info; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:209:57:   [ skipping 2 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   required from ‘constexpr const size_t struct_pack::members_count<coro_io::ib_socket_t::ib_socket_info>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_io::ib_socket_t::ib_socket_info; Visitor = struct_pack::detail::get_types<coro_io::ib_socket_t::ib_socket_info>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_io::ib_socket_t::ib_socket_info]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:525:40:   required from ‘constexpr uint32_t struct_pack::detail::get_types_code() [with T = coro_io::ib_socket_t::ib_socket_info; uint32_t = unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:84:44:   required from ‘constexpr uint32_t struct_pack::get_type_code() [with Args = {coro_io::ib_socket_t::ib_socket_info}; uint32_t = unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:724:62:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::buffer_size’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::qp_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::buffer_size’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::qp_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_io::ib_socket_t::ib_socket_info, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_io::ib_socket_t::ib_socket_info, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_io::ib_socket_t::ib_socket_info; Args = {ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_io::ib_socket_t::ib_socket_info; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   [ skipping 2 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:958:29:   required from ‘constexpr std::size_t struct_pack::detail::members_count() [with T = coro_io::ib_socket_t::ib_socket_info; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   required from ‘constexpr const size_t struct_pack::members_count<coro_io::ib_socket_t::ib_socket_info>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_io::ib_socket_t::ib_socket_info; Visitor = struct_pack::detail::get_types<coro_io::ib_socket_t::ib_socket_info>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_io::ib_socket_t::ib_socket_info]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:525:40:   required from ‘constexpr uint32_t struct_pack::detail::get_types_code() [with T = coro_io::ib_socket_t::ib_socket_info; uint32_t = unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:84:44:   required from ‘constexpr uint32_t struct_pack::get_type_code() [with Args = {coro_io::ib_socket_t::ib_socket_info}; uint32_t = unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/ibverbs/ib_socket.hpp:724:62:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::qp_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_io::ib_socket_t::ib_socket_info::qp_num’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_metric.h:16,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘ylt::metric::detail::summary_impl<uint_type, frac_bit>::summary_impl(std::vector<double>&, std::chrono::seconds) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; std::chrono::seconds = std::chrono::duration<long int>]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:53:72:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:368:24: warning: ‘ylt::metric::detail::summary_impl<long unsigned int>::rate_’ will be initialized after [-Wreorder]
+  368 |   std::vector<double>& rate_;
+      |                        ^~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:366:35: warning:   ‘const milliseconds ylt::metric::detail::summary_impl<long unsigned int>::refresh_time_’ [-Wreorder]
+  366 |   const std::chrono::milliseconds refresh_time_;
+      |                                   ^~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:348:3: warning:   when initialized here [-Wreorder]
+  348 |   summary_impl(std::vector<double>& rate,
+      |   ^~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘std::vector<float> ylt::metric::detail::summary_impl<uint_type, frac_bit>::stat(double&, uint64_t&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:96:33:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:335:30: warning: comparison of integer expressions of different signedness: ‘int16_t’ {aka ‘short int’} and ‘long unsigned int’ [-Wsign-compare]
+  335 |     while (data_copy.value() < bucket_size / 2) {
+      |            ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_metric.h:15,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/histogram.hpp: In instantiation of ‘ylt::metric::basic_static_histogram<value_type>::basic_static_histogram(std::string, std::string, std::vector<double>, std::map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >, size_t) [with value_type = long int; std::string = std::__cxx11::basic_string<char>; size_t = long unsigned int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_metric.h:120:55:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/histogram.hpp:157:23: warning: ‘ylt::metric::basic_static_histogram<long int>::bucket_boundaries_’ will be initialized after [-Wreorder]
+  157 |   std::vector<double> bucket_boundaries_;
+      |                       ^~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/histogram.hpp:47:60: warning:   base ‘ylt::metric::static_metric’ [-Wreorder]
+   47 |         sum_(std::make_shared<gauge_t>("", "", dupli_count)) {
+      |                                                            ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/histogram.hpp:41:3: warning:   when initialized here [-Wreorder]
+   41 |   basic_static_histogram(std::string name, std::string help,
+      |   ^~~~~~~~~~~~~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_ptr.hpp:2,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_names.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_value.hpp:7,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/util.hpp:21,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/common.hpp:4,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/json_util.hpp:6,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/iguana/json_reader.hpp:4,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_json/json_reader.h:18,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/types.h:15,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/rpc_types.h:3,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/utils.h:14,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_metric.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, void>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   required from ‘constexpr std::size_t ylt::reflection::members_count() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:209:57:   required from ‘constexpr const size_t ylt::reflection::members_count_v<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:958:29:   required from ‘constexpr std::size_t struct_pack::detail::members_count() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   [ skipping 2 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_rpc::protocol::coro_rpc_protocol::resp_header]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:567:60:   required from ‘constexpr const bool struct_pack::detail::exist_compatible_member<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:746:42:   required from ‘constexpr const bool struct_pack::detail::serialize_static_config<coro_rpc::protocol::coro_rpc_protocol::resp_header>::has_compatible’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/calculate_size.hpp:411:66:   required from ‘constexpr struct_pack::serialize_buffer_size struct_pack::detail::get_serialize_runtime_info(const Args& ...) [with long unsigned int conf = 3; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:147:57:   required from ‘void struct_pack::serialize_to(Writer&, const Args& ...) [with long unsigned int conf = 3; Writer = std::__cxx11::basic_string<char>; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/protocol/coro_rpc_protocol.hpp:238:30:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::version’ [-Wmissing-field-initializers]
+  151 |     : std::true_type {};
+      |                      ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::err_code’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::msg_type’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::version’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::err_code’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::msg_type’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   required from ‘constexpr std::size_t ylt::reflection::members_count() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:209:57:   required from ‘constexpr const size_t ylt::reflection::members_count_v<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:958:29:   [ skipping 3 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_rpc::protocol::coro_rpc_protocol::resp_header]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:567:60:   required from ‘constexpr const bool struct_pack::detail::exist_compatible_member<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:746:42:   required from ‘constexpr const bool struct_pack::detail::serialize_static_config<coro_rpc::protocol::coro_rpc_protocol::resp_header>::has_compatible’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/calculate_size.hpp:411:66:   required from ‘constexpr struct_pack::serialize_buffer_size struct_pack::detail::get_serialize_runtime_info(const Args& ...) [with long unsigned int conf = 3; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:147:57:   required from ‘void struct_pack::serialize_to(Writer&, const Args& ...) [with long unsigned int conf = 3; Writer = std::__cxx11::basic_string<char>; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/protocol/coro_rpc_protocol.hpp:238:30:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::err_code’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::msg_type’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::err_code’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::msg_type’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   required from ‘constexpr std::size_t ylt::reflection::members_count() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:209:57:   [ skipping 3 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_rpc::protocol::coro_rpc_protocol::resp_header; Visitor = struct_pack::detail::get_types<coro_rpc::protocol::coro_rpc_protocol::resp_header>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_rpc::protocol::coro_rpc_protocol::resp_header]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:567:60:   required from ‘constexpr const bool struct_pack::detail::exist_compatible_member<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:746:42:   required from ‘constexpr const bool struct_pack::detail::serialize_static_config<coro_rpc::protocol::coro_rpc_protocol::resp_header>::has_compatible’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/calculate_size.hpp:411:66:   required from ‘constexpr struct_pack::serialize_buffer_size struct_pack::detail::get_serialize_runtime_info(const Args& ...) [with long unsigned int conf = 3; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:147:57:   required from ‘void struct_pack::serialize_to(Writer&, const Args& ...) [with long unsigned int conf = 3; Writer = std::__cxx11::basic_string<char>; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/protocol/coro_rpc_protocol.hpp:238:30:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::msg_type’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::msg_type’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:200:48:   [ skipping 3 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   required from ‘constexpr const size_t struct_pack::members_count<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_rpc::protocol::coro_rpc_protocol::resp_header; Visitor = struct_pack::detail::get_types<coro_rpc::protocol::coro_rpc_protocol::resp_header>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_rpc::protocol::coro_rpc_protocol::resp_header]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:567:60:   required from ‘constexpr const bool struct_pack::detail::exist_compatible_member<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:746:42:   required from ‘constexpr const bool struct_pack::detail::serialize_static_config<coro_rpc::protocol::coro_rpc_protocol::resp_header>::has_compatible’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/calculate_size.hpp:411:66:   required from ‘constexpr struct_pack::serialize_buffer_size struct_pack::detail::get_serialize_runtime_info(const Args& ...) [with long unsigned int conf = 3; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:147:57:   required from ‘void struct_pack::serialize_to(Writer&, const Args& ...) [with long unsigned int conf = 3; Writer = std::__cxx11::basic_string<char>; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/protocol/coro_rpc_protocol.hpp:238:30:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::seq_num’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   [ skipping 3 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:958:29:   required from ‘constexpr std::size_t struct_pack::detail::members_count() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   required from ‘constexpr const size_t struct_pack::members_count<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_rpc::protocol::coro_rpc_protocol::resp_header; Visitor = struct_pack::detail::get_types<coro_rpc::protocol::coro_rpc_protocol::resp_header>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_rpc::protocol::coro_rpc_protocol::resp_header]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:567:60:   required from ‘constexpr const bool struct_pack::detail::exist_compatible_member<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:746:42:   required from ‘constexpr const bool struct_pack::detail::serialize_static_config<coro_rpc::protocol::coro_rpc_protocol::resp_header>::has_compatible’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/calculate_size.hpp:411:66:   required from ‘constexpr struct_pack::serialize_buffer_size struct_pack::detail::get_serialize_runtime_info(const Args& ...) [with long unsigned int conf = 3; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:147:57:   required from ‘void struct_pack::serialize_to(Writer&, const Args& ...) [with long unsigned int conf = 3; Writer = std::__cxx11::basic_string<char>; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/protocol/coro_rpc_protocol.hpp:238:30:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp: In instantiation of ‘struct ylt::reflection::internal::is_constructable_impl<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, void, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:155:65:   required from ‘constexpr const bool ylt::reflection::internal::is_constructable<coro_rpc::protocol::coro_rpc_protocol::resp_header, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:162:22:   required from ‘constexpr std::size_t ylt::reflection::internal::members_count_impl() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; Args = {ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType, ylt::reflection::internal::UniversalType}; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:163:57:   [ skipping 3 instantiation contexts, use -ftemplate-backtrace-limit=0 to disable ]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:209:57:   required from ‘constexpr const size_t ylt::reflection::members_count_v<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:958:29:   required from ‘constexpr std::size_t struct_pack::detail::members_count() [with T = coro_rpc::protocol::coro_rpc_protocol::resp_header; std::size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:96:63:   required from ‘constexpr const size_t struct_pack::members_count<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/reflection.hpp:965:41:   required from ‘constexpr decltype(auto) struct_pack::detail::visit_members(Object&&, Visitor&&) [with Object = coro_rpc::protocol::coro_rpc_protocol::resp_header; Visitor = struct_pack::detail::get_types<coro_rpc::protocol::coro_rpc_protocol::resp_header>::<lambda(auto:335&& ...)>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:924:25:   required from ‘constexpr auto struct_pack::detail::get_types() [with U = coro_rpc::protocol::coro_rpc_protocol::resp_header]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:567:60:   required from ‘constexpr const bool struct_pack::detail::exist_compatible_member<coro_rpc::protocol::coro_rpc_protocol::resp_header>’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/type_calculate.hpp:746:42:   required from ‘constexpr const bool struct_pack::detail::serialize_static_config<coro_rpc::protocol::coro_rpc_protocol::resp_header>::has_compatible’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack/calculate_size.hpp:411:66:   required from ‘constexpr struct_pack::serialize_buffer_size struct_pack::detail::get_serialize_runtime_info(const Args& ...) [with long unsigned int conf = 3; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/struct_pack.hpp:147:57:   required from ‘void struct_pack::serialize_to(Writer&, const Args& ...) [with long unsigned int conf = 3; Writer = std::__cxx11::basic_string<char>; Args = {coro_rpc::protocol::coro_rpc_protocol::resp_header}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/protocol/coro_rpc_protocol.hpp:238:30:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/reflection/member_count.hpp:151:22: warning: missing initializer for member ‘coro_rpc::protocol::coro_rpc_protocol::resp_header::attach_length’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_metric.h:16,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::refresh() [with uint_type = long unsigned int; long unsigned int frac_bit = 6]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:278:5:   required from ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::insert(float) [with uint_type = long unsigned int; long unsigned int frac_bit = 6]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:78:23:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:258:14: warning: comparison of integer expressions of different signedness: ‘long unsigned int’ and ‘std::chrono::duration<long int, std::ratio<1, 1000> >::rep’ {aka ‘long int’} [-Wsign-compare]
+  258 |     if (; ms >= refresh_time_.count()) [[unlikely]] {
+      |           ~~~^~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:260:16: warning: comparison of integer expressions of different signedness: ‘long unsigned int’ and ‘std::chrono::duration<long int, std::ratio<1, 1000> >::rep’ {aka ‘long int’} [-Wsign-compare]
+  260 |         if (ms >= 2 * refresh_time_.count()) {
+      |             ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘static uint16_t ylt::metric::detail::summary_impl<uint_type, frac_bit>::encode(float) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint16_t = short unsigned int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:280:26:   required from ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::insert(float) [with uint_type = long unsigned int; long unsigned int frac_bit = 6]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:78:23:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:68:27: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]
+   68 |     uint32_t& fltInt32 = *(uint32_t*)&flt;
+      |                           ^~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::data_t::stat(uint64_t&, std::vector<std::pair<short int, uint_type> >&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:295:20:   required from ‘std::vector<float> ylt::metric::detail::summary_impl<uint_type, frac_bit>::stat(double&, uint64_t&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:96:33:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:160:37: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+  160 |       for (int i = piece_cnt - 1; i >= piece_cnt / 2; --i) {
+      |                                   ~~^~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:163:25: warning: comparison of integer expressions of different signedness: ‘int’ and ‘long unsigned int’ [-Wsign-compare]
+  163 |       for (int i = 0; i < piece_cnt / 2; ++i) {
+      |                       ~~^~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::data_t::stat_impl(uint64_t&, std::vector<std::pair<short int, uint_type> >&, int) [with bool inc_order = true; uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:164:24:   required from ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::data_t::stat(uint64_t&, std::vector<std::pair<short int, uint_type> >&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:295:20:   required from ‘std::vector<float> ylt::metric::detail::summary_impl<uint_type, frac_bit>::stat(double&, uint64_t&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:96:33:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:137:29: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::array<std::atomic<long unsigned int>, 128>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+  137 |           for (int j = 0; j < piece->size(); ++j) {
+      |                           ~~^~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp: In instantiation of ‘static uint16_t ylt::metric::detail::summary_impl<uint_type, frac_bit>::data_t::get_ordered_index(int16_t) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint16_t = short unsigned int; int16_t = short int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:151:52:   required from ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::data_t::stat_impl(uint64_t&, std::vector<std::pair<short int, uint_type> >&, int) [with bool inc_order = false; uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:161:25:   required from ‘void ylt::metric::detail::summary_impl<uint_type, frac_bit>::data_t::stat(uint64_t&, std::vector<std::pair<short int, uint_type> >&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:295:20:   required from ‘std::vector<float> ylt::metric::detail::summary_impl<uint_type, frac_bit>::stat(double&, uint64_t&) [with uint_type = long unsigned int; long unsigned int frac_bit = 6; uint64_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary.hpp:96:33:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/metric/summary_impl.hpp:124:25: warning: comparison of integer expressions of different signedness: ‘int16_t’ {aka ‘short int’} and ‘long unsigned int’ [-Wsign-compare]
+  124 |       return (raw_index >= bucket_size / 2) ? (bucket_size / 2 - 1 - raw_index)
+      |              ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:12,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:19,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/client_pool.hpp: In instantiation of ‘coro_io::client_pools<client_t, io_context_pool_t>::client_pools(const typename coro_io::client_pools<client_t, io_context_pool_t>::client_pool_t::pool_config&, io_context_pool_t&) [with client_t = coro_rpc::coro_rpc_client; io_context_pool_t = coro_io::io_context_pool; typename coro_io::client_pools<client_t, io_context_pool_t>::client_pool_t::pool_config = coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config]’:
+/usr/include/c++/10/bits/stl_construct.h:97:14:   required from ‘constexpr decltype (::new(void*(0)) _Tp) std::construct_at(_Tp*, _Args&& ...) [with _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}; decltype (::new(void*(0)) _Tp) = coro_io::client_pools<coro_rpc::coro_rpc_client>*]’
+/usr/include/c++/10/bits/alloc_traits.h:514:4:   required from ‘static constexpr void std::allocator_traits<std::allocator<_Up> >::construct(std::allocator_traits<std::allocator<_Up> >::allocator_type&, _Up*, _Args&& ...) [with _Up = coro_io::client_pools<coro_rpc::coro_rpc_client>; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}; _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; std::allocator_traits<std::allocator<_Up> >::allocator_type = std::allocator<coro_io::client_pools<coro_rpc::coro_rpc_client> >]’
+/usr/include/c++/10/bits/shared_ptr_base.h:551:39:   required from ‘std::_Sp_counted_ptr_inplace<_Tp, _Alloc, _Lp>::_Sp_counted_ptr_inplace(_Alloc, _Args&& ...) [with _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}; _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; _Alloc = std::allocator<coro_io::client_pools<coro_rpc::coro_rpc_client> >; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’
+/usr/include/c++/10/bits/shared_ptr_base.h:682:16:   required from ‘std::__shared_count<_Lp>::__shared_count(_Tp*&, std::_Sp_alloc_shared_tag<_Alloc>, _Args&& ...) [with _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; _Alloc = std::allocator<coro_io::client_pools<coro_rpc::coro_rpc_client> >; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’
+/usr/include/c++/10/bits/shared_ptr_base.h:1376:71:   required from ‘std::__shared_ptr<_Tp, _Lp>::__shared_ptr(std::_Sp_alloc_shared_tag<_Tp>, _Args&& ...) [with _Alloc = std::allocator<coro_io::client_pools<coro_rpc::coro_rpc_client> >; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}; _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_atomic]’
+/usr/include/c++/10/bits/shared_ptr.h:408:59:   required from ‘std::shared_ptr<_Tp>::shared_ptr(std::_Sp_alloc_shared_tag<_Tp>, _Args&& ...) [with _Alloc = std::allocator<coro_io::client_pools<coro_rpc::coro_rpc_client> >; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}; _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>]’
+/usr/include/c++/10/bits/shared_ptr.h:861:14:   required from ‘std::shared_ptr<_Tp> std::allocate_shared(const _Alloc&, _Args&& ...) [with _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; _Alloc = std::allocator<coro_io::client_pools<coro_rpc::coro_rpc_client> >; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}]’
+/usr/include/c++/10/bits/shared_ptr.h:877:39:   required from ‘std::shared_ptr<_Tp> std::make_shared(_Args&& ...) [with _Tp = coro_io::client_pools<coro_rpc::coro_rpc_client>; _Args = {coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config&}]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:90:26:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/client_pool.hpp:707:22: warning: ‘coro_io::client_pools<coro_rpc::coro_rpc_client>::io_context_pool_’ will be initialized after [-Wreorder]
+  707 |   io_context_pool_t& io_context_pool_;
+      |                      ^~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/client_pool.hpp:703:39: warning:   ‘coro_io::client_pool<coro_rpc::coro_rpc_client>::pool_config coro_io::client_pools<coro_rpc::coro_rpc_client>::default_pool_config_’ [-Wreorder]
+  703 |   typename client_pool_t::pool_config default_pool_config_{};
+      |                                       ^~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_io/client_pool.hpp:633:3: warning:   when initialized here [-Wreorder]
+  633 |   client_pools(
+      |   ^~~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/Future.h:25,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/impl/coro_rpc_client.hpp:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_rpc/coro_rpc_client.hpp:17,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_client.h:11,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/client_service.h:19,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/client_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h: In member function ‘void async_simple::FutureState<T>::setResult(async_simple::Try<T>&&) [with T = std::error_code]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:207:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  207 |                 if (_state.compare_exchange_strong(state,
+      |                 ^~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:215:13: note: here
+  215 |             case detail::State::ONLY_CONTINUATION:
+      |             ^~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:216:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  216 |                 if (_state.compare_exchange_strong(state, detail::State::DONE,
+      |                 ^~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:221:13: note: here
+  221 |             default:
+      |             ^~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h: In member function ‘void async_simple::FutureState<T>::setResult(async_simple::Try<T>&&) [with T = std::variant<coro_rpc::coro_rpc_client::async_rpc_raw_result_value_type, std::error_code>]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:207:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  207 |                 if (_state.compare_exchange_strong(state,
+      |                 ^~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:215:13: note: here
+  215 |             case detail::State::ONLY_CONTINUATION:
+      |             ^~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:216:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  216 |                 if (_state.compare_exchange_strong(state, detail::State::DONE,
+      |                 ^~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:221:13: note: here
+  221 |             default:
+      |             ^~~~~~~
+[2/80] Building CXX object mooncake-store/src/CMakeFiles/mooncake_store.dir/master_service.cpp.o
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/multipart.hpp: In member function ‘async_simple::coro::Lazy<cinatra::part_head_t> cinatra::multipart_reader_t<T>::read_part_head(std::string_view)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/multipart.hpp:17:76: warning: missing initializer for member ‘cinatra::part_head_t::name’ [-Wmissing-field-initializers]
+   17 |       co_return part_head_t{std::make_error_code(std::errc::protocol_error)};
+      |                                                                            ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/multipart.hpp:17:76: warning: missing initializer for member ‘cinatra::part_head_t::filename’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::connect(std::string, std::vector<asio::ip::basic_endpoint<asio::ip::tcp> >*)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:341:79: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+  341 |       co_return resp_data{std::make_error_code(std::errc::protocol_error), 404};
+      |                                                                               ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:341:79: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:382:75: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+  382 |       co_return resp_data{make_error_code(http_errc::connect_timeout), 404};
+      |                                                                           ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:382:75: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘void cinatra::coro_http_client::check_source(cinatra::resp_data&, Source&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:938:76: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+  938 |             std::make_error_code(std::errc::no_such_file_or_directory), 404};
+      |                                                                            ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:938:76: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:945:76: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+  945 |             std::make_error_code(std::errc::no_such_file_or_directory), 404};
+      |                                                                            ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:945:76: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘int64_t cinatra::coro_http_client::handle_upload_header_with_length(cinatra::resp_data&, Source&, std::unordered_map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >&, uint64_t, int64_t)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:987:77: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+  987 |             resp_data{std::make_error_code(std::errc::invalid_argument), 404};
+      |                                                                             ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:987:77: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:994:77: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+  994 |             resp_data{std::make_error_code(std::errc::invalid_argument), 404};
+      |                                                                             ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:994:77: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<bool> cinatra::coro_http_client::reconnect(cinatra::resp_data&, cinatra::uri_t)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1126:72: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1126 |       data = resp_data{make_error_code(http_errc::connect_timeout), 404};
+      |                                                                        ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1126:72: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::async_upload_impl(S, cinatra::http_method, Source, cinatra::req_content_type, std::unordered_map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >, uint64_t, int64_t)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1169:79: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1169 |       co_return resp_data{std::make_error_code(std::errc::protocol_error), 404};
+      |                                                                               ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1169:79: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1204:75: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1204 |       co_return resp_data{make_error_code(http_errc::request_timeout), 404};
+      |                                                                           ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1204:75: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1209:34: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1209 |       co_return resp_data{ec, 404};
+      |                                  ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1209:34: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1269:34: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1269 |       co_return resp_data{ec, 404};
+      |                                  ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1269:34: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::async_upload_multipart(std::string)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1311:30: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1311 |                           404};
+      |                              ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1311:30: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::async_upload_multipart(std::string, std::string, std::string)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1324:30: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1324 |                           404};
+      |                              ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1324:30: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::connect(const cinatra::uri_t&, std::vector<asio::ip::basic_endpoint<asio::ip::tcp> >*)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2264:77: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2264 |         co_return resp_data{make_error_code(http_errc::connect_timeout), 404};
+      |                                                                             ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2264:77: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2273:38: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2273 |           co_return resp_data{ec, 404};
+      |                                      ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2273:38: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2283:36: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2283 |                                 404};
+      |                                    ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2283:36: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2297:36: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2297 |         co_return resp_data{ec, 404};
+      |                                    ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2297:36: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2306:36: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2306 |         co_return resp_data{ec, 404};
+      |                                    ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2306:36: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2312:38: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2312 |           co_return resp_data{ec, 404};
+      |                                      ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2312:38: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2335:38: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2335 |           co_return resp_data{ec, 404};
+      |                                      ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2335:38: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::send_single_part(const string&, const cinatra::multipart_t&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2398:34: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2398 |       co_return resp_data{ec, 404};
+      |                                  ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2398:34: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2413:38: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2413 |           co_return resp_data{ec, 404};
+      |                                      ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2413:38: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2417:40: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2417 |             co_return resp_data{ec, 404};
+      |                                        ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2417:40: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2427:36: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2427 |         co_return resp_data{ec, 404};
+      |                                    ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2427:36: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2431:32: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2431 |     co_return resp_data{{}, 200};
+      |                                ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2431:32: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In member function ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::async_read_ws()’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2450:79: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 2450 |           co_return resp_data{make_error_code(http_errc::request_timeout), 404};
+      |                                                                               ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2450:79: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:11,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_connection.hpp: In member function ‘async_simple::coro::Lazy<cinatra::websocket_result> cinatra::coro_http_connection::read_websocket()’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_connection.hpp:961:31: warning: missing initializer for member ‘cinatra::websocket_result::type’ [-Wmissing-field-initializers]
+  961 |     websocket_result result{ec};
+      |                               ^
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_connection.hpp:961:31: warning: missing initializer for member ‘cinatra::websocket_result::data’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_connection.hpp:961:31: warning: missing initializer for member ‘cinatra::websocket_result::eof’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp: In member function ‘async_simple::coro::Lazy<void> cinatra::coro_http_server::reply(cinatra::coro_http_client&, std::string_view, cinatra::coro_http_request&, cinatra::coro_http_response&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:1093:71: warning: missing initializer for member ‘cinatra::req_context<std::basic_string_view<char> >::req_header’ [-Wmissing-field-initializers]
+ 1093 |     auto ctx = req_context<std::string_view>{.content = req.get_body()};
+      |                                                                       ^
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:1:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_service.h: In constructor ‘mooncake::MasterService::MasterService(const mooncake::MasterServiceConfig&)’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_service.h:2035:23: warning: ‘mooncake::MasterService::task_manager_’ will be initialized after [-Wreorder]
+ 2035 |     ClientTaskManager task_manager_;
+      |                       ^~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/master_service.h:1992:23: warning:   ‘const string mooncake::MasterService::cxl_path_’ [-Wreorder]
+ 1992 |     const std::string cxl_path_;
+      |                       ^~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:159:1: warning:   when initialized here [-Wreorder]
+  159 | MasterService::MasterService(const MasterServiceConfig& config)
+      | ^~~~~~~~~~~~~
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp: In instantiation of ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::async_upload_impl(S, cinatra::http_method, Source, cinatra::req_content_type, std::unordered_map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >, uint64_t, int64_t) [with cinatra::upload_type_t upload_type = cinatra::upload_type_t::multipart; S = std::__cxx11::basic_string<char>; Source = cinatra::upload_type_t; uint64_t = long unsigned int; int64_t = long int]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1316:36:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1156:19: warning: missing initializer for member ‘cinatra::req_context<>::req_header’ [-Wmissing-field-initializers]
+ 1156 |     req_context<> ctx{content_type};
+      |                   ^~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1156:19: warning: missing initializer for member ‘cinatra::req_context<>::content’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1169:17: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1169 |       co_return resp_data{std::make_error_code(std::errc::protocol_error), 404};
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1169:17: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1204:17: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1204 |       co_return resp_data{make_error_code(http_errc::request_timeout), 404};
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1204:17: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1209:17: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1209 |       co_return resp_data{ec, 404};
+      |                 ^~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1209:17: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1269:17: warning: missing initializer for member ‘cinatra::resp_data::resp_body’ [-Wmissing-field-initializers]
+ 1269 |       co_return resp_data{ec, 404};
+      |                 ^~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1269:17: warning: missing initializer for member ‘cinatra::resp_data::resp_headers’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/multipart.hpp: In instantiation of ‘async_simple::coro::Lazy<cinatra::part_head_t> cinatra::multipart_reader_t<T>::read_part_head(std::string_view) [with T = cinatra::coro_http_client; std::string_view = std::basic_string_view<char>]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:2160:57:   required from ‘async_simple::coro::Lazy<std::error_code> cinatra::coro_http_client::handle_multipart(cinatra::resp_data&, cinatra::req_context<String>) [with String = std::__cxx11::basic_string<char>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1962:39:   required from ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::handle_read(std::error_code&, size_t&, bool&, cinatra::req_context<String>, cinatra::http_method) [with String = std::__cxx11::basic_string<char>; size_t = long unsigned int]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:1417:31:   required from ‘async_simple::coro::Lazy<cinatra::resp_data> cinatra::coro_http_client::async_request(S, cinatra::http_method, cinatra::req_context<String>, std::unordered_map<std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char> >, std::span<char>) [with S = std::__cxx11::basic_string<char>; String = std::__cxx11::basic_string<char>]’
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:360:53:   required from here
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/multipart.hpp:17:17: warning: missing initializer for member ‘cinatra::part_head_t::name’ [-Wmissing-field-initializers]
+   17 |       co_return part_head_t{std::make_error_code(std::errc::protocol_error)};
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/multipart.hpp:17:17: warning: missing initializer for member ‘cinatra::part_head_t::filename’ [-Wmissing-field-initializers]
+In file included from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/Future.h:25,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_client.hpp:26,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/standalone/cinatra/coro_http_server.hpp:5,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/coro_http/coro_http_server.hpp:39,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/include/http_metadata_server.h:10,
+                 from /mnt/c/CCFOpenSource/Repos/Mooncake-github/mooncake-store/src/master_service.cpp:20:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h: In member function ‘void async_simple::FutureState<T>::setResult(async_simple::Try<T>&&) [with T = std::error_code]’:
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:207:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  207 |                 if (_state.compare_exchange_strong(state,
+      |                 ^~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:215:13: note: here
+  215 |             case detail::State::ONLY_CONTINUATION:
+      |             ^~~~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:216:17: warning: this statement may fall through [-Wimplicit-fallthrough=]
+  216 |                 if (_state.compare_exchange_strong(state, detail::State::DONE,
+      |                 ^~
+/mnt/c/CCFOpenSource/Repos/Mooncake-github/extern/yalantinglibs/include/ylt/thirdparty/async_simple/FutureState.h:221:13: note: here
+  221 |             default:
+      |             ^~~~~~~
+ninja: build stopped: subcommand failed.

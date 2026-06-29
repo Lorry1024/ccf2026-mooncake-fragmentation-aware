@@ -1,0 +1,10 @@
+command: wsl bash -lc 'cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=c++17 -O2 repro/fragmentation_aware_sim.cpp -o fragmentation_aware_sim_verify_20260630_001525 && ./fragmentation_aware_sim_verify_20260630_001525'
+request_mib=10
+
+segment       free_mib largest_mib  free_ratio    fa_score   can_fit
+fragmented          16           8       0.500       0.500        no
+contiguous          12          12       0.375       0.812       yes
+
+free_ratio_first_choice=fragmented can_fit=no
+fragmentation_aware_choice=contiguous can_fit=yes
+exit_code=0

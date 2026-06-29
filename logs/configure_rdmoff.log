@@ -1,0 +1,63 @@
+-- The CXX compiler identification is GNU 10.5.0
+-- The C compiler identification is GNU 10.5.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++-10 - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/gcc-10 - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Found JsonCpp: JsonCpp::JsonCpp
+-- Found GLOG: glog::glog
+CMAKE_BUILD_TYPE: RelWithDebInfo
+-- [limit_jobs] Available memory: 4969 MB, CPU cores: 20
+-- [limit_jobs] Compile jobs: 3 (1500 MB/job), Link jobs: 1 (4000 MB/job)
+-- [limit_jobs] Ninja job pools: compile=3, link=1
+-- Performing Test MOONCAKE_IBVERBS_HAS_GID_EX
+-- Performing Test MOONCAKE_IBVERBS_HAS_GID_EX - Failed
+-- libibverbs does not provide ibv_query_gid_ex; yalantinglibs will use the configured default GID index
+-- Event-driven completion is disabled
+-- Http as metadata server support is enabled
+-- metrics is enabled
+YLT is imported by find_package
+-- -------------YLT CONFIG SETTING-------------
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE
+-- YLT_ENABLE_DL: ON
+-- YLT_ENABLE_SSL: OFF
+-- YLT_ENABLE_NTLS: OFF
+-- YLT_ENABLE_PMR: OFF
+-- YLT_ENABLE_IO_URING: OFF
+-- YLT_ENABLE_STRUCT_PACK_UNPORTABLE_TYPE: OFF
+-- YLT_ENABLE_STRUCT_PACK_OPTIMIZE: OFF
+-- --------------------------------------------
+-- pybind11 v2.13.6 
+-- Found PythonInterp: python3 (found suitable version "3.8.10", minimum required is "3.7")
+-- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.8.so
+-- Performing Test HAS_FLTO
+-- Performing Test HAS_FLTO - Success
+-- USE_NOF=OFF, NoF SSD pool support is disabled
+-- Found ASIO at: /usr/include
+-- Found Python3: /usr/bin/python3.8 (found version "3.8.10") found components: Interpreter Development Development.Module Development.Embed
+-- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "7.68.0")
+-- CUDA: Disabled
+-- ROCm/HIP: Disabled
+-- Sunrise/Tang: Disabled
+-- Mooncake Store will be built
+-- Store HA backends are disabled
+-- AWS SDK not found, S3 functionality will be disabled
+-- Found xxHash: include=/usr/include lib=/usr/lib/x86_64-linux-gnu/libxxhash.so
+-- io_uring: Disabled (liburing not found)
+/root/.local/lib/python3.8/site-packages
+/root/.local/lib/python3.8/site-packages
+-- Configuring done (12.6s)
+-- Generating done (18.2s)
+-- Build files have been written to: /mnt/c/CCFOpenSource/Repos/Mooncake-github/build-ccf-rdmaoff
