@@ -1,5 +1,36 @@
 # Testing Notes
 
+## Official Topic-2 Alignment Validation - 2026-07-06
+
+This section was added to make the validation evidence explicitly align with official Mooncake `track2_2026Mooncake` 赛题2: Mooncake Store throughput performance, high availability, scalability, and SGLang HiCache + Mooncake Store performance.
+
+New deterministic simulation:
+
+```powershell
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligned_store_scalability_sim_20260706 && ./topic_aligned_store_scalability_sim_20260706 > logs/topic_aligned_store_scalability_sim_20260706.log 2>&1"
+```
+
+Result:
+
+- Exit code: 0.
+- Log: `logs\topic_aligned_store_scalability_sim_20260706.log`.
+- Summary: `PASS topic_aligned_store_scalability_sim`.
+
+Key metrics:
+
+| Metric | free_ratio_first | fragmentation_aware |
+|---|---:|---:|
+| Large-object primary fit success | 0/6 | 6/6 |
+| Eventual fit success with fallback scan | 6/6 | 6/6 |
+| Fallback attempts | 11 | 0 |
+| Average candidates scored | 5.00 | 5.00 |
+| Decision time per request | 121.00 ns | 138.93 ns |
+| Extra local decision cost | n/a | 17.93 ns |
+
+Interpretation: in the deterministic fragmented Store model, `fragmentation_aware` selects a contiguous-fit segment first for all tested large-object requests, while `free_ratio_first` repeatedly picks fragmented high-free segments first and needs fallback attempts. This supports the topic-2 narrative of Store throughput stability and scalability, but it is not a real Mooncake/SGLang HiCache benchmark.
+
+Boundary: full upstream Mooncake build, RDMA validation, official CI, and real SGLang HiCache benchmark are still not proven in this local environment.
+
 ## Unit Test Added
 
 `FragmentationAwarePrefersContiguousSpaceOverTotalFreeSpace`
@@ -26,13 +57,10 @@ Configured Mooncake with:
 - AWS SDK not found, so S3 snapshot support was disabled by CMake.
 - io_uring not found, so io_uring support was disabled by CMake.
 
-Configuration succeeded in:
+Configuration succeeded in the original June 25 workspace. The retained evidence for this scoped package is in:
 
-`C:\CCFOpenSource\Repos\Mooncake-github\build-ccf-rdmaoff`
-
-Low-memory configuration also succeeded in:
-
-`C:\CCFOpenSource\Repos\Mooncake-github\build-ccf-rdmaoff-debug`
+- `logs\configure_rdmoff.log`
+- `logs\configure_rdmoff_debug.log`
 
 ### Full Target Build
 
@@ -53,10 +81,10 @@ Observed environment issues:
 
 Build logs:
 
-- `C:\CCFOpenSource\Submission\logs\configure_rdmoff.log`
-- `C:\CCFOpenSource\Submission\logs\configure_rdmoff_debug.log`
-- `C:\CCFOpenSource\Submission\logs\build_allocation_strategy_targets_rdmoff.log`
-- `C:\CCFOpenSource\Submission\logs\build_allocation_strategy_test_rdmoff_debug.log`
+- `logs\configure_rdmoff.log`
+- `logs\configure_rdmoff_debug.log`
+- `logs\build_allocation_strategy_targets_rdmoff.log`
+- `logs\build_allocation_strategy_test_rdmoff_debug.log`
 
 ### Lightweight Header-Level Unit Test
 
@@ -85,7 +113,7 @@ Compiled directly against Mooncake headers with a fake allocator backend:
 
 Result log:
 
-`C:\CCFOpenSource\Submission\logs\allocation_strategy_light_test.log`
+`logs\allocation_strategy_light_test.log`
 
 Observed result:
 
@@ -105,7 +133,7 @@ g++ -std=c++17 -O2 /mnt/c/CCFOpenSource/Work/fragmentation_aware_sim.cpp \
 
 Result log:
 
-`C:\CCFOpenSource\Submission\logs\fragmentation_aware_sim.log`
+`logs\fragmentation_aware_sim.log`
 
 Observed result:
 
@@ -121,3 +149,87 @@ fragmentation_aware_choice=contiguous can_fit=yes
 ```
 
 Interpretation: `free_ratio_first` picks the segment with the higher aggregate free ratio but cannot fit the request. `fragmentation_aware` picks the segment with a lower aggregate free ratio but sufficient contiguous free space, matching the intended behavior.
+
+## Nightly Validation: 2026-07-03
+
+### Upstream Patch Applicability
+
+Upstream checked:
+
+```text
+kvcache-ai/Mooncake@a325291c6baccc872ce137bd0c58d5791ac4e8c4
+```
+
+Old patch applicability:
+
+- Patch: `mooncake_fragmentation_aware.patch`
+- Command: `git apply --check --verbose`
+- Result: failed against current upstream `main`.
+- Log: `logs\git_apply_check_20260703_0001.log`
+- Cause: upstream changed nearby allocation strategy docs/config, `local_first` strategy wiring, and transport build files after the original patch was prepared.
+
+New PR-ready patch:
+
+- Patch: `mooncake_fragmentation_aware_pr_ready_20260703.patch`
+- Command: `git apply --check --verbose`
+- Result: passed.
+- Log: `logs\git_apply_check_pr_ready_20260703_0002.log`
+
+Format check:
+
+```powershell
+git -C C:\CCFOpenSource\02_Mooncake_FragmentationAware\upstream\Mooncake diff --check
+```
+
+Result: passed.
+
+### Standalone Fragmentation Simulation Re-run
+
+Command:
+
+```powershell
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=c++17 -O2 repro/fragmentation_aware_sim.cpp -o fragmentation_aware_sim_verify_20260703_0002 && ./fragmentation_aware_sim_verify_20260703_0002"
+```
+
+Result:
+
+- Exit code: 0.
+- Log: `logs\fragmentation_aware_sim_verify_20260703_0002.log`.
+- Key output: `free_ratio_first_choice=fragmented can_fit=no`; `fragmentation_aware_choice=contiguous can_fit=yes`.
+
+### Extended Quantitative Metrics Simulation
+
+Command:
+
+```powershell
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=c++17 -O2 repro/fragmentation_aware_metrics.cpp -o fragmentation_aware_metrics_verify_20260703_0002 && ./fragmentation_aware_metrics_verify_20260703_0002"
+```
+
+Result:
+
+- Exit code: 0.
+- Log: `logs\fragmentation_aware_metrics_verify_20260703_0002.log`.
+- Summary: `PASS fragmentation_aware_metrics: validated 5 deterministic ranking and boundary scenarios`.
+- Metrics table: `quantitative_metrics_20260703.md`.
+
+### Header-Level Light Test Rebuild Attempt
+
+Commands attempted:
+
+```powershell
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=gnu++20 ... repro/allocation_strategy_light_test.cpp ..."
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++-10 -std=gnu++20 -fcoroutines ... repro/allocation_strategy_light_test.cpp ..."
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && /usr/lib/llvm-18/bin/clang++ -std=gnu++20 ... repro/allocation_strategy_light_test.cpp ..."
+```
+
+Results:
+
+- Default `g++` is 9.4.0 and does not support the required C++20 flags.
+- `g++-10` and `clang++-18` both reached current upstream Mooncake headers but failed on `std::atomic_flag::test` in `mooncake-store/include/mutex.h`.
+- The failure is due to the installed Ubuntu 20.04 libstdc++ not providing this C++20 library API. It occurs before validating the new strategy logic.
+- Logs:
+  - `logs\allocation_strategy_light_test_verify_20260703_0001.log`
+  - `logs\allocation_strategy_light_test_verify_20260703_0002.log`
+  - `logs\allocation_strategy_light_test_verify_20260703_0003.log`
+
+The existing historical pass log remains available at `logs\allocation_strategy_light_test.log`. Current-night validation relies on the clean patch apply check, standalone deterministic simulation, and extended quantitative metrics simulation.

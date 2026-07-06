@@ -19,3 +19,6 @@
 - Selection overhead is bounded by the same small candidate sample size as `free_ratio_first`.
 - The lightweight unit test and standalone simulation demonstrate a concrete failure mode that total-free-space ranking cannot distinguish.
 - Documentation makes the feature reproducible for users and reviewers.
+- The 2026-07-03 PR-ready patch applies cleanly to current Mooncake `main` at `a325291c6baccc872ce137bd0c58d5791ac4e8c4`.
+- The extended metrics simulation records request size, free MiB, largest MiB, free ratio, contiguity ratio, `fa_score`, old/new choices, and `can_fit` results.
+- The known local build limitation is explicit: current upstream headers require `std::atomic_flag::test`, which is unavailable in the installed Ubuntu 20.04 libstdc++.

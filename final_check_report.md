@@ -2,6 +2,51 @@
 
 Check time: 2026-06-30 00:19 local time.
 
+## Topic Alignment Addendum - 2026-07-06
+
+This addendum aligns the existing submission to official Mooncake `track2_2026Mooncake` 赛题2: optimizing Mooncake Store throughput performance, high availability, scalability, and SGLang HiCache + Mooncake Store performance.
+
+Corrected positioning:
+
+`Mooncake Store fragmentation-aware allocation for Store scalability/performance stability`
+
+New alignment artifacts:
+
+- `OFFICIAL_TOPIC_ALIGNMENT.md`
+- `topic_alignment_metrics_20260706.md`
+- `repro\topic_aligned_store_scalability_sim.cpp`
+- `logs\topic_aligned_store_scalability_sim_20260706.log`
+- `TOPIC_ALIGNMENT_REPORT.md`
+
+New verification command:
+
+```powershell
+wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligned_store_scalability_sim_20260706 && ./topic_aligned_store_scalability_sim_20260706 > logs/topic_aligned_store_scalability_sim_20260706.log 2>&1"
+```
+
+New result:
+
+- Exit code: 0.
+- `PASS topic_aligned_store_scalability_sim`.
+- `free_ratio_first` primary fit success: 0/6.
+- `fragmentation_aware` primary fit success: 6/6.
+- Fallback attempts: 11 -> 0.
+- Average candidates scored: 5.00 for both strategies.
+
+Boundary: this is deterministic local evidence for Store allocation-path behavior. It is not a complete upstream Mooncake build result, not an RDMA result, not an official CI result, and not a real SGLang HiCache benchmark.
+
+## Nightly Addendum - 2026-07-03
+
+The scoped submission was strengthened again on 2026-07-03. See:
+
+- `final_check_report_20260703.md`
+- `NIGHTLY_IMPROVEMENT_REPORT.md`
+- `mooncake_fragmentation_aware_pr_ready_20260703.patch`
+- `patch_pr_ready_notes_20260703.md`
+- `quantitative_metrics_20260703.md`
+
+Important change: the old `mooncake_fragmentation_aware.patch` is retained, but it no longer applies cleanly to current upstream Mooncake `main`. The preferred patch for review is `mooncake_fragmentation_aware_pr_ready_20260703.patch`, verified against `a325291c6baccc872ce137bd0c58d5791ac4e8c4`.
+
 Scope: `C:\CCFOpenSource\02_Mooncake_FragmentationAware`.
 
 This report covers the scoped submission directory. No existing files in that directory were deleted.
