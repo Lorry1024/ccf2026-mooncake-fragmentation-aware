@@ -58,7 +58,7 @@ Public GitHub submission repository:
 
 | Item | Why it matters | Status |
 | --- | --- | --- |
-| Public GitHub repository | Competition rule says all artifacts must be hosted on GitHub. | Created; push pending. |
+| Public GitHub repository | Competition rule says all artifacts must be hosted on GitHub. | Created and pushed. |
 | Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Prepare locally, then push. |
 | 5-minute demo video | Required artifact in the competition guide. | Needs screen recording. |
 | PPT file | Required as solution material or defense support. | Draft can be generated locally. |
