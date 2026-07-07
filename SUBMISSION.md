@@ -39,6 +39,14 @@ Public GitHub submission repository:
 
 `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
 
+Mooncake fork branch:
+
+`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
+
+Draft PR creation URL:
+
+`https://github.com/Lorry1024/Mooncake/pull/new/ccf-fragmentation-aware-allocation`
+
 | Artifact | Path | Status |
 | --- | --- | --- |
 | Project README | `README.md` | Present |
@@ -59,7 +67,7 @@ Public GitHub submission repository:
 | Item | Why it matters | Status |
 | --- | --- | --- |
 | Public GitHub repository | Competition rule says all artifacts must be hosted on GitHub. | Created and pushed. |
-| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Prepare locally, then push. |
+| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Fork branch pushed; draft PR pending. |
 | 5-minute demo video | Required artifact in the competition guide. | Needs screen recording. |
 | PPT file | Required as solution material or defense support. | Draft can be generated locally. |
 | Final submission zip | Needed for platform upload. | Generate after docs/PPT are updated. |
