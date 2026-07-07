@@ -1,0 +1,4 @@
+slides/*.inspect.ndjson
+slides/qa/*
+!slides/qa/contact_sheet.png
+

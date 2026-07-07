@@ -4,6 +4,26 @@ Competition: The 8th CCF Open Source Innovation Competition, Open Source Task Ch
 
 Task: Mooncake KVCache storage design and performance optimization.
 
+## Competition-Ready Positioning
+
+This repository is a CCF Mooncake submission package, not a standalone fork of
+the full upstream Mooncake repository. The core source-code artifact is:
+
+`mooncake_fragmentation_aware_pr_ready_20260703.patch`
+
+Public GitHub repository:
+
+`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
+
+For final competition submission, this package should be mirrored to a public
+GitHub repository, and the patch should ideally be applied to a Mooncake fork
+branch or draft PR. See:
+
+- `DESIGN.md`
+- `EVALUATION.md`
+- `SUBMISSION.md`
+- `GITHUB_RELEASE_GUIDE.md`
+
 ## Official Topic-2 Alignment - 2026-07-06
 
 This package is now explicitly aligned to official Mooncake track `track2_2026Mooncake`, **赛题2：优化 Mooncake Store 吞吐性能、高可用功能和可扩展性，优化 SGLang HiCache + Mooncake Store 性能**.
