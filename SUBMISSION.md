@@ -43,9 +43,9 @@ Mooncake fork branch:
 
 `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
 
-Draft PR creation URL:
+Mooncake draft PR:
 
-`https://github.com/Lorry1024/Mooncake/pull/new/ccf-fragmentation-aware-allocation`
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
 
 | Artifact | Path | Status |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ Draft PR creation URL:
 | Item | Why it matters | Status |
 | --- | --- | --- |
 | Public GitHub repository | Competition rule says all artifacts must be hosted on GitHub. | Created and pushed. |
-| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Fork branch pushed; draft PR pending. |
+| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Draft PR created: `kvcache-ai/Mooncake#2797`. |
 | 5-minute demo video | Required artifact in the competition guide. | Needs screen recording. |
 | PPT file | Required as solution material or defense support. | Draft can be generated locally. |
 | Final submission zip | Needed for platform upload. | Generate after docs/PPT are updated. |

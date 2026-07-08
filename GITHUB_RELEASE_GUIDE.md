@@ -11,7 +11,7 @@ final submission should also have a GitHub-visible source of truth.
 1. Push the contents of this package to `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`.
 3. Fork `kvcache-ai/Mooncake` on GitHub.
 4. Push a branch with the applied `fragmentation_aware` changes.
-5. Open a draft PR to `kvcache-ai/Mooncake` using `https://github.com/Lorry1024/Mooncake/pull/new/ccf-fragmentation-aware-allocation`.
+5. Draft PR has been created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
 6. Put both links in the GitLink platform submission.
 
 ## Local Mooncake Branch Preparation
@@ -19,6 +19,10 @@ final submission should also have a GitHub-visible source of truth.
 Current pushed fork branch:
 
 `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
+
+Current draft PR:
+
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
 
 From a clean Mooncake checkout:
 

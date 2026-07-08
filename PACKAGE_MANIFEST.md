@@ -49,5 +49,5 @@ These links should be filled in on the GitLink platform:
 
 - Public GitHub submission repository: `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`.
 - Mooncake fork branch: `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`.
-- Draft PR creation URL: `https://github.com/Lorry1024/Mooncake/pull/new/ccf-fragmentation-aware-allocation`.
+- Mooncake draft PR: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
 - 5-minute demo video URL.

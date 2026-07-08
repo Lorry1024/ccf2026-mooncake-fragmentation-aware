@@ -12,9 +12,9 @@ Fork branch:
 
 `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
 
-Draft PR creation URL:
+Mooncake draft PR:
 
-`https://github.com/Lorry1024/Mooncake/pull/new/ccf-fragmentation-aware-allocation`
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
 
 Commit:
 
@@ -26,6 +26,7 @@ Status:
   applied as a real Git commit.
 - `git diff --check` passed before packaging.
 - The branch has been pushed to the `Lorry1024/Mooncake` fork.
+- Draft PR created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
 
 If the branch needs to be pushed again:
 
@@ -33,11 +34,9 @@ If the branch needs to be pushed again:
 git push lorry ccf-fragmentation-aware-allocation
 ```
 
-Then open a draft PR with:
+Draft PR:
 
-Title:
-
-`Add fragmentation-aware allocation strategy for Mooncake Store`
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
 
 Primary submission package:
 
