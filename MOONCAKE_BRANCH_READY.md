@@ -18,6 +18,10 @@ Mooncake draft PR:
 
 Commit:
 
+`fe353e5 Apply clang-format to allocation strategy changes`
+
+Implementation commit:
+
 `f227c22 Add fragmentation-aware Store allocation strategy`
 
 Status:
@@ -27,6 +31,10 @@ Status:
 - `git diff --check` passed before packaging.
 - The branch has been pushed to the `Lorry1024/Mooncake` fork.
 - Draft PR created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
+- `Check code format` passed on the updated PR head commit after the
+  clang-format follow-up commit.
+- Other GitHub Actions jobs may still be queued or running; verify the PR check
+  summary before marking the draft PR ready for review.
 
 If the branch needs to be pushed again:
 

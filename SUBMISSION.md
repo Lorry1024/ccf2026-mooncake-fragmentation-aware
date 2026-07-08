@@ -67,11 +67,11 @@ Mooncake draft PR:
 | Item | Why it matters | Status |
 | --- | --- | --- |
 | Public GitHub repository | Competition rule says all artifacts must be hosted on GitHub. | Created and pushed. |
-| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Draft PR created: `kvcache-ai/Mooncake#2797`. |
-| 5-minute demo video | Required artifact in the competition guide. | Needs screen recording. |
-| PPT file | Required as solution material or defense support. | Draft can be generated locally. |
-| Final submission zip | Needed for platform upload. | Generate after docs/PPT are updated. |
-| SHA256 sidecar | Helps prove package integrity. | Generate with the zip. |
+| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Draft PR created: `kvcache-ai/Mooncake#2797`; format-check fix pushed at `fe353e5`. |
+| 5-minute demo video | Required artifact in the competition guide. | Needs screen recording and public URL. |
+| PPT file | Required as solution material or defense support. | Present: `slides/Mooncake_FragmentationAware_初赛展示.pptx`. |
+| Final submission zip | Needed for platform upload. | Present under `release/`; regenerate after adding the final video URL or changing docs. |
+| SHA256 sidecar | Helps prove package integrity. | Present under `release/`; regenerate whenever the zip changes. |
 
 ## Suggested GitHub Repository Structure
 
