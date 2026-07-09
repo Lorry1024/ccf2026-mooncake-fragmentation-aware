@@ -21,7 +21,7 @@
 \usetikzlibrary{arrows.meta,positioning,fit,calc,shapes.geometric}
 
 \geometry{left=2.65cm,right=2.65cm,top=2.55cm,bottom=2.65cm}
-\xeCJKsetup{CJKecglue={}}
+\xeCJKsetup{CJKecglue={\hskip 0.10em plus 0.03em minus 0.02em}}
 \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
 \IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{TeX Gyre Heros}}
 \IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{\setmonofont{Courier New}}
@@ -50,6 +50,7 @@
 \setlength{\headheight}{14pt}
 \emergencystretch=3em
 \renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{4pt}
 \setlist[itemize]{leftmargin=2.2em,itemsep=0.2em,topsep=0.3em}
 \setlist[enumerate]{leftmargin=2.2em,itemsep=0.2em,topsep=0.3em}
 
@@ -78,9 +79,13 @@
 \lstset{style=codestyle}
 
 \newcommand{\artifact}[1]{\texttt{#1}}
+\newcommand{\smallartifact}[1]{{\ttfamily\footnotesize #1}}
 \newcommand{\strategy}{\texttt{fragmentation\_aware}}
 \newcommand{\baseline}{\texttt{free\_ratio\_first}}
 \newcommand{\splitpath}[2]{\begin{tabular}[t]{@{}l@{}}\ttfamily\scriptsize #1\\\ttfamily\scriptsize #2\end{tabular}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{B}[1]{>{\bfseries\raggedright\arraybackslash}p{#1}}
 
 \begin{document}
 
@@ -95,13 +100,14 @@
   \vspace{0.55cm}
   {\Large Fragmentation-Aware Allocation for Mooncake Store\par}
   \vspace{2.2cm}
-  \begin{tabular}{>{\sffamily\bfseries}p{3.2cm}p{9.3cm}}
-    参赛方向 & 赛题2：优化Mooncake Store吞吐性能、高可用功能和可扩展性，优化SGLang HiCache+Mooncake Store性能 \\
-    作品名称 & Mooncake Store碎片感知分配策略 \\
-    参赛仓库 & \url{https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware} \\
-    上游PR & \url{https://github.com/kvcache-ai/Mooncake/pull/2797} \\
-    PR头提交 & \artifact{0123fa1 Fix fragmentation-aware allocation test setup} \\
-    报告日期 & 2026年7月9日 \\
+  \begin{tabular}{|>{\sffamily\bfseries\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{9.3cm}|}
+    \hline
+    参赛方向 & 赛题2：优化Mooncake Store吞吐性能、高可用功能和可扩展性，优化SGLang HiCache+Mooncake Store性能 \\ \hline
+    作品名称 & Mooncake Store碎片感知分配策略 \\ \hline
+    参赛仓库 & \url{https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware} \\ \hline
+    上游PR & \url{https://github.com/kvcache-ai/Mooncake/pull/2797} \\ \hline
+    PR头提交 & \artifact{0123fa1 Fix fragmentation-aware allocation test setup} \\ \hline
+    报告日期 & 2026年7月9日 \\ \hline
   \end{tabular}
   \vfill
   {\small 本报告与仓库中的patch、复现实验、验证日志和展示PPT共同构成初赛提交材料。\par}
@@ -122,17 +128,15 @@ Mooncake Store是Mooncake体系中支撑KVCache对象存储和复用的关键组
 \begin{table}[h]
   \centering
   \caption{初赛阶段模块完成情况}
-  \begin{tabularx}{\textwidth}{>{\bfseries}p{3.2cm}X}
-    \toprule
-    模块 & 完成情况 \\
-    \midrule
-    问题分析 & 明确\baseline{}在碎片化大对象分配中的误判模式，形成最小复现和专题仿真。 \\
-    策略设计 & 设计\strategy{}排序规则，优先考虑\artifact{can\_fit}、连续性评分和最大连续空闲区域。 \\
-    代码实现 & 在Mooncake Store中新增策略类型、策略类、配置解析、启动参数和benchmark矩阵。 \\
-    测试验证 & 新增碎片化单元测试，保留preferred segment语义，PR通过上游GitHub Actions。 \\
-    材料整理 & 完成中文Markdown材料、LaTeX技术报告、展示PPT、复现实验源码和提交包。 \\
-    待完成项 & 5分钟展示视频尚未录制；真实RDMA和SGLang HiCache端到端benchmark作为后续工作。 \\
-    \bottomrule
+  \begin{tabularx}{\textwidth}{|B{3.2cm}|Y|}
+    \hline
+    模块 & 完成情况 \\ \hline
+    问题分析 & 明确\baseline{}在碎片化大对象分配中的误判模式，形成最小复现和专题仿真。 \\ \hline
+    策略设计 & 设计\strategy{}排序规则，优先考虑\artifact{can\_fit}、连续性评分和最大连续空闲区域。 \\ \hline
+    代码实现 & 在Mooncake Store中新增策略类型、策略类、配置解析、启动参数和benchmark矩阵。 \\ \hline
+    测试验证 & 新增碎片化单元测试，保留preferred segment语义，PR通过上游GitHub Actions。 \\ \hline
+    材料整理 & 完成中文Markdown材料、LaTeX技术报告、展示PPT、复现实验源码和提交包。 \\ \hline
+    待完成项 & 5分钟展示视频尚未录制；真实RDMA和SGLang HiCache端到端benchmark作为后续工作。 \\ \hline
   \end{tabularx}
 \end{table}
 
@@ -175,16 +179,46 @@ Mooncake赛题2要求围绕Mooncake Store吞吐性能、高可用功能、可扩
 
 \section{原有机制与问题分析}
 
-\subsection{Mooncake Store原有分配策略}
+\subsection{Mooncake Store分配链路与关键抽象}
 
-Mooncake Store已有多种segment分配策略。默认\artifact{random}策略开销最低，适合简单场景；\baseline{}策略按照总空闲比例排序，有利于改善segment之间的负载和空间均衡；其他策略则面向SSD、CXL或local-first等特定场景。对本项目而言，关键对比对象是\baseline{}，因为它已经尝试利用空闲空间信息，但仍停留在“总量”视角。
+Mooncake Store在写入KVCache对象时，需要为对象的每个副本选择可写入的segment。上层调用并不直接关心底层空闲块的形态，而是把对象大小、副本数、preferred segment和excluded segment等约束交给Master侧分配逻辑。Master再调用具体分配策略，从可用segment集合中选出候选，并通过对应allocator完成空间申请。这个过程看似只是“选择一个segment”，但实际承担了三类语义：
 
-\subsection{总空闲比例的误判}
+\begin{enumerate}
+  \item \textbf{容量语义。} 当前segment是否拥有足够空间，决定对象是否可以一次性落地。
+  \item \textbf{副本语义。} 多副本写入需要避免重复使用同一segment，并在候选不足时保留best-effort fallback。
+  \item \textbf{调度语义。} preferred segment表示上层希望优先使用的放置位置，excluded segment表示本次请求不能选择的位置。
+\end{enumerate}
 
-在长期运行的KVCache Store中，对象大小可能从几MiB到几十MiB不等。对象释放后形成的空闲区域并不一定连续，导致一个segment拥有较高总空闲比例，却无法为当前请求提供足够大的连续空间。此时只看总空闲比例会产生错误排序。
+因此，分配策略不是孤立的性能小优化，而是Store吞吐稳定性、资源利用率和高可用副本放置之间的连接点。如果策略选中了“总空闲很多但无法容纳当前对象”的segment，后续allocator仍会拒绝分配，系统只能继续尝试其他segment或走fallback路径。该失败不会直接制造数据错误，但会增加一次无效尝试，并可能放大为锁竞争、重试、尾延迟和副本放置压力。
 
-\begin{figure}[h]
+\begin{table}[htbp]
   \centering
+  \caption{Mooncake Store分配路径中的关键对象}
+  \label{tab:store-abstractions}
+  \begin{tabularx}{\textwidth}{|B{3.0cm}|L{4.4cm}|Y|}
+    \hline
+    对象 & 主要职责 & 与本项目的关系 \\ \hline
+    Master & 管理segment视图并执行分配策略 & 新策略接入点位于Master侧策略工厂和配置解析路径 \\ \hline
+    segment & Store后端的空间放置单元 & 每个segment的空闲空间形态决定当前对象是否能落地 \\ \hline
+    allocator & 维护segment内部可用空间 & 提供总空闲空间和最大连续空闲区域等统计信息 \\ \hline
+    preferred segments & 上层传入的优先候选位置 & 新策略必须先尝试preferred，不能因为评分逻辑改变用户语义 \\ \hline
+    excluded segments & 当前请求禁止选择的位置 & 新策略在采样和fallback阶段都必须尊重排除集合 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{现有策略的能力边界}
+
+Mooncake Store已有多种分配策略。默认\artifact{random}策略开销低、行为简单，适合通用场景；\baseline{}策略按照总空闲比例排序，目标是让更空闲的segment优先吸收写入，从而改善整体空间利用均衡；\artifact{ssd\_free\_ratio\_first}、\artifact{cxl}和\artifact{local\_first}等策略则面向特定介质或拓扑。就赛题2而言，\baseline{}是最重要的对比基线，因为它已经使用了空间信息，却仍然没有识别segment内部碎片。
+
+\baseline{}的核心假设可以概括为：总空闲比例越高，当前请求越可能分配成功。该假设在对象大小比较均匀、释放行为比较规则、segment内部空闲区较少被切碎时通常成立。但KVCache Store的运行状态并不总是满足这些条件。长上下文推理、不同batch形态、前缀复用和缓存淘汰会让对象大小差异扩大；对象生命周期不同步又会让释放位置分散。最终，一个segment可能拥有较高总空闲字节数，但这些空间被拆成多个小洞，无法提供一个足够大的连续区域。
+
+\subsection{总空闲比例误判的形成机制}
+
+在allocator需要连续空间的前提下，“总空闲空间”和“最大连续空闲区域”是两个不同指标。前者衡量还有多少空间未被使用，后者衡量当前请求能否被一次性放入。碎片化场景下，两者可能明显背离。图\ref{fig:frag-shape}展示了典型情况：上方segment的绿色空闲块数量多、总量不低，但每个块都较小；下方segment的总空闲量略低，却拥有足够大的连续区域。
+
+\begin{figure}[htbp]
+  \centering
+  \resizebox{0.98\textwidth}{!}{%
   \begin{tikzpicture}[
     block/.style={draw=white,minimum height=0.55cm},
     used/.style={block,fill=moonblue!75},
@@ -208,53 +242,142 @@ Mooncake Store已有多种segment分配策略。默认\artifact{random}策略开
     \draw[{Latex[length=2.5mm]}-,thick,moonred] (6.2,-0.45) -- (10,-0.45);
     \node[label,moonred] at (8.1,-0.75) {可容纳10MiB请求};
   \end{tikzpicture}
+  }
   \caption{总空闲空间与最大连续空闲区域可能不一致}
+  \label{fig:frag-shape}
 \end{figure}
 
-最小复现数据如表\ref{tab:minimal-case}所示。\baseline{}会优先选择总空闲空间为16MiB的\artifact{fragmented}，但它的最大连续空闲区域只有8MiB，无法容纳10MiB请求；\strategy{}会选择总空闲空间为12MiB但连续区域为12MiB的\artifact{contiguous}。
+最小复现数据如表\ref{tab:minimal-case}所示。\baseline{}会优先选择总空闲空间为16MiB的\artifact{fragmented}，因为它的总空闲比例更高；但这个segment的最大连续空闲区域只有8MiB，无法容纳10MiB请求。相反，\artifact{contiguous}虽然总空闲空间只有12MiB，却可以直接完成本次分配。
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \caption{最小碎片化复现场景}
   \label{tab:minimal-case}
-  \begin{tabular}{lrrrr}
-    \toprule
-    segment & 总容量 & 总空闲 & 最大连续空闲 & 10MiB请求 \\
-    \midrule
-    \artifact{fragmented} & 32MiB & 16MiB & 8MiB & 不能容纳 \\
-    \artifact{contiguous} & 32MiB & 12MiB & 12MiB & 可以容纳 \\
-    \bottomrule
+  \begin{tabular}{|l|r|r|r|l|}
+    \hline
+    segment & 总容量 & 总空闲 & 最大连续空闲 & 10MiB请求 \\ \hline
+    \artifact{fragmented} & 32MiB & 16MiB & 8MiB & 不能容纳 \\ \hline
+    \artifact{contiguous} & 32MiB & 12MiB & 12MiB & 可以容纳 \\ \hline
   \end{tabular}
 \end{table}
 
-\section{碎片感知分配策略设计}
+\subsection{误判带来的性能影响}
 
-\subsection{设计原则}
+该问题的关键不在于最终一定失败，而在于首选候选质量下降。对多副本写入而言，一次错误排序可能导致一个副本先失败再尝试其他segment；如果多个副本同时处于碎片化状态，失败尝试会被放大。对推理系统而言，这类失败尝试会影响Store写入路径的稳定性，进而影响KVCache对象的后端落盘、复用和淘汰压力。
 
-\strategy{}遵循四个原则：
+\begin{table}[htbp]
+  \centering
+  \caption{总空闲比例误判的影响链路}
+  \label{tab:failure-chain}
+  \begin{tabularx}{\textwidth}{|B{2.7cm}|L{4.2cm}|Y|}
+    \hline
+    阶段 & 表现 & 对系统的影响 \\ \hline
+    候选排序 & 高总空闲但碎片化的segment排在前面 & 首选segment质量下降 \\ \hline
+    allocator申请 & 最大连续区域小于请求大小 & 出现一次无效分配尝试 \\ \hline
+    副本放置 & 当前副本继续尝试其他segment & 增加fallback和重试路径压力 \\ \hline
+    长时间运行 & 释放和再分配持续制造小空洞 & 问题随对象大小混合程度和运行时长加重 \\ \hline
+    推理场景 & KVCache对象写入路径不稳定 & 间接影响HiCache后端稳定性和尾延迟 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{本项目抽象出的优化需求}
+
+基于上述分析，本项目没有选择重写Store协议或引入复杂全局整理机制，而是把问题收敛为“在现有候选集合内提高排序质量”。这个抽象有明确边界：它不尝试移动已有对象，不做在线压缩，不改变副本协议，也不扩大候选扫描范围；它只利用allocator已经能提供或可近似得到的元数据，让策略在面对大对象请求时先识别“当前是否真的能放下”。因此，优化需求可以拆成四点：
 
 \begin{enumerate}
-  \item 保持默认行为不变。用户不显式指定新策略时，Mooncake Store仍使用原有默认策略。
-  \item 保持有界采样。策略只对采样候选评分，不进行全局segment扫描。
-  \item 优先满足当前请求。排序时先判断最大连续空闲区域是否能够容纳当前对象。
-  \item 保留原有语义。preferred segment、excluded segment和best-effort replica行为不能被破坏。
+  \item 在排序中显式加入最大连续空闲区域，而不是只看总空闲比例。
+  \item 在当前请求大小已知的情况下，优先选择\artifact{can\_fit=true}的候选。
+  \item 保持原有采样规模和fallback语义，避免策略本身成为新的扩展性瓶颈。
+  \item 保持配置可选和默认行为不变，便于灰度、回滚和上游接受。
 \end{enumerate}
 
-\subsection{评分模型}
+\section{碎片感知分配策略设计}
 
-对每个候选segment，策略读取或计算以下信息：
+\subsection{设计目标与非目标}
+
+\strategy{}的目标是提高碎片化场景下的首选segment可用性。它不是一个通用碎片整理器，也不是面向所有场景的强制默认策略。设计时刻意区分目标和非目标，是为了避免优化范围失控。
+
+\begin{table}[htbp]
+  \centering
+  \caption{\strategy{}的设计边界}
+  \label{tab:design-boundary}
+  \begin{tabularx}{\textwidth}{|B{3.0cm}|Y|}
+    \hline
+    类型 & 说明 \\ \hline
+    目标1 & 在混合大小对象场景中，优先选择最大连续空闲区域能够容纳当前请求的segment。 \\ \hline
+    目标2 & 沿用\baseline{}的有界候选思想，只改变候选排序信号，不扩大搜索范围。 \\ \hline
+    目标3 & 保留preferred segment、excluded segment、多副本去重和best-effort fallback语义。 \\ \hline
+    目标4 & 作为显式可选策略接入，不改变\artifact{random}默认行为。 \\ \hline
+    非目标1 & 不进行对象迁移、在线压缩或全局碎片整理。 \\ \hline
+    非目标2 & 不修改Mooncake Store客户端协议、metadata协议或后端存储格式。 \\ \hline
+    非目标3 & 不宣称替代真实RDMA集群和SGLang HiCache端到端压测。 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{候选元数据与评分字段}
+
+策略对每个采样候选segment计算五类字段。这里的关键是把“容量总量”和“空间形态”拆开：\artifact{free\_ratio}继续描述整体空闲程度，\artifact{largest\_free\_region}和\artifact{contiguity\_ratio}描述空闲区域是否集中，\artifact{can\_fit}则把当前请求大小纳入判断。
+
+\begin{table}[htbp]
+  \centering
+  \caption{候选segment评分字段}
+  \label{tab:score-fields}
+  \begin{tabularx}{\textwidth}{|B{3.8cm}|L{4.8cm}|Y|}
+    \hline
+    字段 & 计算方式 & 设计含义 \\ \hline
+    \artifact{total\_free} & 所有allocator可用空间之和 & 描述segment剩余空间总量 \\ \hline
+    \smallartifact{largest\_free\_region} & allocator报告的最大连续空闲区域最大值 & 描述当前对象是否存在可落入的连续块 \\ \hline
+    \artifact{free\_ratio} & \artifact{total\_free / total\_capacity} & 保留原有空间均衡信号 \\ \hline
+    \smallartifact{contiguity\_ratio} & \smallartifact{largest\_free\_region / total\_free} & 衡量空闲空间是否集中 \\ \hline
+    \artifact{can\_fit} & \smallartifact{largest\_free\_region >= request\_size} & 直接判断当前请求是否可被候选容纳 \\ \hline
+  \end{tabularx}
+\end{table}
+
+在实现中，若某类allocator无法提供精确的最大连续空闲区域，策略退化为使用可用空闲空间作为估计值。这样做的原因是兼容性优先：新策略不能要求所有allocator一次性改造完成。对能提供精确碎片信息的OffsetAllocator，策略会使用真实\artifact{getLargestFreeRegion()}；对无法提供精确值的场景，行为退化为接近总空闲视角，不会阻断已有部署。
+
+\subsection{排序规则}
+
+评分公式如下：
 
 \begin{align}
-  total\_free &= \sum(capacity-used) \\
-  largest\_free\_region &= \max(getLargestFreeRegion()) \\
-  free\_ratio &= \frac{total\_free}{total\_capacity} \\
-  contiguity\_ratio &= \frac{largest\_free\_region}{total\_free} \\
-  score &= 0.70\times contiguity\_ratio+0.30\times free\_ratio
+  \mathrm{free\_ratio} &= \frac{\mathrm{total\_free}}{\mathrm{total\_capacity}} \\
+  \mathrm{contiguity\_ratio} &= \frac{\mathrm{largest\_free\_region}}{\mathrm{total\_free}} \\
+  \mathrm{score} &= 0.70\times \mathrm{contiguity\_ratio}+0.30\times \mathrm{free\_ratio}
 \end{align}
 
-排序规则为：先比较\artifact{can\_fit}，再比较\artifact{score}，再比较\artifact{largest\_free\_region}，再比较\artifact{free\_ratio}，最后使用稳定tie-break保证排序结果可复现。
+其中0.70和0.30的权重体现了本策略的取舍：在碎片化优化场景下，空闲空间是否集中比总空闲比例更关键；但完全忽略总空闲比例也不合理，因为当多个候选都能容纳当前请求时，更高总空闲比例有助于维持segment之间的负载均衡。因此排序采用分层规则，而不是只用单一score：
 
-\begin{figure}[h]
+\begin{enumerate}
+  \item \artifact{can\_fit=true}的候选优先于\artifact{can\_fit=false}的候选。
+  \item 同为可容纳或同为不可容纳时，\artifact{score}高者优先。
+  \item \artifact{score}相近时，\artifact{largest\_free\_region}大者优先。
+  \item 仍无法区分时，\artifact{free\_ratio}高者优先。
+  \item 最后使用稳定tie-break，避免同一输入下排序非确定。
+\end{enumerate}
+
+\begin{lstlisting}[language=C++,caption={\strategy{}候选排序伪代码}]
+for candidate in sampled_segments:
+    total_free = sum_free_bytes(candidate)
+    total_capacity = sum_capacity(candidate)
+    largest = largest_contiguous_free_region(candidate)
+    free_ratio = total_free / total_capacity
+    contiguity = largest / total_free
+    can_fit = largest >= request_size
+    score = 0.70 * contiguity + 0.30 * free_ratio
+
+sort candidates by:
+    can_fit desc,
+    score desc,
+    largest desc,
+    free_ratio desc,
+    stable_index asc
+\end{lstlisting}
+
+\subsection{完整策略流程}
+
+图\ref{fig:strategy-flow}展示了\strategy{}的完整流程。这里需要强调两点。第一，preferred segment阶段不进入评分排序，而是沿用原有优先尝试语义；这是为了保证调用方显式指定的位置仍具有最高优先级。第二，评分排序只发生在采样候选上，且排序后仍逐个调用原有allocator尝试分配；如果候选不足以满足副本数，策略继续进入原有fallback路径。
+
+\begin{figure}[htbp]
   \centering
   \begin{tikzpicture}[
     flowstep/.style={draw=moonblue,very thick,rounded corners=2pt,align=center,minimum width=4.2cm,minimum height=0.82cm,fill=moongray},
@@ -280,34 +403,71 @@ Mooncake Store已有多种segment分配策略。默认\artifact{random}策略开
     \draw[arrow] (alloc) -- (fallback);
   \end{tikzpicture}
   \caption{\strategy{}策略流程}
+  \label{fig:strategy-flow}
 \end{figure}
 
-\section{实现路径}
+\subsection{复杂度与并发安全分析}
 
-当前PR补丁涉及9个文件，覆盖策略实现、配置接入、测试、benchmark、文档和CI辅助步骤。表\ref{tab:files}列出主要改动。
+\strategy{}没有引入新的全局数据结构，也没有在策略内部缓存跨请求状态。它只在每次分配时对采样候选读取allocator元数据，并对候选数组排序。若候选数量为\(k\)，则额外计算复杂度为\(O(k)\)，排序复杂度为\(O(k\log k)\)。由于\(k\)来自现有有界采样，而不是全量segment数\(N\)，策略开销不会随集群规模线性扫描所有segment。
 
-\begin{table}[h]
+并发方面，新策略不改变allocator的实际申请路径，也不绕过已有锁和状态检查。评分阶段读取的空闲信息只能作为排序依据，不能作为最终成功承诺；真正分配仍由allocator执行。因此，即使评分后其他线程改变了某个segment的空闲状态，最坏结果也只是该候选分配失败并继续尝试后续候选，不会破坏空间一致性。
+
+\begin{table}[htbp]
   \centering
-  \caption{关键代码改动}
-  \label{tab:files}
-  \begin{tabularx}{\textwidth}{p{4.9cm}X}
-    \toprule
-    文件 & 作用 \\
-    \midrule
-    \splitpath{mooncake-store/include}{allocation\_strategy.h} & 新增\artifact{FragmentationAwareAllocationStrategy}，实现候选评分和排序。 \\
-    \splitpath{mooncake-store/include}{types.h} & 新增\artifact{AllocationStrategyType::FRAGMENTATION\_AWARE}。 \\
-    \splitpath{mooncake-store/include}{master\_config.h} & 解析\artifact{allocation\_strategy=fragmentation\_aware}。 \\
-    \splitpath{mooncake-store/src}{master.cpp} & 更新启动参数帮助信息。 \\
-    \splitpath{mooncake-store/tests}{allocation\_strategy\_test.cpp} & 增加碎片化定向测试和preferred segment测试。 \\
-    \splitpath{mooncake-store/benchmarks}{allocation\_strategy\_bench.cpp} & 将新策略加入benchmark矩阵。 \\
-    \splitpath{docs/source/design}{mooncake-store.md} & 增加策略说明和使用建议。 \\
-    \splitpath{docs/source/deployment}{mooncake-store-deployment-guide.md} & 增加部署参数说明。 \\
-    \splitpath{.github/workflows}{ci.yml} & 在Go store binding集成测试前释放runner磁盘空间，避免无关失败。 \\
-    \bottomrule
+  \caption{策略复杂度与风险控制}
+  \label{tab:complexity}
+  \begin{tabularx}{\textwidth}{|B{3.0cm}|L{4.2cm}|Y|}
+    \hline
+    维度 & 处理方式 & 风险控制 \\ \hline
+    候选规模 & 沿用有界采样 & 避免全局扫描导致扩展性退化 \\ \hline
+    元数据读取 & 读取总空闲和最大连续区域 & 只用于排序，最终结果由allocator确认 \\ \hline
+    排序成本 & 对候选集合排序 & 候选数量小，本地仿真额外开销约17.93ns \\ \hline
+    并发变化 & 分配前后状态可能变化 & 保留原有失败重试和fallback路径 \\ \hline
+    兼容性 & 无精确碎片信息时退化处理 & 不强制改造所有allocator \\ \hline
   \end{tabularx}
 \end{table}
 
-\subsection{参数启用方式}
+\section{实现路径}
+
+\subsection{代码改动总览}
+
+当前PR补丁涉及9个文件，覆盖策略实现、类型系统、配置解析、启动参数、测试、benchmark、文档和CI辅助步骤。表\ref{tab:files}列出主要改动。
+
+\begin{table}[htbp]
+  \centering
+  \caption{关键代码改动}
+  \label{tab:files}
+  \begin{tabularx}{0.98\textwidth}{|L{4.9cm}|Y|}
+    \hline
+    文件 & 作用 \\ \hline
+    \splitpath{mooncake-store/include}{allocation\_strategy.h} & 新增\artifact{FragmentationAwareAllocationStrategy}，实现候选评分、排序、preferred处理和fallback衔接。 \\ \hline
+    \splitpath{mooncake-store/include}{types.h} & 新增\artifact{FRAGMENTATION\_AWARE}枚举值，让策略进入统一类型系统。 \\ \hline
+    \splitpath{mooncake-store/include}{master\_config.h} & 解析\artifact{allocation\_strategy=fragmentation\_aware}，非法值继续走原有报错路径。 \\ \hline
+    \splitpath{mooncake-store/src}{master.cpp} & 更新启动参数帮助信息，确保用户可以从命令行发现新策略。 \\ \hline
+    \splitpath{mooncake-store/tests}{allocation\_strategy\_test.cpp} & 增加碎片化定向测试、preferred segment测试和参数化覆盖。 \\ \hline
+    \splitpath{mooncake-store/benchmarks}{allocation\_strategy\_bench.cpp} & 将新策略加入分配策略benchmark矩阵，便于后续真实环境对比。 \\ \hline
+    \splitpath{docs/source/design}{mooncake-store.md} & 增加策略说明、适用场景和与其他策略的选择建议。 \\ \hline
+    \splitpath{docs/source/deployment}{mooncake-store-deployment-guide.md} & 增加部署参数说明，给出启用方式。 \\ \hline
+    \splitpath{.github/workflows}{ci.yml} & 在Go store binding集成测试前释放runner磁盘空间，避免无关环境失败。 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{策略类接入}
+
+核心实现位于\artifact{mooncake-store/include/allocation\_strategy.h}。新类\artifact{FragmentationAwareAllocationStrategy}继承现有随机策略基础能力，而不是重写所有分配流程。这样做有两个好处：第一，可以复用原有单segment分配、随机fallback和排除集合处理；第二，可以把新增逻辑限制在候选评分和排序层，降低对主路径的侵入。
+
+实现上，新策略先按原有语义处理preferred segment。如果preferred segment没有被排除、没有被当前请求重复使用，并且allocator能够完成申请，则直接返回该分配结果。只有在preferred阶段无法满足全部副本时，策略才进入候选采样和碎片感知排序。排序后的候选按顺序尝试分配，成功后加入used set，避免同一次多副本请求重复选择同一segment。
+
+\subsection{配置和工厂接入}
+
+为了让策略成为正式可选项，而不是测试代码中的孤立类，PR在类型、配置和工厂三处同时接入：
+
+\begin{enumerate}
+  \item 在\artifact{AllocationStrategyType}中新增\artifact{FRAGMENTATION\_AWARE}枚举值。
+  \item 在\artifact{master\_config.h}中识别字符串\artifact{fragmentation\_aware}。
+  \item 在策略工厂中为\artifact{FRAGMENTATION\_AWARE}返回新策略实例。
+  \item 在\artifact{master.cpp}和部署文档中更新\artifact{--allocation\_strategy}可选值。
+\end{enumerate}
 
 新策略通过Master启动参数显式启用：
 
@@ -315,11 +475,50 @@ Mooncake Store已有多种segment分配策略。默认\artifact{random}策略开
 mooncake_master --allocation_strategy=fragmentation_aware
 \end{lstlisting}
 
-由于默认策略保持为\artifact{random}，因此老用户不受影响。出现异常时只需要切回\artifact{random}或\baseline{}即可回滚策略行为。
+由于默认策略保持为\artifact{random}，现有部署不会因为合入该PR而改变行为。若线上灰度时发现新策略不适合某类负载，只需要切回\artifact{random}或\baseline{}即可回滚。
 
-\subsection{测试修复过程}
+\subsection{单元测试设计}
 
-PR创建后经历了三类CI问题并逐步修复。第一次失败来自代码格式检查，后续通过clang-format修复。第二次失败来自GitHub runner磁盘不足，Go store binding集成测试链接阶段出现空间不足，后续在对应job前增加磁盘清理。第三次失败来自碎片化测试构造不足，释放块与尾部空闲区域发生合并，导致断言不稳定，后续通过调整构造为5个8MiB块并释放内部块修复。最终PR头提交\artifact{0123fa1}通过全部必需检查。
+测试不是简单地检查“新策略能运行”，而是针对问题定义构造确定性场景。核心测试创建两个segment：\artifact{fragmented}和\artifact{contiguous}。前者总空闲空间更高，但最大连续区域小于请求大小；后者总空闲空间较低，但最大连续区域可以容纳请求。断言目标是：\strategy{}应该选择\artifact{contiguous}，而不是被更高总空闲比例误导。
+
+另一个关键测试是preferred segment语义。即使某个preferred segment在评分上不是最优，只要它没有被排除且可以满足请求，新策略仍应优先选择它。这一点对兼容性很重要，因为preferred segment通常来自上层调度或副本放置约束，不能被内部评分逻辑无条件覆盖。
+
+\begin{table}[htbp]
+  \centering
+  \caption{关键测试覆盖点}
+  \label{tab:test-coverage}
+  \begin{tabularx}{\textwidth}{|B{3.4cm}|L{4.6cm}|Y|}
+    \hline
+    测试点 & 构造方式 & 验证目的 \\ \hline
+    碎片化选择 & 构造高总空闲但最大连续区域不足的segment & 验证策略不会只按总空闲比例排序 \\ \hline
+    连续空间优先 & 构造总空闲略低但连续空间足够的segment & 验证\artifact{can\_fit}优先级生效 \\ \hline
+    preferred保留 & 传入可用preferred segment & 验证用户显式优先级不被评分覆盖 \\ \hline
+    参数化覆盖 & 将新策略加入既有策略测试矩阵 & 验证基础分配语义与已有策略一致 \\ \hline
+    benchmark接入 & 加入分配策略benchmark列表 & 为后续真实性能对比提供入口 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{测试修复与CI闭环}
+
+PR创建后经历了三类CI问题并逐步修复。第一次失败来自代码格式检查，后续通过格式化修复。第二次失败来自GitHub runner磁盘不足，Go store binding集成测试在链接阶段出现空间不足；这不是策略逻辑失败，但会阻断PR验证，因此在对应job前增加了磁盘清理步骤。第三次失败来自最初碎片化测试构造不够严格：释放块与尾部空闲区域发生合并，导致最大连续区域大于预期，断言不稳定。后续测试改为构造5个8MiB块并释放内部块，避免尾部合并影响碎片形态。
+
+\begin{table}[htbp]
+  \centering
+  \caption{CI问题定位与处理}
+  \label{tab:ci-fix}
+  \begin{tabularx}{\textwidth}{|B{3.0cm}|L{4.5cm}|Y|}
+    \hline
+    问题 & 原因 & 处理结果 \\ \hline
+    格式检查失败 & 新增C++代码未完全符合项目格式 & 运行格式化并重新提交 \\ \hline
+    runner磁盘不足 & GitHub Actions环境空间不足，影响Go store binding测试 & 增加CI磁盘清理步骤，避免无关失败 \\ \hline
+    碎片化测试失败 & 测试构造中空闲块与尾部空闲区域合并 & 调整为内部块释放构造，保证最大连续区域低于请求大小 \\ \hline
+    最终验证 & 上述问题修复后重新触发CI & PR头提交\artifact{0123fa1}通过26个检查，1个检查跳过 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\subsection{文档、benchmark与复现材料}
+
+除了代码本身，PR和比赛材料还补充了三类工程化内容。第一，在Mooncake官方文档中说明\strategy{}的适用场景和启用方式，避免评审只看到代码而不知道何时使用。第二，将新策略加入\artifact{allocation\_strategy\_bench.cpp}，让后续真实Store benchmark可以直接横向比较\artifact{random}、\baseline{}和\strategy{}。第三，在比赛材料仓库中提供独立复现实验和日志，用轻量仿真固定问题模型，证明改进来自“排序信号变化”，而不是扩大候选规模或修改实验口径。
 
 \section{验证与效果}
 
@@ -331,15 +530,13 @@ Mooncake上游draft PR状态如表\ref{tab:ci}所示。
   \centering
   \caption{PR CI状态}
   \label{tab:ci}
-  \begin{tabularx}{\textwidth}{>{\bfseries}p{3.2cm}X}
-    \toprule
-    项目 & 内容 \\
-    \midrule
-    PR链接 & \url{https://github.com/kvcache-ai/Mooncake/pull/2797} \\
-    头提交 & \artifact{0123fa1 Fix fragmentation-aware allocation test setup} \\
-    CI结果 & 26个检查成功，1个检查跳过 \\
-    结论 & 上游构建、格式检查、文档构建和相关测试已通过。 \\
-    \bottomrule
+  \begin{tabularx}{\textwidth}{|B{3.2cm}|Y|}
+    \hline
+    项目 & 内容 \\ \hline
+    PR链接 & \url{https://github.com/kvcache-ai/Mooncake/pull/2797} \\ \hline
+    头提交 & \artifact{0123fa1 Fix fragmentation-aware allocation test setup} \\ \hline
+    CI结果 & 26个检查成功，1个检查跳过 \\ \hline
+    结论 & 上游构建、格式检查、文档构建和相关测试已通过。 \\ \hline
   \end{tabularx}
 \end{table}
 
@@ -351,17 +548,15 @@ Mooncake上游draft PR状态如表\ref{tab:ci}所示。
   \centering
   \caption{专题对齐仿真结果}
   \label{tab:metrics}
-  \begin{tabular}{lrr}
-    \toprule
-    指标 & \baseline{} & \strategy{} \\
-    \midrule
-    大对象首选segment可直接容纳 & 0/6 & 6/6 \\
-    最终可容纳 & 6/6 & 6/6 \\
-    fallback尝试次数 & 11 & 0 \\
-    平均候选segment数量 & 5.00 & 5.00 \\
-    单次决策耗时 & 121.00ns & 138.93ns \\
-    新增决策开销 & 不适用 & 17.93ns \\
-    \bottomrule
+  \begin{tabular}{|l|r|r|}
+    \hline
+    指标 & \baseline{} & \strategy{} \\ \hline
+    大对象首选segment可直接容纳 & 0/6 & 6/6 \\ \hline
+    最终可容纳 & 6/6 & 6/6 \\ \hline
+    fallback尝试次数 & 11 & 0 \\ \hline
+    平均候选segment数量 & 5.00 & 5.00 \\ \hline
+    单次决策耗时 & 121.00ns & 138.93ns \\ \hline
+    新增决策开销 & 不适用 & 17.93ns \\ \hline
   \end{tabular}
 \end{table}
 
@@ -404,18 +599,16 @@ Mooncake上游draft PR状态如表\ref{tab:ci}所示。
 
 \section{与赛题要求的对应}
 
-\begin{longtable}{>{\bfseries}p{3.2cm}p{5.0cm}p{5.0cm}}
+\begin{longtable}{|B{3.2cm}|L{5.0cm}|L{5.0cm}|}
   \caption{赛题要求映射}\\
-  \toprule
-  赛题关注点 & 本项目实现 & 当前证据 \\
-  \midrule
-  Mooncake Store吞吐性能 & 减少碎片化导致的无效首选分配和fallback压力 & 专题仿真中fallback尝试次数从11降为0 \\
-  可扩展性 & 保持有界候选采样，不做全局扫描 & 平均候选segment数量保持5.00 \\
-  高可用语义 & 不改变副本best-effort路径，保留preferred/excluded语义 & 单元测试和策略设计说明 \\
-  SGLang HiCache+Store & 优化Store后端对象放置路径，为HiCache后端稳定性提供基础 & 方案定位和代码路径位于Mooncake Store \\
-  开源规范 & 以PR形式提交上游Mooncake，并保留patch和文档 & PR\#2797通过CI \\
-  可复现性 & 提供仿真源码、日志、技术报告和使用说明 & \artifact{repro/}、\artifact{logs/}、\artifact{EVALUATION.md} \\
-  \bottomrule
+  \hline
+  赛题关注点 & 本项目实现 & 当前证据 \\ \hline
+  Mooncake Store吞吐性能 & 减少碎片化导致的无效首选分配和fallback压力 & 专题仿真中fallback尝试次数从11降为0 \\ \hline
+  可扩展性 & 保持有界候选采样，不做全局扫描 & 平均候选segment数量保持5.00 \\ \hline
+  高可用语义 & 不改变副本best-effort路径，保留preferred/excluded语义 & 单元测试和策略设计说明 \\ \hline
+  SGLang HiCache+Store & 优化Store后端对象放置路径，为HiCache后端稳定性提供基础 & 方案定位和代码路径位于Mooncake Store \\ \hline
+  开源规范 & 以PR形式提交上游Mooncake，并保留patch和文档 & PR\#2797通过CI \\ \hline
+  可复现性 & 提供仿真源码、日志、技术报告和使用说明 & \artifact{repro/}、\artifact{logs/}、\artifact{EVALUATION.md} \\ \hline
 \end{longtable}
 
 \section{使用与复现}
@@ -472,25 +665,23 @@ g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligne
 \appendix
 \section{提交材料清单}
 
-\begin{longtable}{>{\ttfamily}p{6.2cm}p{7.2cm}}
-  \toprule
-  文件或目录 & 说明 \\
-  \midrule
-  README.md & 项目入口说明 \\
-  SUBMISSION.md & 平台提交说明 \\
-  DESIGN.md & 设计文档 \\
-  technical\_solution.md & 技术方案说明 \\
-  EVALUATION.md & 评估报告 \\
-  testing.md & 测试说明 \\
-  usage.md & 使用说明 \\
-  REVIEW\_GUIDE.md & 评审阅读指南 \\
-  \splitpath{mooncake\_fragmentation\_aware}{pr\_2797\_0123fa1.patch} & 当前PR补丁 \\
-  repro/ & 复现实验源码 \\
-  logs/ & 验证日志 \\
-  slides/ & 初赛展示PPT \\
-  report/ & 本技术报告源码和PDF \\
-  release/ & 提交压缩包和校验文件 \\
-  \bottomrule
+\begin{longtable}{|L{6.2cm}|L{7.2cm}|}
+  \hline
+  文件或目录 & 说明 \\ \hline
+  \artifact{README.md} & 项目入口说明 \\ \hline
+  \artifact{SUBMISSION.md} & 平台提交说明 \\ \hline
+  \artifact{DESIGN.md} & 设计文档 \\ \hline
+  \artifact{technical\_solution.md} & 技术方案说明 \\ \hline
+  \artifact{EVALUATION.md} & 评估报告 \\ \hline
+  \artifact{testing.md} & 测试说明 \\ \hline
+  \artifact{usage.md} & 使用说明 \\ \hline
+  \artifact{REVIEW\_GUIDE.md} & 评审阅读指南 \\ \hline
+  \splitpath{mooncake\_fragmentation\_aware}{pr\_2797\_0123fa1.patch} & 当前PR补丁 \\ \hline
+  \artifact{repro/} & 复现实验源码 \\ \hline
+  \artifact{logs/} & 验证日志 \\ \hline
+  \artifact{slides/} & 初赛展示PPT \\ \hline
+  \artifact{report/} & 本技术报告源码和PDF \\ \hline
+  \artifact{release/} & 提交压缩包和校验文件 \\ \hline
 \end{longtable}
 
 \section{参考链接}
