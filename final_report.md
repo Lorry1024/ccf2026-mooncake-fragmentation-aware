@@ -18,7 +18,21 @@ New topic-alignment evidence:
 - `topic_alignment_metrics_20260706.md`
 - `logs\topic_aligned_store_scalability_sim_20260706.log`
 
-The 2026-07-06 deterministic simulation reports primary fit success improving from 0/6 to 6/6 and fallback attempts reducing from 11 to 0 in a synthetic fragmented Store scenario. This supports Store allocation-path stability and scalability claims only. It does not claim a real SGLang HiCache benchmark, RDMA benchmark, official CI result, or full upstream Mooncake build.
+The 2026-07-06 deterministic simulation reports primary fit success improving from 0/6 to 6/6 and fallback attempts reducing from 11 to 0 in a synthetic fragmented Store scenario. This supports Store allocation-path stability and scalability claims only. It does not claim a real SGLang HiCache benchmark or RDMA benchmark.
+
+## PR CI Update - 2026-07-09
+
+Mooncake draft PR:
+
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
+
+Current PR head:
+
+`0123fa1 Fix fragmentation-aware allocation test setup`
+
+GitHub Actions result:
+
+`All checks have passed: 26 successful checks, 1 skipped check.`
 
 ## Project
 
@@ -69,11 +83,11 @@ Fallback remains the existing random best-effort path.
 
 Preferred PR patch:
 
-`mooncake_fragmentation_aware_pr_ready_20260703.patch`
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
 Baseline:
 
-`kvcache-ai/Mooncake@a325291c6baccc872ce137bd0c58d5791ac4e8c4`
+`kvcache-ai/Mooncake@c9896684fbd7b85ca207c643056a645ab6be3bad`
 
 Touched areas:
 
@@ -88,7 +102,7 @@ Touched areas:
 Passed:
 
 - `git diff --check`.
-- `git apply --check` for the PR-ready patch against a clean worktree.
+- GitHub Actions on PR head `0123fa1`: 26 successful checks, 1 skipped check.
 - Deterministic standalone fragmentation simulation.
 - Extended metrics simulation with 5 deterministic scenarios.
 
@@ -121,20 +135,23 @@ cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware
 Apply patch:
 
 ```bash
-git checkout a325291c6baccc872ce137bd0c58d5791ac4e8c4
-git apply --check mooncake_fragmentation_aware_pr_ready_20260703.patch
-git apply mooncake_fragmentation_aware_pr_ready_20260703.patch
+git checkout c9896684fbd7b85ca207c643056a645ab6be3bad
+git apply --check mooncake_fragmentation_aware_pr_2797_0123fa1.patch
+git apply mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
 Rollback:
 
 ```bash
-git apply -R mooncake_fragmentation_aware_pr_ready_20260703.patch
+git apply -R mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
 ## Remaining Risk
 
-The full upstream Mooncake unit-test binary was not rebuilt successfully in this local WSL Ubuntu 20.04 environment. The current upstream header `mooncake-store/include/mutex.h` uses `std::atomic_flag::test`, which is unavailable in the installed libstdc++ used by `g++-10` and `clang++-18`. A native Linux or CI-like environment with a newer standard library should run the full `allocation_strategy_test` and benchmark targets before opening the upstream PR.
+Full local Mooncake rebuild is still not claimed in this Windows/WSL workspace.
+The upstream draft PR has passed GitHub Actions, including the
+`allocation_strategy_test` target. Remaining risk is the absence of real RDMA
+and SGLang HiCache end-to-end benchmarking in this initial-round package.
 
 ## Submission Artifacts
 
@@ -147,6 +164,6 @@ The full upstream Mooncake unit-test binary was not rebuilt successfully in this
 - `official_verification_20260703.md`
 - `final_report.md`
 - `NIGHTLY_IMPROVEMENT_REPORT.md`
-- `mooncake_fragmentation_aware_pr_ready_20260703.patch`
+- `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 - `logs\`
 - `repro\`

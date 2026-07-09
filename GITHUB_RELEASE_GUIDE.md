@@ -9,9 +9,10 @@ final submission should also have a GitHub-visible source of truth.
 ## Recommended Publication Plan
 
 1. Push the contents of this package to `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`.
-3. Fork `kvcache-ai/Mooncake` on GitHub.
-4. Push a branch with the applied `fragmentation_aware` changes.
-5. Draft PR has been created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
+2. Fork `kvcache-ai/Mooncake` on GitHub.
+3. Push a branch with the applied `fragmentation_aware` changes.
+4. Draft PR has been created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
+5. PR CI has passed on `0123fa1`: 26 successful checks, 1 skipped check.
 6. Put both links in the GitLink platform submission.
 
 ## Local Mooncake Branch Preparation
@@ -24,13 +25,22 @@ Current draft PR:
 
 `https://github.com/kvcache-ai/Mooncake/pull/2797`
 
+Current PR head:
+
+`0123fa1 Fix fragmentation-aware allocation test setup`
+
+Current patch artifact:
+
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+
 From a clean Mooncake checkout:
 
 ```bash
 git checkout -b ccf-fragmentation-aware-allocation
-git apply /path/to/mooncake_fragmentation_aware_pr_ready_20260703.patch
+git apply /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 git diff --check
-git add docs/source/deployment/mooncake-store-deployment-guide.md \
+git add .github/workflows/ci.yml \
+        docs/source/deployment/mooncake-store-deployment-guide.md \
         docs/source/design/mooncake-store.md \
         mooncake-store/benchmarks/allocation_strategy_bench.cpp \
         mooncake-store/include/allocation_strategy.h \
@@ -65,7 +75,7 @@ before aggregate free ratio.
 ## Validation
 
 - git diff --check
-- git apply --check against current upstream
+- GitHub Actions on PR head 0123fa1: 26 successful checks, 1 skipped check
 - deterministic fragmentation simulation
 - extended ranking and boundary simulation
 - topic-aligned Store scalability simulation

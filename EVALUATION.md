@@ -27,7 +27,7 @@ Important environment boundary:
 
 Preferred patch:
 
-`mooncake_fragmentation_aware_pr_ready_20260703.patch`
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
 Recorded baseline:
 
@@ -42,6 +42,24 @@ The patch was also checked against current upstream `main` at:
 Result:
 
 `git apply --check` passed.
+
+## Upstream PR CI
+
+Mooncake draft PR:
+
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
+
+Current PR head:
+
+`0123fa1 Fix fragmentation-aware allocation test setup`
+
+GitHub Actions result:
+
+`All checks have passed: 26 successful checks, 1 skipped check.`
+
+This verifies the upstream build/test workflow for the submitted PR branch. It
+does not replace hardware-specific RDMA validation or a real SGLang HiCache
+benchmark.
 
 ## Deterministic Fragmentation Simulation
 
@@ -120,7 +138,7 @@ fragmented Store model while preserving bounded candidate scoring.
 
 | Requirement | Current status | Gap |
 | --- | --- | --- |
-| Functional test | Partial | Deterministic simulations pass; full upstream unit target not proven. |
+| Functional test | Passed in upstream PR CI | Deterministic simulations pass and GitHub Actions passed on PR head `0123fa1`. |
 | Stress test | Missing | No concurrent Store pressure test is currently included. |
 | Abnormal scenario validation | Partial | Fallback/no-fit cases are simulated; real failure injection is missing. |
 | Benchmark | Partial | Allocation-path simulation exists; put/get throughput and P50/P99 are missing. |
@@ -129,14 +147,11 @@ fragmented Store model while preserving bounded candidate scoring.
 
 ## Recommended Next Evaluation Work
 
-1. Run full Mooncake `allocation_strategy_test` in a native Linux or CI-like
-   environment with a newer C++20 standard library.
-2. Run `allocation_strategy_bench` for `random`, `free_ratio_first`, and
+1. Run `allocation_strategy_bench` for `random`, `free_ratio_first`, and
    `fragmentation_aware`.
-3. Add a lightweight Store put/get benchmark report with throughput, P50/P99,
+2. Add a lightweight Store put/get benchmark report with throughput, P50/P99,
    allocation failure count, fallback attempts, and memory utilization.
-4. Add at least one abnormal scenario: exhausted candidates, excluded segments,
+3. Add at least one abnormal scenario: exhausted candidates, excluded segments,
    or simulated segment churn under mixed-size allocation/free operations.
-5. If hardware and time permit, validate with SGLang HiCache using Mooncake
+4. If hardware and time permit, validate with SGLang HiCache using Mooncake
    Store as the backend.
-

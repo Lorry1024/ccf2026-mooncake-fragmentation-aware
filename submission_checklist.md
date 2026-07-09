@@ -35,15 +35,24 @@
 - [x] Final report and nightly improvement report added.
 - [x] New submission package generated without deleting old packages.
 - [x] New topic-aligned package generated without deleting old packages.
+- [x] Mooncake draft PR created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
+- [x] Current PR patch generated: `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`.
+- [x] GitHub Actions passed on PR head `0123fa1`: 26 successful checks, 1 skipped check.
+- [x] Review guide added: `REVIEW_GUIDE.md`.
 
 ## GitLink Submission Items
 
 - Source code or PR link.
 - Technical solution document or slides.
-- 5-minute demo video.
+- 5-minute demo video. Pending; record after final material freeze.
 - Test/benchmark result logs.
 - GitHub open-source repository link.
 
 ## Current Risk
 
-Full Mooncake `allocation_strategy_test` binary is still not proven passing in this local WSL Ubuntu 20.04 environment. On 2026-07-03, rebuilding the header-level light test against current upstream Mooncake reached upstream headers but failed on `std::atomic_flag::test` because the installed libstdc++ does not provide that C++20 API. The strongest current evidence is the PR-ready patch apply check, deterministic simulation, extended metrics simulation, and historical light-test pass log. A final upstream-quality validation should run in a native Linux or Mooncake CI-like environment with a newer libstdc++.
+Full local Mooncake rebuild is still not claimed in this Windows/WSL workspace.
+The strongest current evidence is the upstream draft PR with passing GitHub
+Actions on `0123fa1`, plus deterministic simulation, extended metrics
+simulation, topic-aligned simulation, and saved validation logs. Remaining
+initial-round risk is mainly the pending 5-minute demo video and the absence of
+real RDMA/SGLang HiCache benchmarking.

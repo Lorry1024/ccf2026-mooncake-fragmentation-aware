@@ -29,7 +29,9 @@ Key metrics:
 
 Interpretation: in the deterministic fragmented Store model, `fragmentation_aware` selects a contiguous-fit segment first for all tested large-object requests, while `free_ratio_first` repeatedly picks fragmented high-free segments first and needs fallback attempts. This supports the topic-2 narrative of Store throughput stability and scalability, but it is not a real Mooncake/SGLang HiCache benchmark.
 
-Boundary: full upstream Mooncake build, RDMA validation, official CI, and real SGLang HiCache benchmark are still not proven in this local environment.
+Boundary: upstream GitHub Actions passed on PR head `0123fa1` with 26
+successful checks and 1 skipped check. RDMA validation and real SGLang HiCache
+benchmark are still not claimed in this local environment.
 
 ## Unit Test Added
 
@@ -37,8 +39,11 @@ Boundary: full upstream Mooncake build, RDMA validation, official CI, and real S
 
 Scenario:
 
-- Segment `fragmented`: 32 MiB capacity, four 8 MiB blocks allocated, then two blocks freed. It has 16 MiB total free space but only 8 MiB largest contiguous free region.
-- Segment `contiguous`: 32 MiB capacity with 20 MiB allocated. It has about 12 MiB contiguous free space.
+- Segment `fragmented`: 40 MiB capacity, five 8 MiB blocks allocated, then two
+  interior blocks freed. It has 16 MiB total free space but only 8 MiB largest
+  contiguous free region.
+- Segment `contiguous`: 40 MiB capacity with 28 MiB allocated. It has about
+  12 MiB contiguous free space.
 - Request: 10 MiB.
 - Expected result: `fragmentation_aware` chooses `contiguous`.
 
@@ -168,12 +173,12 @@ Old patch applicability:
 - Log: `logs\git_apply_check_20260703_0001.log`
 - Cause: upstream changed nearby allocation strategy docs/config, `local_first` strategy wiring, and transport build files after the original patch was prepared.
 
-New PR-ready patch:
+Current PR-ready patch:
 
-- Patch: `mooncake_fragmentation_aware_pr_ready_20260703.patch`
-- Command: `git apply --check --verbose`
-- Result: passed.
-- Log: `logs\git_apply_check_pr_ready_20260703_0002.log`
+- Patch: `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+- PR: `https://github.com/kvcache-ai/Mooncake/pull/2797`
+- Result: GitHub Actions passed on PR head `0123fa1` with 26 successful checks
+  and 1 skipped check.
 
 Format check:
 

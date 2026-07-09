@@ -18,23 +18,29 @@ Mooncake draft PR:
 
 Commit:
 
-`fe353e5 Apply clang-format to allocation strategy changes`
+`0123fa1 Fix fragmentation-aware allocation test setup`
 
 Implementation commit:
 
 `f227c22 Add fragmentation-aware Store allocation strategy`
 
+Current PR patch artifact:
+
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+
 Status:
 
-- The `mooncake_fragmentation_aware_pr_ready_20260703.patch` changes are
-  applied as a real Git commit.
+- The historical `mooncake_fragmentation_aware_pr_ready_20260703.patch`
+  changes were applied as a real Git commit.
+- The current PR diff is exported as
+  `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`.
 - `git diff --check` passed before packaging.
 - The branch has been pushed to the `Lorry1024/Mooncake` fork.
 - Draft PR created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
-- `Check code format` passed on the updated PR head commit after the
-  clang-format follow-up commit.
-- Other GitHub Actions jobs may still be queued or running; verify the PR check
-  summary before marking the draft PR ready for review.
+- GitHub Actions passed on PR head `0123fa1`: 26 successful checks, 1 skipped
+  check.
+- The PR remains a draft; it still requires upstream maintainer review before
+  it can be merged.
 
 If the branch needs to be pushed again:
 
@@ -80,7 +86,7 @@ allocation attempts and fallback pressure.
 ## Validation
 
 - git diff --check
-- git apply --check against current upstream
+- GitHub Actions on PR head 0123fa1: 26 successful checks, 1 skipped check
 - deterministic fragmentation simulation
 - extended ranking and boundary simulation
 - topic-aligned Store scalability simulation
@@ -88,7 +94,7 @@ allocation attempts and fallback pressure.
 ## Boundaries
 
 The default allocation strategy remains unchanged. This PR does not redesign
-SGLang HiCache, RDMA transport, or Mooncake HA. Full upstream CI, RDMA
-validation, and real SGLang HiCache benchmark should still be run in a
-production-like environment before claiming end-to-end throughput gains.
+SGLang HiCache, RDMA transport, or Mooncake HA. RDMA validation and a real
+SGLang HiCache benchmark should still be run in a production-like environment
+before claiming end-to-end throughput gains.
 ```

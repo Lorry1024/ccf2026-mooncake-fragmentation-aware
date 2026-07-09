@@ -59,21 +59,21 @@ a325291c6baccc872ce137bd0c58d5791ac4e8c4
 use:
 
 ```text
-mooncake_fragmentation_aware_pr_ready_20260703.patch
+mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
 Apply:
 
 ```bash
-git checkout a325291c6baccc872ce137bd0c58d5791ac4e8c4
-git apply --check /path/to/mooncake_fragmentation_aware_pr_ready_20260703.patch
-git apply /path/to/mooncake_fragmentation_aware_pr_ready_20260703.patch
+git checkout c9896684fbd7b85ca207c643056a645ab6be3bad
+git apply --check /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
+git apply /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
 Rollback before committing:
 
 ```bash
-git apply -R /path/to/mooncake_fragmentation_aware_pr_ready_20260703.patch
+git apply -R /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
 Nightly local verification commands from this package:

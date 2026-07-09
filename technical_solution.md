@@ -75,9 +75,14 @@ These changes are build-scope support for reproducibility; they do not change th
 
 The current preferred patch is now:
 
-`mooncake_fragmentation_aware_pr_ready_20260703.patch`
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
-It was regenerated against upstream Mooncake `main` at commit `a325291c6baccc872ce137bd0c58d5791ac4e8c4`. The older `mooncake_fragmentation_aware.patch` is retained, but `git apply --check` shows it no longer applies cleanly to current `main` because upstream changed nearby allocation strategy docs/config and transport build files.
+It corresponds to Mooncake draft PR `https://github.com/kvcache-ai/Mooncake/pull/2797`
+at head commit `0123fa1`. The older `mooncake_fragmentation_aware.patch` and
+`mooncake_fragmentation_aware_pr_ready_20260703.patch` are retained for
+traceability, but the `0123fa1` patch is the current review artifact.
+
+Current PR CI status: 26 successful checks, 1 skipped check.
 
 ### Failure Mode
 

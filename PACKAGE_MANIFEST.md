@@ -10,6 +10,7 @@ Recommended package contents for the CCF initial-round upload:
 - `SUBMISSION.md`
 - `GITHUB_RELEASE_GUIDE.md`
 - `MOONCAKE_BRANCH_READY.md`
+- `REVIEW_GUIDE.md`
 - `technical_solution.md`
 - `testing.md`
 - `usage.md`
@@ -21,6 +22,7 @@ Recommended package contents for the CCF initial-round upload:
 ## Source and Review Artifacts
 
 - `mooncake_fragmentation_aware_pr_ready_20260703.patch`
+- `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 - `mooncake_fragmentation_aware.patch`
 - `repro/`
 - `tools/build_submission_deck.mjs`

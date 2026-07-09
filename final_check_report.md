@@ -33,7 +33,25 @@ New result:
 - Fallback attempts: 11 -> 0.
 - Average candidates scored: 5.00 for both strategies.
 
-Boundary: this is deterministic local evidence for Store allocation-path behavior. It is not a complete upstream Mooncake build result, not an RDMA result, not an official CI result, and not a real SGLang HiCache benchmark.
+Boundary: this is deterministic local evidence for Store allocation-path behavior. It is not an RDMA result and not a real SGLang HiCache benchmark.
+
+## PR CI Addendum - 2026-07-09
+
+Mooncake draft PR:
+
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
+
+Current PR head:
+
+`0123fa1 Fix fragmentation-aware allocation test setup`
+
+GitHub Actions result:
+
+`All checks have passed: 26 successful checks, 1 skipped check.`
+
+Current preferred patch:
+
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
 ## Nightly Addendum - 2026-07-03
 

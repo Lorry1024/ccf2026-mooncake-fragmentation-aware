@@ -9,7 +9,7 @@ Task: Mooncake KVCache storage design and performance optimization.
 This repository is a CCF Mooncake submission package, not a standalone fork of
 the full upstream Mooncake repository. The core source-code artifact is:
 
-`mooncake_fragmentation_aware_pr_ready_20260703.patch`
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
 Public GitHub repository:
 
@@ -48,9 +48,23 @@ This submission adds a new Mooncake Store allocation strategy named `fragmentati
 
 The feature is designed to reduce failed allocation attempts in long-running clusters where memory becomes fragmented. It keeps Mooncake's existing best-effort replica semantics and uses a bounded sampled candidate set to avoid full-cluster scans.
 
+## Current PR Status - 2026-07-09
+
+Mooncake draft PR:
+
+`https://github.com/kvcache-ai/Mooncake/pull/2797`
+
+Current PR head:
+
+`0123fa1 Fix fragmentation-aware allocation test setup`
+
+GitHub Actions status:
+
+`All checks have passed: 26 successful checks, 1 skipped check.`
+
 ## Nightly Update - 2026-07-03
 
-This package now includes a PR-ready patch regenerated against current upstream Mooncake:
+This package retains the 2026-07-03 PR-ready patch for traceability:
 
 `mooncake_fragmentation_aware_pr_ready_20260703.patch`
 
@@ -58,7 +72,10 @@ Baseline:
 
 `kvcache-ai/Mooncake@a325291c6baccc872ce137bd0c58d5791ac4e8c4`
 
-The earlier `mooncake_fragmentation_aware.patch` is retained for traceability, but the 2026-07-03 patch is the preferred review artifact because it passes `git apply --check` against the current upstream commit.
+The earlier `mooncake_fragmentation_aware.patch` is also retained for
+traceability. The current preferred review artifact is
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`, matching Mooncake draft
+PR `#2797` after GitHub Actions passed.
 
 Additional evidence added:
 
@@ -112,7 +129,7 @@ mooncake_master \
 
 Implementation patch is prepared at:
 
-`C:\CCFOpenSource\02_Mooncake_FragmentationAware\mooncake_fragmentation_aware_pr_ready_20260703.patch`
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
 Local verification results are recorded in `C:\CCFOpenSource\02_Mooncake_FragmentationAware\testing.md` and `C:\CCFOpenSource\02_Mooncake_FragmentationAware\logs`.
 

@@ -2,6 +2,8 @@
 
 Date: 2026-07-06
 
+Status addendum: 2026-07-09
+
 Scope: `C:\CCFOpenSource\02_Mooncake_FragmentationAware`
 
 ## Goal
@@ -10,7 +12,7 @@ Perform an official-topic alignment strengthening pass without redoing the proje
 
 The current submission is now explicitly positioned as:
 
-> 对齐官方赛题2: Mooncake Store fragmentation-aware allocation for Store scalability/performance stability.
+> Official topic 2 alignment: Mooncake Store fragmentation-aware allocation for Store scalability/performance stability.
 
 ## Official Topic Evidence
 
@@ -45,6 +47,7 @@ Scoring focus used in this alignment:
 | Provide quantitative metrics | Satisfied | `topic_alignment_metrics_20260706.md`. |
 | Generate new package without overwriting old packages | Satisfied | `Mooncake_FragmentationAware_topic_aligned_20260706_0001.zip`. |
 | State SGLang/CI/build boundaries honestly | Satisfied | README, testing notes, final report, and this report. |
+| Upstream PR CI | Satisfied | Mooncake PR `#2797`, head `0123fa1`, 26 successful checks and 1 skipped check. |
 
 ## Partially Satisfied Items
 
@@ -58,9 +61,8 @@ Scoring focus used in this alignment:
 
 | Item | Status |
 |---|---|
-| Full upstream Mooncake build success | Not claimed. Local WSL Ubuntu 20.04/libstdc++ environment remains a blocker. |
+| Local full Mooncake build success | Not claimed. Local Windows/WSL build is not the primary evidence path. |
 | RDMA validation | Not claimed. |
-| Official CI pass | Not claimed. |
 | Real SGLang HiCache benchmark | Not claimed. |
 | Production hardware performance result | Not claimed. |
 
@@ -149,7 +151,6 @@ Sidecar:
 ## Remaining Risks
 
 - The new evidence is deterministic local simulation evidence, not real SGLang HiCache + Mooncake Store benchmark evidence.
-- Full upstream Mooncake Store unit and benchmark binaries are still not proven passing locally.
+- Full upstream Mooncake Store unit and benchmark binaries are still not proven passing locally, but the upstream PR CI has passed on `0123fa1`.
 - RDMA and production hardware paths are not validated in this package.
-- Official CI has not been run.
 - High availability is only indirectly supported by preserving fallback and replica-related semantics; no new HA feature is implemented.

@@ -50,7 +50,7 @@ Show:
 Also show:
 
 ```bash
-git apply --check mooncake_fragmentation_aware_pr_ready_20260703.patch
+git apply --check mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
 Expected evidence:
@@ -75,7 +75,8 @@ Summarize:
 - Bounded sampling overhead.
 - Better allocation reliability under mixed-size KV cache churn, mapped to Mooncake Store throughput stability and scalability for official赛题2.
 - Code, test, documentation, and reproduction artifacts are prepared for review.
-- Honest boundary: this is not yet a real SGLang HiCache benchmark, not an RDMA benchmark, and not an official CI result.
+- Current PR CI status: 26 successful checks, 1 skipped check on `0123fa1`.
+- Honest boundary: this is not yet a real SGLang HiCache benchmark or an RDMA benchmark.
 
 ## Patch Readiness Add-on
 

@@ -70,7 +70,7 @@ the existing random best-effort path.
 
 Preferred review artifact:
 
-`mooncake_fragmentation_aware_pr_ready_20260703.patch`
+`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
 
 Touched upstream Mooncake areas:
 
@@ -99,6 +99,7 @@ Touched upstream Mooncake areas:
 - This patch does not redesign SGLang HiCache, RDMA transport, or Mooncake HA.
 - The current local evidence is strongest for allocation-path behavior, not
   end-to-end production QPS.
-- Full upstream Mooncake build, RDMA benchmark, official CI, and real SGLang
-  HiCache benchmark are not yet proven in this workspace.
-
+- Upstream GitHub Actions passed on PR head `0123fa1` with 26 successful checks
+  and 1 skipped check.
+- RDMA benchmark and real SGLang HiCache benchmark are not claimed in this
+  initial-round package.
