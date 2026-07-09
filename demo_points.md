@@ -1,24 +1,19 @@
-# Demo and Defense Points
+# 展示视频要点
 
-## 5-Minute Demo Structure
+## 必须讲清楚的三件事
 
-1. Competition task and selected Mooncake Store optimization direction.
-2. Problem: aggregate free space can hide fragmentation.
-3. Implementation: `fragmentation_aware` allocation strategy.
-4. Code walkthrough:
-   - enum/config/flag support.
-   - candidate scoring.
-   - deterministic fragmentation unit test.
-   - benchmark matrix integration.
-5. Test run and result logs.
-6. Why this improves Mooncake Store for mixed-size KV cache workloads.
+1. 我们选的是Mooncake赛题2，具体切入点是Mooncake Store分配策略。
+2. 问题是总空闲比例不能反映最大连续空闲区域，碎片化会导致大对象失败尝试。
+3. 新策略`fragmentation_aware`优先选择可直接容纳当前请求的segment，降低fallback压力。
 
-## Key Claims to Support
+## 建议展示顺序
 
-- The feature is opt-in and preserves existing default behavior.
-- Selection overhead is bounded by the same small candidate sample size as `free_ratio_first`.
-- The lightweight unit test and standalone simulation demonstrate a concrete failure mode that total-free-space ranking cannot distinguish.
-- Documentation makes the feature reproducible for users and reviewers.
-- The 2026-07-03 PR-ready patch applies cleanly to current Mooncake `main` at `a325291c6baccc872ce137bd0c58d5791ac4e8c4`.
-- The extended metrics simulation records request size, free MiB, largest MiB, free ratio, contiguity ratio, `fa_score`, old/new choices, and `can_fit` results.
-- The known local build limitation is explicit: current upstream headers require `std::atomic_flag::test`, which is unavailable in the installed Ubuntu 20.04 libstdc++.
+1. 打开GitHub材料仓库。
+2. 打开Mooncake PR#2797，展示CI通过。
+3. 打开技术报告PDF，展示架构图和结果表。
+4. 打开`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`，展示代码改动文件。
+5. 打开`logs/topic_aligned_store_scalability_sim_20260706.log`，展示0/6到6/6、11到0的数据。
+
+## 一句话总结
+
+本作品在不改变Mooncake默认行为的前提下，为Mooncake Store新增碎片感知分配策略，用最大连续空闲区域修正总空闲比例的误判，从而提升混合大小KVCache对象场景下的分配稳定性。

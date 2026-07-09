@@ -1,88 +1,44 @@
-# 5-Minute Demo Script
+# 5分钟展示视频讲稿
 
-## 0:00-0:30 Topic
+## 0:00-0:30 项目介绍
 
-This work is aligned to official Mooncake `track2_2026Mooncake` 赛题2: optimizing Mooncake Store throughput performance, high availability, scalability, and SGLang HiCache + Mooncake Store performance.
+大家好，我们的作品是“Mooncake Store碎片感知分配策略优化”，对应CCF2026开源创新大赛Mooncake赛题2。赛题2关注Mooncake Store吞吐性能、高可用、可扩展性以及SGLang HiCache+Mooncake Store性能。我们的切入点是Store分配路径：在混合大小KVCache对象场景下，优化Master选择segment的策略。
 
-The implemented feature is not a generic KVCache idea. It is `Mooncake Store fragmentation-aware allocation for Store scalability/performance stability`, exposed as a new Mooncake Store allocation strategy: `fragmentation_aware`.
+## 0:30-1:20 问题背景
 
-## 0:30-1:20 Problem
+Mooncake Store已有`random`和`free_ratio_first`等策略。`free_ratio_first`会优先选择总空闲比例高的segment，但总空闲空间并不等于当前请求一定能放进去。长时间运行后，KVCache对象反复分配和释放，会把空闲空间切成多个小块。一个segment可能有很多总空闲空间，但最大连续空闲区域不足，导致大对象分配失败。
 
-The existing `free_ratio_first` strategy ranks segments by aggregate free-space ratio. In mixed-size KV cache workloads, aggregate free space can be fragmented into small holes. A segment may report more total free bytes but still fail a large allocation because its largest contiguous free region is too small.
+我们的目标是让Master优先选择“能够直接容纳当前对象”的segment，而不是只看总空闲比例。
 
-## 1:20-2:30 Implementation
+## 1:20-2:20 方案设计
 
-Show the patch:
+我们新增了`fragmentation_aware`策略。它仍然保持Mooncake原有的有界候选采样，不做全局扫描。对每个候选segment计算总空闲空间、最大连续空闲区域、空闲比例、连续性比例和是否能容纳当前请求。
 
-- `AllocationStrategyType::FRAGMENTATION_AWARE`.
-- `FragmentationAwareAllocationStrategy`.
-- `--allocation_strategy=fragmentation_aware`.
-- Benchmark matrix integration.
-- Unit test `FragmentationAwarePrefersContiguousSpaceOverTotalFreeSpace`.
+排序规则是：能容纳当前请求的segment优先，然后比较碎片感知评分，再比较最大连续空闲区域和总空闲比例。如果候选不能满足所有副本，仍然回退到原有best-effort fallback路径。
 
-Explain the ranking:
+## 2:20-3:20 实现内容
 
-- Fit-capable segments first.
-- Score = `0.70 * contiguity_ratio + 0.30 * free_ratio`.
-- Same best-effort fallback behavior as existing strategies.
+代码改动主要包括：
 
-## 2:30-3:30 Reproduction
+- 新增`AllocationStrategyType::FRAGMENTATION_AWARE`。
+- 实现`FragmentationAwareAllocationStrategy`。
+- 支持`--allocation_strategy=fragmentation_aware`参数。
+- 增加碎片化场景单元测试。
+- 将新策略加入benchmark矩阵。
+- 更新Mooncake Store设计文档和部署文档。
 
-Run:
+我们还创建了上游Mooncake draft PR，PR编号是`kvcache-ai/Mooncake#2797`。
 
-```bash
-cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware
-./fragmentation_aware_sim_verify_20260703_0002
-./fragmentation_aware_metrics_verify_20260703_0002
-./topic_aligned_store_scalability_sim_20260706
-```
+## 3:20-4:20 实验结果
 
-Show:
+在确定性碎片化仿真中，`free_ratio_first`在6个大对象请求里首选segment可直接容纳的次数是0/6，而`fragmentation_aware`是6/6。fallback尝试次数从11降到0。两个策略的平均候选segment数量都是5.00，说明新策略没有扩大采样规模。单次决策耗时从121.00ns增加到138.93ns，额外开销约17.93ns。
 
-- The deterministic simulation confirms `fragmentation_aware` chooses the contiguous-fit candidate.
-- The extended metrics simulation validates 5 ranking and boundary scenarios.
-- The topic-aligned Store scalability simulation shows primary fit success 0/6 -> 6/6 and fallback attempts 11 -> 0 in a synthetic fragmented Store scenario, with the same average candidate count.
-- `fragmented`: 16 MiB total free, 8 MiB largest region, cannot fit 10 MiB.
-- `contiguous`: 12 MiB total free, 12 MiB largest region, can fit 10 MiB.
-- `free_ratio_first` chooses `fragmented`.
-- `fragmentation_aware` chooses `contiguous`.
+这个结果说明，新策略用很小的决策开销换来了更稳定的首选分配结果。
 
-Also show:
+## 4:20-5:00 当前状态和边界
 
-```bash
-git apply --check mooncake_fragmentation_aware_pr_2797_0123fa1.patch
-```
+当前PR头提交是`0123fa1`，GitHub Actions已经通过，结果是26个检查成功、1个检查跳过。我们的提交材料包括源码PR、patch、中文技术报告、PPT、复现实验源码和日志。
 
-Expected evidence:
+需要说明的是，当前阶段我们不宣称完成真实RDMA环境测试或SGLang HiCache端到端benchmark。这些是后续决赛阶段可以继续补充的工作。
 
-- `logs/git_apply_check_pr_ready_20260703_0002.log`
-- `quantitative_metrics_20260703.md`
-
-## 3:30-4:20 Documentation
-
-Show updated docs:
-
-- Design guide.
-- Deployment guide.
-- Quick Start.
-- Submission testing notes and logs.
-
-## 4:20-5:00 Value
-
-Summarize:
-
-- Opt-in feature, default behavior unchanged.
-- Bounded sampling overhead.
-- Better allocation reliability under mixed-size KV cache churn, mapped to Mooncake Store throughput stability and scalability for official赛题2.
-- Code, test, documentation, and reproduction artifacts are prepared for review.
-- Current PR CI status: 26 successful checks, 1 skipped check on `0123fa1`.
-- Honest boundary: this is not yet a real SGLang HiCache benchmark or an RDMA benchmark.
-
-## Patch Readiness Add-on
-
-If asked about PR readiness:
-
-- The old patch is kept but no longer applies to current upstream `main`.
-- The new patch was regenerated against `a325291c6baccc872ce137bd0c58d5791ac4e8c4`.
-- It passed `git apply --check` in a clean worktree.
-- Light-test rebuild is blocked by the local Ubuntu 20.04 libstdc++ lacking `std::atomic_flag::test`; this is an environment/toolchain limitation in current upstream headers, not a failure in the fragmentation-aware simulation.
+视频结束时展示仓库链接、PR链接和技术报告即可。

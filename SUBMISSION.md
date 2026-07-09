@@ -1,121 +1,58 @@
-# SUBMISSION: CCF Mooncake Initial-Round Package
+# 初赛提交说明
 
-## Competition Requirement Mapping
+## 提交模式建议
 
-Selected topic:
+建议采用“文件+链接”的提交方式。平台提交时同时提供公开GitHub仓库、Mooncake PR链接和最终压缩包。这样既满足比赛“成果必须托管至GitHub平台开源”的要求，也便于评委直接查看代码、文档、PR和CI状态。
 
-`赛题2：优化 Mooncake Store 吞吐性能、高可用功能和可扩展性，优化 SGLang HiCache + Mooncake Store 性能`
+## 参赛题目
 
-Submission modes accepted by the competition:
-
-- File plus link.
-- Compressed package only.
-- Pull request to the open-source project.
-
-Required artifacts:
-
-- Source code.
-- Solution document or PPT.
-- Demo video within 5 minutes.
-- Public GitHub hosting for all artifacts.
-
-## Recommended Submission Mode
-
-Use `file plus link`.
-
-Submit:
-
-- A public GitHub repository link for the submission package.
-- A Mooncake fork branch or PR link containing the applied code changes.
-- A compressed package containing the docs, patch, reproducible simulations,
-  logs, PPT, and video link note.
-
-Keep the patch as a fallback review artifact, not as the only source-code
-artifact.
-
-## Current Local Artifacts
-
-Public GitHub submission repository:
-
-`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
-
-Mooncake fork branch:
-
-`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
-
-Mooncake draft PR:
-
-`https://github.com/kvcache-ai/Mooncake/pull/2797`
-
-Current PR head:
-
-`0123fa1 Fix fragmentation-aware allocation test setup`
-
-PR CI status:
-
-`All checks have passed: 26 successful checks, 1 skipped check.`
-
-| Artifact | Path | Status |
-| --- | --- | --- |
-| Project README | `README.md` | Present |
-| Official design document | `DESIGN.md` | Present |
-| Official evaluation report | `EVALUATION.md` | Present |
-| Technical solution | `technical_solution.md` | Present |
-| Testing notes | `testing.md` | Present |
-| Usage guide | `usage.md` | Present |
-| Final report | `final_report.md` | Present |
-| Historical PR-ready patch | `mooncake_fragmentation_aware_pr_ready_20260703.patch` | Present |
-| Reproducible simulations | `repro/` | Present |
-| Validation logs | `logs/` | Present |
-| Demo script | `demo_script.md` | Present |
-| Demo talking points | `demo_points.md` | Present |
-| Current PR patch | `mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | Present |
-
-## Still Required Before Platform Submission
-
-| Item | Why it matters | Status |
-| --- | --- | --- |
-| Public GitHub repository | Competition rule says all artifacts must be hosted on GitHub. | Created and pushed. |
-| Mooncake fork branch or PR | Stronger open-source evidence than a standalone patch. | Draft PR created: `kvcache-ai/Mooncake#2797`; PR CI passed on `0123fa1`. |
-| 5-minute demo video | Required artifact in the competition guide. | Needs screen recording and public URL. |
-| PPT file | Required as solution material or defense support. | Present: `slides/Mooncake_FragmentationAware_初赛展示.pptx`. |
-| Final submission zip | Needed for platform upload. | Present under `release/`; regenerate after adding the final video URL or changing docs. |
-| SHA256 sidecar | Helps prove package integrity. | Present under `release/`; regenerate whenever the zip changes. |
-
-## Suggested GitHub Repository Structure
+本项目选择Mooncake赛题2：
 
 ```text
-README.md
-DESIGN.md
-EVALUATION.md
-SUBMISSION.md
-technical_solution.md
-testing.md
-usage.md
-final_report.md
-OFFICIAL_TOPIC_ALIGNMENT.md
-mooncake_fragmentation_aware_pr_ready_20260703.patch
-mooncake_fragmentation_aware_pr_2797_0123fa1.patch
-repro/
-logs/
-slides/
-release/
+优化Mooncake Store吞吐性能、高可用功能和可扩展性等，优化SGLang HiCache+Mooncake Store性能。
 ```
 
-## Suggested Platform Submission Text
+本项目的具体切入点是Mooncake Store分配策略优化。针对混合大小KVCache对象导致的segment内部碎片问题，新增`fragmentation_aware`策略，让Master优先选择拥有足够连续空闲区域的segment，从而降低失败尝试和fallback压力。
+
+## 提交链接
+
+| 类型 | 链接 |
+| --- | --- |
+| 比赛材料仓库 | `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware` |
+| Mooncake fork分支 | `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation` |
+| Mooncake draft PR | `https://github.com/kvcache-ai/Mooncake/pull/2797` |
+
+## 当前PR状态
+
+| 项目 | 状态 |
+| --- | --- |
+| PR编号 | `kvcache-ai/Mooncake#2797` |
+| PR头提交 | `0123fa1 Fix fragmentation-aware allocation test setup` |
+| GitHub Actions | 26个检查成功，1个检查跳过 |
+| PR状态 | Draft，等待后续正式评审 |
+
+## 必交材料对应关系
+
+| 比赛要求 | 本仓库对应材料 | 当前状态 |
+| --- | --- | --- |
+| 源代码 | Mooncake fork分支、PR#2797、`mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 已完成 |
+| 方案文档或PPT | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`、`slides/Mooncake_FragmentationAware_初赛展示.pptx` | 已完成 |
+| 5分钟内作品展示视频 | 待录制，录制后补充公开链接 | 未完成 |
+| 测试和benchmark说明 | `EVALUATION.md`、`testing.md`、`logs/`、`repro/` | 已完成 |
+| 公开GitHub托管 | GitHub材料仓库和Mooncake fork | 已完成 |
+
+## 建议平台提交文本
 
 ```text
-This work targets Mooncake topic 2, focusing on Mooncake Store allocation-path
-stability for mixed-size KVCache objects. It adds an opt-in
-fragmentation_aware allocation strategy that ranks sampled candidate segments
-by contiguous-fit capability before aggregate free ratio. The submission
-includes a PR-ready Mooncake patch, design and evaluation documents,
-reproducible deterministic simulations, validation logs, and demo materials.
+本作品面向CCF2026开源创新大赛Mooncake赛题2，围绕Mooncake Store在混合大小KVCache对象场景下的分配稳定性进行优化。项目新增可选的fragmentation_aware分配策略，在保持默认random策略不变的前提下，将最大连续空闲区域纳入segment排序，使Master优先选择能够直接容纳当前请求的segment，降低碎片化场景下的大对象失败尝试和fallback压力。
 
-Current PR status: the upstream draft PR has passed GitHub Actions on commit
-0123fa1 with 26 successful checks and 1 skipped check.
-
-Boundary: current evidence is allocation-path simulation, patch applicability,
-and upstream PR CI. RDMA validation and real SGLang HiCache benchmark are not
-claimed in this initial-round package.
+源代码已提交至公开GitHub仓库，并以Mooncake draft PR#2797形式提交给上游项目。当前PR头提交0123fa1已通过GitHub Actions，结果为26个检查成功、1个检查跳过。提交包包含技术报告、设计文档、测试说明、复现实验源码、验证日志、patch文件和展示PPT。当前阶段不宣称完成真实RDMA集群或SGLang HiCache端到端压测，相关内容作为后续工作规划。
 ```
+
+## 提交前最后检查
+
+- 确认视频录制完成并上传到公开可访问位置。
+- 将视频链接补入本文件和`demo_script.md`。
+- 重新生成`release/`下的最终压缩包和SHA256文件。
+- 确认GitHub仓库为公开状态。
+- 确认Mooncake PR链接可访问，CI状态仍为通过。

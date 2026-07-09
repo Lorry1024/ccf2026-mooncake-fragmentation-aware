@@ -1,105 +1,79 @@
-# DESIGN: Mooncake Store Fragmentation-Aware Allocation
+# 设计文档：Mooncake Store碎片感知分配策略
 
-## Selected Track
+## 背景
 
-This work targets Mooncake CCF topic 2:
+Mooncake Store负责为KVCache对象提供分布式存储能力。现有分配策略中，`random`追求简单和低开销，`free_ratio_first`通过总空闲比例改善segment之间的空间利用均衡。但是，在长时间运行的推理服务中，KVCache对象大小并不固定，分配和释放会让同一个segment内部出现许多小空洞。
 
-`Mooncake Store performance, high availability, scalability, and SGLang HiCache + Mooncake Store optimization`.
+当请求对象较大时，仅观察总空闲空间会产生误判：某个segment总空闲空间很多，但最大连续空闲区域不足，实际无法容纳当前对象；另一个segment总空闲空间稍少，但拥有足够大的连续空闲区域，反而能够一次分配成功。
 
-The concrete contribution is:
+## 问题定义
 
-`Mooncake Store fragmentation-aware allocation for mixed-size KVCache objects`.
+| segment | 总空闲空间 | 最大连续空闲区域 | 10MiB请求能否放入 |
+| --- | ---: | ---: | --- |
+| fragmented | 16MiB | 8MiB | 不能 |
+| contiguous | 12MiB | 12MiB | 可以 |
 
-It maps most directly to the official Store evolution task:
+`free_ratio_first`会选择总空闲比例更高的`fragmented`，但该选择会失败。`fragmentation_aware`希望优先选择`contiguous`，因为它能够直接满足当前请求。
 
-`OffsetAllocator optimization: reduce memory fragmentation for KVCache objects with multiple size classes`.
+## 设计目标
 
-## Problem
+1. 不改变默认策略，保持现有部署兼容。
+2. 不引入全局扫描，保留现有有界采样形态。
+3. 优先选择最大连续空闲区域能够满足请求的segment。
+4. 保留preferred segment、excluded segment和best-effort replica语义。
+5. 将策略作为独立选项接入，便于灰度、回滚和对比。
 
-Mooncake Store already supports allocation strategies such as `random` and
-`free_ratio_first`. `free_ratio_first` ranks candidate segments by aggregate
-free-space ratio, which is useful for utilization balancing.
+## 新策略
 
-For long-running KVCache workloads, object sizes vary and allocation/free churn
-can split free bytes into small holes. A segment can therefore have a high total
-free ratio while still failing a large allocation because its largest contiguous
-free region is too small.
-
-That failure mode creates avoidable allocation attempts and fallback pressure on
-the Store allocation path.
-
-## Design Goals
-
-- Preserve the existing default behavior unless users opt in.
-- Keep the same bounded candidate-sampling shape as `free_ratio_first`.
-- Prefer segments that can fit the current object in a contiguous free region.
-- Preserve preferred segment, excluded segment, and best-effort replica behavior.
-- Avoid introducing new heavyweight dependencies or cross-module rewrites.
-
-## Proposed Strategy
-
-The new strategy is exposed as:
+新策略通过如下参数启用：
 
 ```bash
 mooncake_master --allocation_strategy=fragmentation_aware
 ```
 
-For each sampled candidate segment, the strategy computes:
+对每个候选segment计算以下信息：
 
 ```text
-total_free = sum(capacity - used)
-largest_free_region = max(allocator.getLargestFreeRegion())
-free_ratio = total_free / total_capacity
-contiguity_ratio = largest_free_region / total_free
-can_fit = largest_free_region >= request_size
-score = 0.70 * contiguity_ratio + 0.30 * free_ratio
+total_free=sum(capacity-used)
+largest_free_region=max(allocator.getLargestFreeRegion())
+free_ratio=total_free/total_capacity
+contiguity_ratio=largest_free_region/total_free
+can_fit=largest_free_region>=request_size
+score=0.70*contiguity_ratio+0.30*free_ratio
 ```
 
-Candidates are ranked by:
+排序规则为：
 
-1. `can_fit` first.
-2. Higher fragmentation-aware score.
-3. Larger contiguous free region.
-4. Higher aggregate free ratio.
-5. Stable candidate index tie-break.
+1. `can_fit=true`的候选优先。
+2. `score`更高的候选优先。
+3. `largest_free_region`更大的候选优先。
+4. `free_ratio`更高的候选优先。
+5. 保留稳定tie-break，避免非确定性排序。
 
-If the ranked candidates cannot satisfy all replicas, the strategy falls back to
-the existing random best-effort path.
+如果排序后的候选segment仍无法满足所有副本，新策略回退到原有随机best-effort路径。
 
-## Code Changes
+## 代码改动范围
 
-Preferred review artifact:
-
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
-
-Touched upstream Mooncake areas:
-
-| Upstream file | Purpose |
+| 文件 | 改动 |
 | --- | --- |
-| `mooncake-store/include/allocation_strategy.h` | Adds `FragmentationAwareAllocationStrategy` and candidate scoring. |
-| `mooncake-store/include/types.h` | Adds `AllocationStrategyType::FRAGMENTATION_AWARE`. |
-| `mooncake-store/include/master_config.h` | Parses `allocation_strategy=fragmentation_aware`. |
-| `mooncake-store/src/master.cpp` | Documents the new CLI flag value. |
-| `mooncake-store/tests/allocation_strategy_test.cpp` | Adds deterministic fragmentation and preferred-segment tests. |
-| `mooncake-store/benchmarks/allocation_strategy_bench.cpp` | Adds the new strategy to benchmark matrices. |
-| `docs/source/design/mooncake-store.md` | Documents the selection guidance and algorithm. |
-| `docs/source/deployment/mooncake-store-deployment-guide.md` | Documents deployment usage. |
+| `mooncake-store/include/allocation_strategy.h` | 新增`FragmentationAwareAllocationStrategy`和候选评分逻辑 |
+| `mooncake-store/include/types.h` | 新增`AllocationStrategyType::FRAGMENTATION_AWARE` |
+| `mooncake-store/include/master_config.h` | 支持解析`fragmentation_aware`参数 |
+| `mooncake-store/src/master.cpp` | 更新`--allocation_strategy`帮助信息 |
+| `mooncake-store/tests/allocation_strategy_test.cpp` | 增加碎片化选择和preferred segment测试 |
+| `mooncake-store/benchmarks/allocation_strategy_bench.cpp` | 将新策略加入benchmark矩阵 |
+| `docs/source/design/mooncake-store.md` | 补充策略说明和适用场景 |
+| `docs/source/deployment/mooncake-store-deployment-guide.md` | 补充部署参数说明 |
+| `.github/workflows/ci.yml` | 为Go store binding测试前置磁盘清理，避免runner磁盘不足导致无关失败 |
 
-## Compatibility
+## 兼容性
 
-- The default strategy remains `random`.
-- The new strategy is opt-in through `--allocation_strategy=fragmentation_aware`.
-- Existing preferred and excluded segment semantics are preserved.
-- Existing best-effort replica semantics are preserved.
-- Allocators without precise largest-free-region metadata degrade to an
-  aggregate-free-space interpretation.
+- 默认策略仍为`random`。
+- 用户必须显式指定`--allocation_strategy=fragmentation_aware`才会启用新策略。
+- 已有客户端接口、存储协议和metadata路径不变。
+- 对不能提供精确最大连续空闲区域的allocator，策略退化为基于可用空闲空间的保守处理。
+- 当没有候选segment能够满足请求时，新策略不会制造容量，仍遵循原有fallback行为。
 
-## Known Boundaries
+## 预期收益
 
-- This patch does not redesign SGLang HiCache, RDMA transport, or Mooncake HA.
-- The current local evidence is strongest for allocation-path behavior, not
-  end-to-end production QPS.
-- Upstream GitHub Actions passed on PR head `0123fa1` with 26 successful checks
-  and 1 skipped check.
-- RDMA benchmark and real SGLang HiCache benchmark are not claimed in this
-  initial-round package.
+该策略不会直接提升所有场景下的裸分配吞吐，但能减少碎片化场景下的无效首选分配尝试。在长时间运行、对象大小混合、segment内部空闲区域被切碎的KVCache Store中，这种减少失败尝试的能力有助于稳定分配路径延迟，并降低fallback、重试或后续淘汰路径压力。

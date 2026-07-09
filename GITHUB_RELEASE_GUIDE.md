@@ -1,101 +1,34 @@
-# GITHUB RELEASE GUIDE
+# GitHub发布说明
 
-## Why This Is Needed
+## 目标
 
-The competition guide requires all results to be hosted publicly on GitHub.
-The current GitLink repository and local patch package are useful, but the
-final submission should also have a GitHub-visible source of truth.
+比赛要求所有成果托管到GitHub平台开源。因此，本仓库作为公开材料仓库，需要包含源码入口、PR链接、文档、报告、PPT、复现实验和提交压缩包。
 
-## Recommended Publication Plan
+## 推荐仓库设置
 
-1. Push the contents of this package to `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`.
-2. Fork `kvcache-ai/Mooncake` on GitHub.
-3. Push a branch with the applied `fragmentation_aware` changes.
-4. Draft PR has been created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
-5. PR CI has passed on `0123fa1`: 26 successful checks, 1 skipped check.
-6. Put both links in the GitLink platform submission.
+- 仓库名称：`ccf2026-mooncake-fragmentation-aware`
+- 可见性：Public
+- 默认分支：`main`
+- 描述：`CCF2026 Mooncake Store fragmentation-aware allocation optimization`
 
-## Local Mooncake Branch Preparation
+## 发布前检查
 
-Current pushed fork branch:
+1. 确认`README.md`为中文入口文档。
+2. 确认`SUBMISSION.md`中的链接正确。
+3. 确认`report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`可打开。
+4. 确认`slides/Mooncake_FragmentationAware_初赛展示.pptx`存在。
+5. 确认`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`存在。
+6. 确认`release/`中的压缩包和SHA256已更新。
+7. 视频录制完成后，补充视频链接并重新打包。
 
-`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
-
-Current draft PR:
-
-`https://github.com/kvcache-ai/Mooncake/pull/2797`
-
-Current PR head:
-
-`0123fa1 Fix fragmentation-aware allocation test setup`
-
-Current patch artifact:
-
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
-
-From a clean Mooncake checkout:
-
-```bash
-git checkout -b ccf-fragmentation-aware-allocation
-git apply /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
-git diff --check
-git add .github/workflows/ci.yml \
-        docs/source/deployment/mooncake-store-deployment-guide.md \
-        docs/source/design/mooncake-store.md \
-        mooncake-store/benchmarks/allocation_strategy_bench.cpp \
-        mooncake-store/include/allocation_strategy.h \
-        mooncake-store/include/master_config.h \
-        mooncake-store/include/types.h \
-        mooncake-store/src/master.cpp \
-        mooncake-store/tests/allocation_strategy_test.cpp
-git commit -m "Add fragmentation-aware Store allocation strategy"
-```
-
-Suggested branch name:
-
-`ccf-fragmentation-aware-allocation`
-
-Suggested PR title:
-
-`Add fragmentation-aware allocation strategy for Mooncake Store`
-
-## Suggested PR Description
+## 建议Release说明
 
 ```text
-## Summary
+CCF2026 Mooncake赛题2初赛提交材料。
 
-This PR adds an opt-in Mooncake Store allocation strategy named
-fragmentation_aware. It is designed for mixed-size KVCache workloads where
-aggregate free ratio can be misleading under allocator fragmentation.
+本作品实现Mooncake Store碎片感知分配策略fragmentation_aware，针对混合大小KVCache对象造成的segment内部碎片问题，在分配策略层引入最大连续空闲区域信号，降低碎片化场景下的大对象失败尝试和fallback压力。
 
-The strategy preserves preferred/excluded segment semantics and best-effort
-replica behavior, while ranking sampled candidates by contiguous-fit capability
-before aggregate free ratio.
-
-## Validation
-
-- git diff --check
-- GitHub Actions on PR head 0123fa1: 26 successful checks, 1 skipped check
-- deterministic fragmentation simulation
-- extended ranking and boundary simulation
-- topic-aligned Store scalability simulation
-
-## Boundaries
-
-This PR does not change the default allocation strategy, redesign SGLang
-HiCache, or introduce a new HA protocol. Full RDMA and SGLang HiCache benchmark
-validation should be run in a production-like environment before claiming
-end-to-end throughput gains.
+Mooncake PR：https://github.com/kvcache-ai/Mooncake/pull/2797
+当前PR头提交：0123fa1
+CI状态：26个检查成功，1个检查跳过
 ```
-
-## GitHub Submission Package
-
-After pushing the submission repository, create a release or tag:
-
-```bash
-git tag ccf2026-mooncake-initial
-git push origin ccf2026-mooncake-initial
-```
-
-Attach or link the final zip package and SHA256 file in the GitHub release if
-desired.

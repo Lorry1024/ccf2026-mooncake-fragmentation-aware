@@ -1,20 +1,14 @@
-# Usage Guide
+# 使用说明
 
-## Official Topic-2 Usage Positioning
+## 启用新策略
 
-Use this package as a Mooncake Store allocation-strategy patch for official赛题2 alignment:
-
-`Mooncake Store fragmentation-aware allocation for Store scalability/performance stability`
-
-The strategy is relevant when SGLang HiCache or another KVCache frontend uses Mooncake Store as the storage backend and the Store sees mixed-size KVCache objects over a long-running process lifetime. It is not a standalone SGLang change and no real SGLang HiCache benchmark is included.
-
-## Enable the Strategy
+在Mooncake master启动时指定：
 
 ```bash
 mooncake_master --allocation_strategy=fragmentation_aware
 ```
 
-With HTTP metadata enabled:
+如果同时启用HTTP metadata server：
 
 ```bash
 mooncake_master \
@@ -23,71 +17,61 @@ mooncake_master \
   --http_metadata_server_port=8080
 ```
 
-## When to Use
+## 适用场景
 
-Use `fragmentation_aware` when:
+建议在以下场景启用：
 
-- workload object sizes vary significantly.
-- the cluster runs long enough for free space to become fragmented.
-- large KV pages fail even when aggregate free bytes are still available.
+- KVCache对象大小差异较大。
+- Store运行时间较长，segment内部出现明显碎片。
+- 大对象分配经常失败，但总空闲空间看起来仍然充足。
+- 希望降低fallback和重试路径压力。
 
-Use `free_ratio_first` when the primary goal is utilization balance and fragmentation is not a concern.
+不建议在以下场景盲目启用：
 
-Use `random` when the cluster is stable and the highest raw allocation throughput is preferred.
+- 所有对象大小高度一致。
+- 更关注极限裸分配吞吐，而不是碎片化下的稳定性。
+- 尚未完成生产灰度和监控。
 
-## Local Verification Commands
+## 应用补丁
 
-```bash
-cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware
-./fragmentation_aware_sim_verify_20260703_0002
-./fragmentation_aware_metrics_verify_20260703_0002
-```
-
-Expected logs:
-
-- `C:\CCFOpenSource\02_Mooncake_FragmentationAware\logs\fragmentation_aware_sim_verify_20260703_0002.log`
-- `C:\CCFOpenSource\02_Mooncake_FragmentationAware\logs\fragmentation_aware_metrics_verify_20260703_0002.log`
-
-## PR-Ready Patch Usage
-
-For current upstream Mooncake `main` at:
-
-```text
-a325291c6baccc872ce137bd0c58d5791ac4e8c4
-```
-
-use:
-
-```text
-mooncake_fragmentation_aware_pr_2797_0123fa1.patch
-```
-
-Apply:
+在干净的Mooncake工作区中：
 
 ```bash
-git checkout c9896684fbd7b85ca207c643056a645ab6be3bad
 git apply --check /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 git apply /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
-Rollback before committing:
+回滚：
 
 ```bash
 git apply -R /path/to/mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
-Nightly local verification commands from this package:
+## 复现实验
 
 ```bash
-cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware
-./fragmentation_aware_sim_verify_20260703_0002
-./fragmentation_aware_metrics_verify_20260703_0002
-./topic_aligned_store_scalability_sim_20260706
+g++ -std=c++17 -O2 repro/fragmentation_aware_sim.cpp -o fragmentation_aware_sim
+./fragmentation_aware_sim
+
+g++ -std=c++17 -O2 repro/fragmentation_aware_metrics.cpp -o fragmentation_aware_metrics
+./fragmentation_aware_metrics
+
+g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligned_store_scalability_sim
+./topic_aligned_store_scalability_sim
 ```
 
-Expected logs:
+对应日志位于：
 
-- `logs\fragmentation_aware_sim_verify_20260703_0002.log`
-- `logs\fragmentation_aware_metrics_verify_20260703_0002.log`
-- `logs\topic_aligned_store_scalability_sim_20260706.log`
-- `logs\git_apply_check_pr_ready_20260703_0002.log`
+```text
+logs/fragmentation_aware_sim_verify_20260703_0002.log
+logs/fragmentation_aware_metrics_verify_20260703_0002.log
+logs/topic_aligned_store_scalability_sim_20260706.log
+```
+
+## 生产灰度建议
+
+1. 先在测试集群启用`fragmentation_aware`。
+2. 对比`random`、`free_ratio_first`和`fragmentation_aware`。
+3. 观察分配失败次数、fallback次数、P50/P99延迟、segment碎片率和内存利用率。
+4. 如果指标稳定，再逐步扩大范围。
+5. 出现异常时将参数切回`random`或`free_ratio_first`即可完成回滚。

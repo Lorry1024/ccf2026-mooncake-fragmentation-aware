@@ -1,100 +1,30 @@
-# Mooncake Branch Ready
+# Mooncake分支状态
 
-Local prepared upstream clone:
+## 分支信息
 
-`E:\26ccf\Mooncake-current-check`
+| 项目 | 内容 |
+| --- | --- |
+| fork仓库 | `https://github.com/Lorry1024/Mooncake.git` |
+| 工作分支 | `ccf-fragmentation-aware-allocation` |
+| 上游PR | `https://github.com/kvcache-ai/Mooncake/pull/2797` |
+| 当前头提交 | `0123fa1 Fix fragmentation-aware allocation test setup` |
 
-Branch:
+## 当前状态
 
-`ccf-fragmentation-aware-allocation`
+- 分支已经推送到GitHub fork。
+- 上游draft PR已经创建。
+- GitHub Actions已经通过，结果为26个检查成功、1个检查跳过。
+- 当前PR仍为Draft状态，后续如果希望进入正式维护者评审，可以点击`Ready for review`。
 
-Fork branch:
+## 提交历史
 
-`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
+| 提交 | 说明 |
+| --- | --- |
+| `f227c22` | 新增碎片感知分配策略 |
+| `fe353e5` | 应用clang-format修复格式检查 |
+| `1fd621e` | 在CI中释放runner磁盘空间 |
+| `0123fa1` | 修复碎片化单元测试构造 |
 
-Mooncake draft PR:
+## 比赛用途
 
-`https://github.com/kvcache-ai/Mooncake/pull/2797`
-
-Commit:
-
-`0123fa1 Fix fragmentation-aware allocation test setup`
-
-Implementation commit:
-
-`f227c22 Add fragmentation-aware Store allocation strategy`
-
-Current PR patch artifact:
-
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
-
-Status:
-
-- The historical `mooncake_fragmentation_aware_pr_ready_20260703.patch`
-  changes were applied as a real Git commit.
-- The current PR diff is exported as
-  `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`.
-- `git diff --check` passed before packaging.
-- The branch has been pushed to the `Lorry1024/Mooncake` fork.
-- Draft PR created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
-- GitHub Actions passed on PR head `0123fa1`: 26 successful checks, 1 skipped
-  check.
-- The PR remains a draft; it still requires upstream maintainer review before
-  it can be merged.
-
-If the branch needs to be pushed again:
-
-```bash
-git push lorry ccf-fragmentation-aware-allocation
-```
-
-Draft PR:
-
-`https://github.com/kvcache-ai/Mooncake/pull/2797`
-
-Primary submission package:
-
-`release/CCF2026_Mooncake_FragmentationAware_initial_20260707.zip`
-
-Suggested PR description:
-
-```text
-## Summary
-
-This PR adds an opt-in Mooncake Store allocation strategy named
-fragmentation_aware for mixed-size KVCache workloads. The strategy keeps the
-bounded candidate sampling shape of free_ratio_first, but ranks sampled
-segments by whether their largest contiguous free region can satisfy the
-current request before considering aggregate free ratio.
-
-## Why
-
-In long-running Store pools, aggregate free space can be split into fragmented
-holes. A segment may report a higher total free ratio while failing a large
-allocation because no contiguous region is large enough. This creates avoidable
-allocation attempts and fallback pressure.
-
-## Changes
-
-- Add AllocationStrategyType::FRAGMENTATION_AWARE.
-- Add FragmentationAwareAllocationStrategy.
-- Wire --allocation_strategy=fragmentation_aware.
-- Add deterministic fragmentation and preferred-segment tests.
-- Add the strategy to allocation_strategy_bench.
-- Document design and deployment usage.
-
-## Validation
-
-- git diff --check
-- GitHub Actions on PR head 0123fa1: 26 successful checks, 1 skipped check
-- deterministic fragmentation simulation
-- extended ranking and boundary simulation
-- topic-aligned Store scalability simulation
-
-## Boundaries
-
-The default allocation strategy remains unchanged. This PR does not redesign
-SGLang HiCache, RDMA transport, or Mooncake HA. RDMA validation and a real
-SGLang HiCache benchmark should still be run in a production-like environment
-before claiming end-to-end throughput gains.
-```
+该分支和PR是本作品“源代码”部分的主要证据。材料仓库中的patch文件用于离线审查和平台提交备份。

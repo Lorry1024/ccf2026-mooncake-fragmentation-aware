@@ -1,121 +1,100 @@
-# Technical Solution
+# 技术方案：基于连续空闲区域的Mooncake Store分配优化
 
-## Official Topic-2 Positioning
+## 赛题理解
 
-This solution is aligned to official Mooncake `track2_2026Mooncake` **赛题2：优化 Mooncake Store 吞吐性能、高可用功能和可扩展性，优化 SGLang HiCache + Mooncake Store 性能**.
+赛题2要求优化Mooncake Store吞吐性能、高可用功能和可扩展性，并关注SGLang HiCache+Mooncake Store性能。Mooncake Store作为KVCache后端时，真正影响性能的不只是网络传输和put/get接口本身，还包括Master为每个对象选择segment的决策质量。
 
-The corrected technical narrative is:
+在混合大小KVCache对象场景下，segment内部碎片会让“总空闲空间”与“当前请求是否能分配成功”脱钩。因此，本项目选择从Store分配策略层切入，优化碎片化场景下的首选segment选择。
 
-> Mooncake Store fragmentation-aware allocation for Store scalability/performance stability.
+## 现有策略的不足
 
-The contribution is intentionally scoped to Mooncake Store's allocation strategy layer. It does not claim to redesign SGLang, HiCache, RDMA transport, or Mooncake high-availability protocols. Instead, it improves a Store backend decision that can affect mixed-size KVCache placement: choose a segment whose largest contiguous free region can satisfy the request before ranking only by aggregate free bytes.
+`free_ratio_first`使用总空闲比例作为排序依据。该策略适合均衡segment利用率，但在大对象分配时可能出现如下问题：
 
-Topic-2 mapping:
+1. segmentA总空闲空间高，但被切成多个小块。
+2. segmentB总空闲空间低一些，但存在足够大的连续空闲区域。
+3. 当前请求必须落在一个连续区域中。
+4. `free_ratio_first`优先选择segmentA，造成一次失败尝试。
+5. 系统随后进入fallback或重试路径，增加分配路径开销。
 
-| Topic-2 concern | How this patch maps to it | Current evidence |
-|---|---|---|
-| Store throughput stability | Avoids primary selection of fragmented high-free segments that cannot fit the object, reducing retry/fallback work in the allocation path. | `logs/topic_aligned_store_scalability_sim_20260706.log`. |
-| Store scalability | Keeps bounded sampled candidate ranking; no full-cluster scan is introduced. | Candidate count remains 5.00 average in the 2026-07-06 simulation. |
-| High availability | Preserves preferred/excluded segment semantics and best-effort replica fallback; no new HA subsystem is claimed. | Patch design and rollback notes. |
-| SGLang HiCache + Store performance | Relevant to the Store backend used for KVCache objects; stable large-object placement can support backend behavior. | Local simulation only; no real SGLang HiCache benchmark is claimed. |
+## 核心思路
 
-## Background
+新增`fragmentation_aware`策略，在候选segment排序时引入两个信息：
 
-Mooncake Store already provides `random` and `free_ratio_first` allocation strategies. `free_ratio_first` improves cluster utilization balance by sampling candidate segments and ranking them by free-space ratio.
+- 当前请求是否可以被最大连续空闲区域直接容纳。
+- 空闲空间的连续性比例。
 
-For mixed-size KV cache workloads, aggregate free ratio can be misleading. A segment may have high total free space split across small holes, while another segment with slightly less total free space may have a contiguous region large enough for the current request.
+策略仍然沿用有界采样，不做全局遍历，避免随着集群规模增长而引入不可控开销。
 
-## Design
+## 算法流程
 
-`fragmentation_aware` extends the existing sampled-selection design:
+```text
+输入：请求大小request_size、副本数replica_count、可用segment集合
 
-1. Try preferred segments first, preserving existing behavior.
-2. Sample `min(6 * remaining_replicas, total_segments)` candidate segments.
-3. For each candidate, compute:
-   - total capacity.
-   - total free bytes.
-   - largest free region across its allocators.
-   - whether the largest region can fit the requested slice.
-4. Sort candidates by:
-   - fit-capable segments first.
-   - blended score: `0.70 * contiguity_ratio + 0.30 * free_ratio`.
-   - largest free region as a tie-breaker.
-5. Attempt allocation in ranked order.
-6. Fall back to random allocation for remaining replicas.
+1. 优先尝试preferred segment，保持原有语义。
+2. 从可用segment中采样有界候选集合。
+3. 对每个候选计算total_free、largest_free_region、free_ratio、contiguity_ratio和can_fit。
+4. 按can_fit、score、largest_free_region、free_ratio排序。
+5. 按排序结果尝试分配。
+6. 未满足的副本继续走原有随机best-effort fallback路径。
+```
 
-## Expected Benefit
+评分公式：
 
-The strategy avoids selecting segments that look healthy by total free space but cannot satisfy large allocations due to fragmentation. This should reduce failed allocation attempts under mixed-size object churn and improve usable capacity for KV cache workloads.
+```text
+score=0.70*contiguity_ratio+0.30*free_ratio
+```
 
-For official赛题2, this expected benefit should be read as Store allocation-path stability rather than a measured end-to-end QPS claim. The 2026-07-06 deterministic simulation reports:
+其中`contiguity_ratio`强调空闲空间是否集中，`free_ratio`保留总体空间利用信号。
 
-- `free_ratio_first` primary fit success: 0/6.
-- `fragmentation_aware` primary fit success: 6/6.
-- `free_ratio_first` fallback attempts: 11.
-- `fragmentation_aware` fallback attempts: 0.
-- Average candidates scored: 5.00 for both strategies.
-- Measured local scoring overhead: about 17.93 ns/request in the synthetic CPU-only model.
+## 与Mooncake代码的集成
 
-## Scope Control
+| 层次 | 集成方式 |
+| --- | --- |
+| 类型系统 | 新增`AllocationStrategyType::FRAGMENTATION_AWARE` |
+| 策略工厂 | `CreateAllocationStrategy`返回`FragmentationAwareAllocationStrategy` |
+| 配置解析 | `master_config.h`识别`fragmentation_aware`字符串 |
+| 启动参数 | `master.cpp`帮助信息加入新取值 |
+| 测试 | 扩展参数化测试，并新增碎片化定向测试 |
+| benchmark | 将新策略加入分配策略矩阵 |
+| 文档 | 更新Mooncake Store设计和部署说明 |
 
-The implementation intentionally avoids changing allocator internals, protocol behavior, or client APIs. It adds one strategy behind an explicit master flag, so existing deployments keep the `random` default unless they opt in.
+## 测试构造
 
-## Local Build Compatibility
+关键单元测试构造两个segment：
 
-During validation on Ubuntu 20.04, several unrelated build-environment issues blocked a direct Store test binary. The patch includes scoped compatibility fixes:
+- `fragmented`：总空闲空间更高，但最大连续空闲区域小于请求大小。
+- `contiguous`：总空闲空间较低，但最大连续空闲区域可以容纳请求。
 
-- `USE_RDMA=OFF` now excludes RDMA transport objects and RPC RDMA initialization paths for TCP-only builds.
-- Older `libibverbs` is detected and yalantinglibs is configured to avoid `ibv_query_gid_ex` paths.
-- `MasterAdminServer` uses `std::binary_semaphore` when available and a condition-variable fallback on older libstdc++.
-- Yalantinglibs source include roots are added explicitly for builds that use the vendored headers.
+预期行为：
 
-These changes are build-scope support for reproducibility; they do not change the allocation strategy semantics.
+```text
+fragmentation_aware选择contiguous
+```
 
-## Nightly Strengthening: 2026-07-03
+同时测试preferred segment语义，确保用户指定的优先segment仍被保留。
 
-The current preferred patch is now:
+## 评估结果
 
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+专题对齐仿真使用5个segment和6个不同大小请求，模拟碎片化和连续空闲区域并存的Store场景。
 
-It corresponds to Mooncake draft PR `https://github.com/kvcache-ai/Mooncake/pull/2797`
-at head commit `0123fa1`. The older `mooncake_fragmentation_aware.patch` and
-`mooncake_fragmentation_aware_pr_ready_20260703.patch` are retained for
-traceability, but the `0123fa1` patch is the current review artifact.
+| 指标 | `free_ratio_first` | `fragmentation_aware` |
+| --- | ---: | ---: |
+| 首选segment可直接容纳 | 0/6 | 6/6 |
+| 最终可容纳 | 6/6 | 6/6 |
+| fallback尝试次数 | 11 | 0 |
+| 平均候选segment数量 | 5.00 | 5.00 |
+| 单次决策耗时 | 121.00ns | 138.93ns |
+| 额外决策开销 | 不适用 | 17.93ns |
 
-Current PR CI status: 26 successful checks, 1 skipped check.
+该结果说明，新策略在不扩大候选规模的情况下改善了首选分配质量。额外开销为纳秒级，本地仿真中约为17.93ns/请求。
 
-### Failure Mode
+## 边界说明
 
-`free_ratio_first` ranks sampled segments by aggregate free-space ratio. This is insufficient when a large KV cache object must fit inside one allocator's contiguous free region:
+当前阶段已经完成代码实现、单元测试、benchmark接入、文档更新和上游PR CI验证。尚未宣称完成以下内容：
 
-- Segment A can have higher total free bytes, but split into small holes.
-- Segment B can have lower total free bytes, but one contiguous region large enough for the request.
-- Ranking A first causes a failed allocation attempt and pushes the system into retry/fallback/eviction paths even though B could have satisfied the request immediately.
+- 真实RDMA环境benchmark。
+- 真实SGLang HiCache端到端压测。
+- Mooncake高可用协议重设计。
+- 生产集群长时间压测。
 
-### Fragmentation-Aware Score
-
-For each sampled candidate:
-
-- `total_free = sum(capacity - used)`.
-- `largest_free_region = max(allocator.getLargestFreeRegion())`.
-- `free_ratio = total_free / total_capacity`.
-- `contiguity_ratio = largest_free_region / total_free`.
-- `can_fit = largest_free_region >= request_size`.
-- `fa_score = 0.70 * contiguity_ratio + 0.30 * free_ratio`.
-
-Sort order:
-
-1. `can_fit` candidates first.
-2. Higher `fa_score`.
-3. Higher `largest_free_region`.
-4. Higher `free_ratio`.
-5. Stable candidate-index tie break.
-
-### Scope and Boundaries
-
-- Default behavior is unchanged because the new strategy is opt-in through `--allocation_strategy=fragmentation_aware`.
-- Preferred and excluded segment semantics are preserved.
-- Replica best-effort behavior is preserved.
-- Offset allocators provide exact largest-free-region data.
-- CacheLib allocators report unknown largest-free-region data, so the strategy falls back to aggregate free bytes for those allocators.
-- If no candidate can fit, the strategy cannot manufacture capacity; it still falls back to existing random best-effort behavior.
+这些内容适合作为决赛阶段或后续PR迭代的工作。

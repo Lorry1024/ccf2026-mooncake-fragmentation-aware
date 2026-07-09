@@ -1,145 +1,102 @@
-# Mooncake Fragmentation-Aware Allocation Strategy
+# CCF2026 Mooncake Store碎片感知分配优化
 
-Competition: The 8th CCF Open Source Innovation Competition, Open Source Task Challenge Track.
+本仓库是CCF2026开源创新大赛Mooncake赛题的初赛提交材料仓库。项目选择Mooncake赛题2，聚焦Mooncake Store在混合大小KVCache对象场景下的分配稳定性与可扩展性优化。
 
-Task: Mooncake KVCache storage design and performance optimization.
+## 项目定位
 
-## Competition-Ready Positioning
+本项目的核心贡献是在Mooncake Store中新增一种可选的`fragmentation_aware`分配策略。该策略不改变默认行为，不重写Mooncake Store协议，不修改SGLang HiCache接口，而是在Master选择segment时增加“最大连续空闲区域”这一信号，避免只按总空闲比例排序时优先选中已经碎片化、无法容纳当前大对象的segment。
 
-This repository is a CCF Mooncake submission package, not a standalone fork of
-the full upstream Mooncake repository. The core source-code artifact is:
+| 项目 | 内容 |
+| --- | --- |
+| 赛题方向 | 赛题2：优化Mooncake Store吞吐性能、高可用功能和可扩展性，优化SGLang HiCache+Mooncake Store性能 |
+| 优化对象 | Mooncake Store分配策略层 |
+| 新增策略 | `fragmentation_aware` |
+| 默认行为 | 保持`random`不变，用户显式开启新策略 |
+| 主要收益 | 降低碎片化场景下的大对象失败尝试和fallback压力 |
+| 当前证据 | 上游PR通过GitHub Actions，确定性仿真通过，补充性能指标与复现日志 |
 
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+## 公开仓库与PR
 
-Public GitHub repository:
+- 比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
+- Mooncake fork分支：`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
+- Mooncake draft PR：`https://github.com/kvcache-ai/Mooncake/pull/2797`
 
-`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
+当前PR头提交：
 
-For final competition submission, this package should be mirrored to a public
-GitHub repository, and the patch should ideally be applied to a Mooncake fork
-branch or draft PR. See:
+```text
+0123fa1 Fix fragmentation-aware allocation test setup
+```
 
-- `DESIGN.md`
-- `EVALUATION.md`
-- `SUBMISSION.md`
-- `GITHUB_RELEASE_GUIDE.md`
+当前CI状态：
 
-## Official Topic-2 Alignment - 2026-07-06
+```text
+26个检查成功，1个检查跳过
+```
 
-This package is now explicitly aligned to official Mooncake track `track2_2026Mooncake`, **赛题2：优化 Mooncake Store 吞吐性能、高可用功能和可扩展性，优化 SGLang HiCache + Mooncake Store 性能**.
+## 核心产物
 
-The precise positioning is:
+| 产物 | 路径 | 说明 |
+| --- | --- | --- |
+| 当前PR补丁 | `mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 与Mooncake PR#2797当前提交对应 |
+| 技术方案 | `technical_solution.md` | 中文技术方案说明 |
+| 设计文档 | `DESIGN.md` | 问题、目标、算法与兼容性 |
+| 评估报告 | `EVALUATION.md` | 仿真、CI、指标和边界 |
+| 测试说明 | `testing.md` | 本地复现和验证记录 |
+| 使用说明 | `usage.md` | 如何启用、应用和回滚补丁 |
+| 评审指南 | `REVIEW_GUIDE.md` | 建议评审阅读顺序 |
+| 技术报告源码 | `report/technical_report.tex` | XeLaTeX报告源码 |
+| 技术报告PDF | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf` | 由LaTeX编译生成 |
+| 展示PPT | `slides/Mooncake_FragmentationAware_初赛展示.pptx` | 初赛展示材料 |
+| 提交压缩包 | `release/CCF2026_Mooncake_FragmentationAware_initial_20260707.zip` | 平台提交候选包，视频链接补齐后需重新生成 |
 
-`Mooncake Store fragmentation-aware allocation for Store scalability/performance stability`
+## 已完成的工作
 
-This is not a generic KVCache proposal. The implemented patch targets Mooncake Store segment allocation for mixed-size KVCache objects. The expected competition value is fewer avoidable failed allocation attempts, lower fallback pressure, and more stable large-object placement when long-running Store memory pools become fragmented. SGLang HiCache relevance is through its Mooncake Store backend path; no real SGLang HiCache benchmark is claimed.
+1. 在Mooncake Store中新增`AllocationStrategyType::FRAGMENTATION_AWARE`。
+2. 实现`FragmentationAwareAllocationStrategy`。
+3. 增加`--allocation_strategy=fragmentation_aware`启动参数支持。
+4. 补充分配策略单元测试，覆盖碎片化优先级和preferred segment语义。
+5. 将新策略加入allocation strategy benchmark矩阵。
+6. 更新Mooncake Store设计文档和部署文档。
+7. 为GitHub Actions中的Go store binding集成测试加入磁盘回收步骤，避免runner磁盘不足导致无关失败。
+8. 准备确定性仿真和专题对齐仿真，记录可复现实验日志。
+9. 创建上游Mooncake draft PR并修复CI中出现的格式、磁盘和测试构造问题。
+10. 整理中文提交材料、技术报告和初赛展示材料。
 
-New topic-alignment artifacts:
+## 主要实验结论
 
-- `OFFICIAL_TOPIC_ALIGNMENT.md`
-- `topic_alignment_metrics_20260706.md`
-- `repro/topic_aligned_store_scalability_sim.cpp`
-- `logs/topic_aligned_store_scalability_sim_20260706.log`
-- `TOPIC_ALIGNMENT_REPORT.md`
+| 指标 | `free_ratio_first` | `fragmentation_aware` |
+| --- | ---: | ---: |
+| 大对象首选segment可直接容纳 | 0/6 | 6/6 |
+| fallback尝试次数 | 11 | 0 |
+| 平均候选segment数量 | 5.00 | 5.00 |
+| 单次决策耗时 | 121.00ns | 138.93ns |
+| 新增决策开销 | 不适用 | 17.93ns |
 
-## Work Summary
+该结果说明，在混合大小KVCache对象造成内存碎片时，新策略能够以很小的决策开销换取更稳定的首选分配结果。当前结论限定在分配路径仿真、单元测试和上游CI范围内，不宣称已经完成真实RDMA集群或真实SGLang HiCache端到端压测。
 
-This submission adds a new Mooncake Store allocation strategy named `fragmentation_aware`. The strategy improves allocation decisions for mixed-size KV cache workloads by considering the largest contiguous free region in each candidate segment, not only the aggregate free-space ratio.
+## 快速使用
 
-The feature is designed to reduce failed allocation attempts in long-running clusters where memory becomes fragmented. It keeps Mooncake's existing best-effort replica semantics and uses a bounded sampled candidate set to avoid full-cluster scans.
-
-## Current PR Status - 2026-07-09
-
-Mooncake draft PR:
-
-`https://github.com/kvcache-ai/Mooncake/pull/2797`
-
-Current PR head:
-
-`0123fa1 Fix fragmentation-aware allocation test setup`
-
-GitHub Actions status:
-
-`All checks have passed: 26 successful checks, 1 skipped check.`
-
-## Nightly Update - 2026-07-03
-
-This package retains the 2026-07-03 PR-ready patch for traceability:
-
-`mooncake_fragmentation_aware_pr_ready_20260703.patch`
-
-Baseline:
-
-`kvcache-ai/Mooncake@a325291c6baccc872ce137bd0c58d5791ac4e8c4`
-
-The earlier `mooncake_fragmentation_aware.patch` is also retained for
-traceability. The current preferred review artifact is
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`, matching Mooncake draft
-PR `#2797` after GitHub Actions passed.
-
-Additional evidence added:
-
-- `official_verification_20260703.md`
-- `quantitative_metrics_20260703.md`
-- `patch_pr_ready_notes_20260703.md`
-- `final_report.md`
-- `NIGHTLY_IMPROVEMENT_REPORT.md`
-- New logs under `logs\*20260703*`
-- Final nightly package path and SHA256 are recorded in `NIGHTLY_IMPROVEMENT_REPORT.md`.
-
-## Key Deliverables
-
-- New `AllocationStrategyType::FRAGMENTATION_AWARE`.
-- New `FragmentationAwareAllocationStrategy`.
-- Master startup support via `--allocation_strategy=fragmentation_aware`.
-- Unit test covering a deterministic fragmentation scenario.
-- Allocation benchmark matrix support for the new strategy.
-- Updated design, deployment, and quick-start documentation.
-- TCP-only / old-libibverbs build compatibility fixes needed for local
-  validation on Ubuntu 20.04.
-
-## Repository
-
-Current scoped working repository:
-
-`C:\CCFOpenSource\02_Mooncake_FragmentationAware\upstream\Mooncake`
-
-Current upstream baseline:
-
-`a325291c6baccc872ce137bd0c58d5791ac4e8c4`
-
-## Usage
-
-Start Mooncake master with:
+启动Mooncake master时显式指定新策略：
 
 ```bash
 mooncake_master --allocation_strategy=fragmentation_aware
 ```
 
-For HTTP metadata quick start:
+应用当前补丁：
 
 ```bash
-mooncake_master \
-  --allocation_strategy=fragmentation_aware \
-  --enable_http_metadata_server=true \
-  --http_metadata_server_port=8080
+git apply --check mooncake_fragmentation_aware_pr_2797_0123fa1.patch
+git apply mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 ```
 
-## Status
+回滚补丁：
 
-Implementation patch is prepared at:
+```bash
+git apply -R mooncake_fragmentation_aware_pr_2797_0123fa1.patch
+```
 
-`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+## 尚未完成
 
-Local verification results are recorded in `C:\CCFOpenSource\02_Mooncake_FragmentationAware\testing.md` and `C:\CCFOpenSource\02_Mooncake_FragmentationAware\logs`.
-
-Primary local validation:
-
-- `allocation_strategy_light_test.log`: passed.
-- `fragmentation_aware_sim.log`: passed.
-- `fragmentation_aware_sim_verify_20260703_0002.log`: passed.
-- `fragmentation_aware_metrics_verify_20260703_0002.log`: passed.
-- `topic_aligned_store_scalability_sim_20260706.log`: passed; deterministic topic-2 simulation shows primary fit success improved from 0/6 to 6/6 and fallback attempts reduced from 11 to 0 in the synthetic fragmented Store scenario.
-- `git_apply_check_pr_ready_20260703_0002.log`: PR-ready patch apply check passed.
-- Full upstream Store target was attempted but did not finish in the local
-  WSL/GCC10/Windows-mounted workspace within the available resource window.
+- 5分钟以内作品展示视频尚未录制。
+- 视频链接写入`SUBMISSION.md`后，需要重新生成最终提交压缩包。
+- 如果进入决赛，建议补充真实Mooncake Store压测、RDMA环境验证和SGLang HiCache端到端对比。

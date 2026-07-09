@@ -1,55 +1,32 @@
-# Package Manifest
+# 提交包清单
 
-Recommended package contents for the CCF initial-round upload:
+## 核心文件
 
-## Core Documents
+| 文件 | 说明 |
+| --- | --- |
+| `README.md` | 项目入口说明 |
+| `SUBMISSION.md` | 平台提交说明 |
+| `DESIGN.md` | 设计文档 |
+| `technical_solution.md` | 技术方案 |
+| `EVALUATION.md` | 评估报告 |
+| `testing.md` | 测试说明 |
+| `usage.md` | 使用说明 |
+| `REVIEW_GUIDE.md` | 评审阅读指南 |
+| `final_report.md` | 初赛总结报告 |
+| `demo_script.md` | 展示视频讲稿 |
+| `demo_points.md` | 展示视频要点 |
 
-- `README.md`
-- `DESIGN.md`
-- `EVALUATION.md`
-- `SUBMISSION.md`
-- `GITHUB_RELEASE_GUIDE.md`
-- `MOONCAKE_BRANCH_READY.md`
-- `REVIEW_GUIDE.md`
-- `technical_solution.md`
-- `testing.md`
-- `usage.md`
-- `final_report.md`
-- `OFFICIAL_TOPIC_ALIGNMENT.md`
-- `TOPIC_ALIGNMENT_REPORT.md`
-- `submission_checklist.md`
+## 代码与证据
 
-## Source and Review Artifacts
+| 文件或目录 | 说明 |
+| --- | --- |
+| `mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 当前PR对应补丁 |
+| `repro/` | 可独立编译的复现实验源码 |
+| `logs/` | 验证日志 |
+| `slides/` | 初赛展示PPT |
+| `report/` | LaTeX技术报告源码和PDF |
+| `release/` | 平台提交压缩包和校验文件 |
 
-- `mooncake_fragmentation_aware_pr_ready_20260703.patch`
-- `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
-- `mooncake_fragmentation_aware.patch`
-- `repro/`
-- `tools/build_submission_deck.mjs`
+## 历史文件
 
-## Evidence
-
-- `logs/`
-- `quantitative_metrics_20260703.md`
-- `topic_alignment_metrics_20260706.md`
-- `official_verification_20260703.md`
-- `patch_pr_ready_notes_20260703.md`
-- `final_check_report.md`
-- `final_check_report_20260703.md`
-- `NIGHTLY_IMPROVEMENT_REPORT.md`
-
-## Demo and Presentation
-
-- `demo_script.md`
-- `demo_points.md`
-- `slides/Mooncake_FragmentationAware_初赛展示.pptx`
-- `slides/qa/contact_sheet.png`
-
-## Expected External Links
-
-These links should be filled in on the GitLink platform:
-
-- Public GitHub submission repository: `https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`.
-- Mooncake fork branch: `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`.
-- Mooncake draft PR: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
-- 5-minute demo video URL.
+仓库中保留了早期patch、早期检查报告和夜间改进报告，目的是保留开发过程可追溯性。正式评审建议优先查看当前PR补丁和中文技术报告。

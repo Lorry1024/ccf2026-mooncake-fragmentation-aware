@@ -1,58 +1,35 @@
-# Submission Checklist
+# 提交检查清单
 
-## Official Topic-2 Alignment Addendum - 2026-07-06
+## 已完成
 
-- [x] `OFFICIAL_TOPIC_ALIGNMENT.md` added with explicit wording: 对齐官方赛题2.
-- [x] Project positioning corrected to `Mooncake Store fragmentation-aware allocation for Store scalability/performance stability`.
-- [x] README, technical solution, testing notes, usage guide, demo script, and final check report updated to avoid generic KVCache-only wording.
-- [x] New topic-aligned deterministic simulation added: `repro/topic_aligned_store_scalability_sim.cpp`.
-- [x] New topic-aligned log generated: `logs\topic_aligned_store_scalability_sim_20260706.log`.
-- [x] New topic-aligned metrics table generated: `topic_alignment_metrics_20260706.md`.
-- [x] Boundary stated: no complete upstream Mooncake build, no RDMA benchmark, no official CI, and no real SGLang HiCache benchmark are claimed.
+- [x] 明确选择Mooncake赛题2。
+- [x] 将项目定位为Mooncake Store碎片感知分配策略优化。
+- [x] 完成`fragmentation_aware`策略实现。
+- [x] 增加启动参数`--allocation_strategy=fragmentation_aware`。
+- [x] 增加碎片化场景单元测试。
+- [x] 将新策略加入benchmark矩阵。
+- [x] 更新Mooncake Store设计文档和部署文档。
+- [x] 创建Mooncake fork分支。
+- [x] 创建上游Mooncake draft PR：`https://github.com/kvcache-ai/Mooncake/pull/2797`。
+- [x] 修复PR中的格式、runner磁盘和测试构造问题。
+- [x] PR头提交`0123fa1`通过GitHub Actions，结果为26个检查成功、1个检查跳过。
+- [x] 生成当前PR补丁：`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`。
+- [x] 准备`repro/`复现实验源码。
+- [x] 准备`logs/`验证日志。
+- [x] 准备展示PPT。
+- [x] 准备中文技术报告源码和PDF。
+- [x] 准备提交压缩包。
 
-- [x] Official CCF notice saved.
-- [x] GitLink competition/task data saved.
-- [x] Candidate decision matrix created.
-- [x] Main task selected.
-- [x] Official repositories cloned.
-- [x] Feature implementation drafted.
-- [x] Unit test drafted.
-- [x] Documentation drafted.
-- [x] Build configured.
-- [x] Lightweight allocation strategy unit test passed.
-- [x] Standalone fragmentation reproduction passed.
-- [x] Build/log artifacts saved.
-- [x] Final patch exported.
-- [x] Demo video script finalized.
-- [x] Official CCF notice and public Mooncake repository re-checked on 2026-07-03.
-- [x] Current upstream Mooncake baseline recorded: `a325291c6baccc872ce137bd0c58d5791ac4e8c4`.
-- [x] Old patch applicability checked and recorded as drifted against current upstream.
-- [x] New PR-ready patch generated: `mooncake_fragmentation_aware_pr_ready_20260703.patch`.
-- [x] New PR-ready patch passed `git apply --check` against a clean worktree.
-- [x] Standalone fragmentation simulation re-run on 2026-07-03.
-- [x] Extended metrics simulation added and passed across 5 deterministic scenarios.
-- [x] Patch apply, rollback, compatibility, and side-effect notes added.
-- [x] Final report and nightly improvement report added.
-- [x] New submission package generated without deleting old packages.
-- [x] New topic-aligned package generated without deleting old packages.
-- [x] Mooncake draft PR created: `https://github.com/kvcache-ai/Mooncake/pull/2797`.
-- [x] Current PR patch generated: `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`.
-- [x] GitHub Actions passed on PR head `0123fa1`: 26 successful checks, 1 skipped check.
-- [x] Review guide added: `REVIEW_GUIDE.md`.
+## 提交前待完成
 
-## GitLink Submission Items
+- [ ] 录制5分钟以内展示视频。
+- [ ] 上传视频并获得公开可访问链接。
+- [ ] 将视频链接补入`SUBMISSION.md`、`README.md`和平台提交说明。
+- [ ] 重新生成最终压缩包和SHA256。
+- [ ] 最后确认GitHub材料仓库为公开状态。
 
-- Source code or PR link.
-- Technical solution document or slides.
-- 5-minute demo video. Pending; record after final material freeze.
-- Test/benchmark result logs.
-- GitHub open-source repository link.
+## 风险说明
 
-## Current Risk
-
-Full local Mooncake rebuild is still not claimed in this Windows/WSL workspace.
-The strongest current evidence is the upstream draft PR with passing GitHub
-Actions on `0123fa1`, plus deterministic simulation, extended metrics
-simulation, topic-aligned simulation, and saved validation logs. Remaining
-initial-round risk is mainly the pending 5-minute demo video and the absence of
-real RDMA/SGLang HiCache benchmarking.
+- 当前证据已覆盖代码实现、上游CI、单元测试和分配路径仿真。
+- 当前不宣称真实RDMA环境或SGLang HiCache端到端benchmark。
+- 如果平台要求必须上传视频文件而不是链接，需要将视频文件放入最终压缩包或按平台规则上传。

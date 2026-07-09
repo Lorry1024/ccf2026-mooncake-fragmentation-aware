@@ -1,156 +1,32 @@
-# Topic Alignment Report
+# 赛题对齐报告
 
-Date: 2026-07-06
+## 对齐结论
 
-Status addendum: 2026-07-09
+本项目与Mooncake赛题2对齐，重点解决Mooncake Store在混合大小KVCache对象场景下的分配稳定性问题。项目通过新增`fragmentation_aware`策略，将最大连续空闲区域纳入segment选择过程，从而减少碎片化下的失败尝试。
 
-Scope: `C:\CCFOpenSource\02_Mooncake_FragmentationAware`
+## 为什么属于赛题2
 
-## Goal
+赛题2强调Mooncake Store吞吐性能、高可用、可扩展性和SGLang HiCache+Mooncake Store性能。本项目虽然没有直接改写SGLang HiCache，但优化的是Mooncake Store后端的分配路径，而该路径会影响KVCache对象写入和复用时的稳定性。
 
-Perform an official-topic alignment strengthening pass without redoing the project and without generating LaTeX, PDF, `docs/submission_report`, or `DOCUMENTATION_REPORT.md`.
+## 对齐证据
 
-The current submission is now explicitly positioned as:
+| 维度 | 证据 |
+| --- | --- |
+| Store路径 | 改动集中在`mooncake-store`目录 |
+| 性能稳定性 | 专题仿真中fallback从11降到0 |
+| 可扩展性 | 平均候选segment数量保持5.00 |
+| 兼容性 | 默认策略不变，新策略显式开启 |
+| 开源规范 | 已创建Mooncake上游PR并通过CI |
 
-> Official topic 2 alignment: Mooncake Store fragmentation-aware allocation for Store scalability/performance stability.
+## 评审建议
 
-## Official Topic Evidence
+建议评委重点查看：
 
-Local official-source evidence already present in this directory:
+1. `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`
+2. `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`
+3. Mooncake PR#2797
+4. `logs/topic_aligned_store_scalability_sim_20260706.log`
 
-- `official_verification_20260703.md`
-- GitLink task entry recorded there: `https://www.gitlink.org.cn/competitions/track2_2026Mooncake`
-- Mooncake upstream repository recorded there: `https://github.com/kvcache-ai/Mooncake`
-- Mooncake Store design/deployment documentation references recorded there.
+## 边界
 
-Official topic wording used for this alignment:
-
-> 赛题2：优化 Mooncake Store 吞吐性能、高可用功能和可扩展性，优化 SGLang HiCache + Mooncake Store 性能。
-
-Scoring focus used in this alignment:
-
-| Scoring focus | Weight | How this pass addresses it |
-|---|---:|---|
-| Technical completeness | 30% | Adds explicit topic mapping, reproducible simulation, logs, metrics table, and updated submission docs. |
-| Open-source standardization | 10% | Keeps the PR-ready patch, rollback notes, existing logs, and package structure intact. |
-| Scenario fit | 25% | Reframes the work around Mooncake Store allocation stability, mixed-size KVCache objects, and SGLang HiCache backend relevance. |
-| Innovation | 35% | Highlights fit-aware ranking based on largest contiguous free region instead of only aggregate free ratio. |
-
-## Satisfied Items
-
-| Requirement | Status | Evidence |
-|---|---|---|
-| Explicitly align to official topic 2 | Satisfied | `OFFICIAL_TOPIC_ALIGNMENT.md`, README, technical solution, testing notes, demo script. |
-| Avoid generic KVCache-only wording | Satisfied | Positioning now states `Mooncake Store fragmentation-aware allocation for Store scalability/performance stability`. |
-| Map implementation to Store throughput/scalability | Satisfied | `technical_solution.md`, `topic_alignment_metrics_20260706.md`. |
-| Run at least one validation path | Satisfied | `logs/topic_aligned_store_scalability_sim_20260706.log`, exit code 0. |
-| Provide quantitative metrics | Satisfied | `topic_alignment_metrics_20260706.md`. |
-| Generate new package without overwriting old packages | Satisfied | `Mooncake_FragmentationAware_topic_aligned_20260706_0001.zip`. |
-| State SGLang/CI/build boundaries honestly | Satisfied | README, testing notes, final report, and this report. |
-| Upstream PR CI | Satisfied | Mooncake PR `#2797`, head `0123fa1`, 26 successful checks and 1 skipped check. |
-
-## Partially Satisfied Items
-
-| Official topic area | Current status | Why partial |
-|---|---|---|
-| High availability | Partial | The patch preserves preferred/excluded segment semantics and best-effort fallback, but it does not implement a new HA protocol. |
-| SGLang HiCache + Mooncake Store performance | Partial | The Store allocation path is relevant to HiCache backend stability, but no real SGLang HiCache benchmark was run. |
-| Throughput performance | Partial but evidence-backed | The simulation quantifies lower failed first choices and fallback pressure, but it is not an end-to-end QPS benchmark. |
-
-## Not Satisfied / Not Claimed
-
-| Item | Status |
-|---|---|
-| Local full Mooncake build success | Not claimed. Local Windows/WSL build is not the primary evidence path. |
-| RDMA validation | Not claimed. |
-| Real SGLang HiCache benchmark | Not claimed. |
-| Production hardware performance result | Not claimed. |
-
-## Changed Files
-
-Added:
-
-- `OFFICIAL_TOPIC_ALIGNMENT.md`
-- `topic_alignment_metrics_20260706.md`
-- `TOPIC_ALIGNMENT_REPORT.md`
-- `repro/topic_aligned_store_scalability_sim.cpp`
-- `logs/topic_aligned_store_scalability_sim_20260706.log`
-- `topic_aligned_store_scalability_sim_20260706`
-- `Mooncake_FragmentationAware_topic_aligned_20260706_0001.zip`
-- `Mooncake_FragmentationAware_topic_aligned_20260706_0001.zip.sha256.txt`
-
-Updated:
-
-- `README.md`
-- `technical_solution.md`
-- `testing.md`
-- `usage.md`
-- `demo_script.md`
-- `submission_checklist.md`
-- `final_check_report.md`
-- `final_report.md`
-
-No existing patch, old zip, existing log, or submission package was deleted.
-
-## Run Command
-
-```powershell
-wsl bash -lc "cd /mnt/c/CCFOpenSource/02_Mooncake_FragmentationAware && g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligned_store_scalability_sim_20260706 && ./topic_aligned_store_scalability_sim_20260706 > logs/topic_aligned_store_scalability_sim_20260706.log 2>&1"
-```
-
-## Test Result
-
-Result: passed.
-
-Key log:
-
-`logs/topic_aligned_store_scalability_sim_20260706.log`
-
-Summary:
-
-```text
-PASS topic_aligned_store_scalability_sim
-free_ratio_primary_success=0/6
-fragmentation_aware_primary_success=6/6
-free_ratio_eventual_success=6/6
-fragmentation_aware_eventual_success=6/6
-free_ratio_fallback_attempts=11
-fragmentation_aware_fallback_attempts=0
-avg_candidates_scored_free_ratio=5.00
-avg_candidates_scored_fragmentation_aware=5.00
-free_ratio_decision_ns_per_request=121.00
-fragmentation_aware_decision_ns_per_request=138.93
-fragmentation_aware_extra_ns_per_request=17.93
-```
-
-## Quantitative Metrics
-
-| Function / case | Log | Metric | Current result | Competition value | Risk |
-|---|---|---|---|---|---|
-| Large-object primary selection | `topic_aligned_store_scalability_sim_20260706.log` | Primary fit success | 0/6 -> 6/6 | Fewer failed first allocation attempts in fragmented Store pools. | Synthetic deterministic model. |
-| Fallback pressure | Same log | Fallback attempts | 11 -> 0 | Lower allocation-path fallback work can support throughput stability. | Not measured as end-to-end QPS. |
-| Candidate sampling | Same log | Avg candidates scored | 5.00 -> 5.00 | Bounded sampling supports scalable decision scope. | Fixed synthetic candidate set. |
-| Scoring overhead | Same log | Extra decision time | 17.93 ns/request | Makes overhead explicit. | Local CPU microbenchmark only. |
-| Existing fragmentation reproduction | `fragmentation_aware_metrics_verify_20260703_0002.log` | 5 deterministic scenarios | Passed | Confirms ranking/boundary behavior. | Simulation only. |
-| Patch readiness | `git_apply_check_pr_ready_20260703_0002.log` | `git apply --check` | Passed | PR-ready review artifact. | Does not replace full CI. |
-
-## New Package
-
-Path:
-
-`C:\CCFOpenSource\02_Mooncake_FragmentationAware\Mooncake_FragmentationAware_topic_aligned_20260706_0001.zip`
-
-SHA256:
-
-`3AD089784674421E3A1426FFC375DC18B5CAF9D847648359E14D52E2263EFBC8`
-
-Sidecar:
-
-`C:\CCFOpenSource\02_Mooncake_FragmentationAware\Mooncake_FragmentationAware_topic_aligned_20260706_0001.zip.sha256.txt`
-
-## Remaining Risks
-
-- The new evidence is deterministic local simulation evidence, not real SGLang HiCache + Mooncake Store benchmark evidence.
-- Full upstream Mooncake Store unit and benchmark binaries are still not proven passing locally, but the upstream PR CI has passed on `0123fa1`.
-- RDMA and production hardware paths are not validated in this package.
-- High availability is only indirectly supported by preserving fallback and replica-related semantics; no new HA feature is implemented.
+本项目当前是初赛阶段分配策略优化，不是完整生产级Store压测报告。真实RDMA和SGLang HiCache端到端测试应作为后续工作补充。
