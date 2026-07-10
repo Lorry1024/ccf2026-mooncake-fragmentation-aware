@@ -2,6 +2,14 @@
 
 本仓库是CCF2026开源创新大赛Mooncake赛题的初赛提交材料仓库。项目选择Mooncake赛题2，聚焦Mooncake Store在混合大小KVCache对象场景下的分配稳定性与可扩展性优化。
 
+## 参赛队伍
+
+| 项目 | 信息 |
+| --- | --- |
+| 队伍名称 | KVCache Forge |
+| 队长 | 刘神舟 |
+| 队员 | 罗荣裕、王英颖、杨俊 |
+
 ## 项目定位
 
 本项目的核心贡献是在Mooncake Store中新增一种可选的`fragmentation_aware`分配策略。该策略不改变默认行为，不重写Mooncake Store协议，不修改SGLang HiCache接口，而是在Master选择segment时增加“最大连续空闲区域”这一信号，避免只按总空闲比例排序时优先选中已经碎片化、无法容纳当前大对象的segment。
@@ -17,7 +25,8 @@
 
 ## 公开仓库与PR
 
-- 比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
+- GitHub比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
+- GitLink比赛材料仓库：`https://gitlink.org.cn/liushenzhou/ccf2026-mooncake-fragmentation-aware`
 - Mooncake fork分支：`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
 - Mooncake draft PR：`https://github.com/kvcache-ai/Mooncake/pull/2797`
 
@@ -46,8 +55,8 @@
 | 评审指南 | `REVIEW_GUIDE.md` | 建议评审阅读顺序 |
 | 技术报告源码 | `report/technical_report.tex` | XeLaTeX报告源码 |
 | 技术报告PDF | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf` | 由LaTeX编译生成 |
-| 展示PPT | `slides/Mooncake_FragmentationAware_初赛展示_更新版.pptx` | 初赛展示材料 |
-| 提交压缩包 | `release/CCF2026_Mooncake_FragmentationAware_initial_20260707.zip` | 平台提交候选包，视频链接补齐后需重新生成 |
+| 展示PPT | `slides/Mooncake_FragmentationAware_初赛展示_最终版.pptx` | 初赛展示材料 |
+| 提交压缩包 | `release/CCF2026_Mooncake_FragmentationAware_initial_20260710.zip` | 平台提交候选包，视频链接补齐后需重新生成 |
 
 ## 已完成的工作
 

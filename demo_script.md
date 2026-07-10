@@ -22,13 +22,14 @@
 
 按以下顺序预先打开窗口或标签页，录制时只做切换，不临时输入网址：
 
-1. 更新版PPT，停在封面。
+1. 最终版PPT，停在封面。
 2. 上游PR：`https://github.com/kvcache-ai/Mooncake/pull/2797`。
 3. PR的`Checks`或页面底部“All checks have passed”区域。
 4. PR的`Files changed`页面，提前定位`allocation_strategy.h`和测试文件。
-5. 比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`。
-6. 终端，工作目录切换到比赛材料仓库根目录。
-7. 技术报告PDF，提前定位“验证与效果”章节。
+5. GitHub比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`。
+6. GitLink比赛材料仓库：`https://gitlink.org.cn/liushenzhou/ccf2026-mooncake-fragmentation-aware`。
+7. 终端，工作目录切换到比赛材料仓库根目录。
+8. 技术报告PDF，提前定位“验证与效果”章节。
 
 录制前关闭邮件、聊天软件、下载提示和系统通知，检查GitHub页面上是否显示私人邮箱、访问令牌、内网地址或其他不应公开的信息。所有命令至少预演一遍；若现场编译耗时或环境不稳定，可以展示已生成日志，但应明确说明日志来自仓库中的可复现程序。
 
@@ -40,7 +41,7 @@
 
 讲稿：
 
-大家好，我们的作品是“Mooncake Store碎片感知优化”，对应CCF 2026开源创新大赛Mooncake赛题2。我们没有修改传输协议，而是优化Mooncake Store Master侧的segment分配决策，让混合尺寸KVCache对象优先尝试真正具有足够连续空间的位置。
+大家好，我们是KVCache Forge队伍，成员包括刘神舟、罗荣裕、王英颖和杨俊。我们的作品是“Mooncake Store碎片感知优化”，对应CCF 2026开源创新大赛Mooncake赛题2。我们没有修改传输协议，而是优化Mooncake Store Master侧的segment分配决策，让混合尺寸KVCache对象优先尝试真正具有足够连续空间的位置。
 
 ### 0:25-0:55 问题背景
 

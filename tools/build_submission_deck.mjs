@@ -9,7 +9,7 @@ const repoRoot = process.env.SUBMISSION_REPO_ROOT
   : path.resolve(path.dirname(__filename), "..");
 const outDir = path.join(repoRoot, "slides");
 const qaDir = path.join(outDir, "qa");
-const finalPptx = path.join(outDir, "Mooncake_FragmentationAware_初赛展示_更新版.pptx");
+const finalPptx = path.join(outDir, "Mooncake_FragmentationAware_初赛展示_最终版.pptx");
 
 const W = 1280;
 const H = 720;
@@ -117,7 +117,7 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    addText(slide, "Mooncake Store", 42, 40, 500, 34, {
+    addText(slide, "KVCache Forge", 42, 40, 500, 34, {
       fontSize: 18,
       bold: true,
       color: muted,
@@ -135,10 +135,14 @@ async function main() {
       42,
       { fontSize: 26, color: muted },
     );
-    addPanel(slide, 42, 510, 354, 72, panel);
-    addText(slide, "赛题2 · Store吞吐性能与可扩展性", 64, 530, 320, 30, {
+    addPanel(slide, 42, 500, 700, 96, panel);
+    addText(slide, "赛题2 · Store吞吐性能与可扩展性", 64, 516, 650, 28, {
       fontSize: 18,
       bold: true,
+    });
+    addText(slide, "刘神舟（队长） · 罗荣裕 · 王英颖 · 杨俊", 64, 554, 650, 26, {
+      fontSize: 16,
+      color: muted,
     });
     addPanel(slide, 940, 0, 298, 720, panel);
     addText(slide, "PR #2797", 982, 82, 200, 56, { fontSize: 42, bold: true });
@@ -249,7 +253,7 @@ async function main() {
         "Draft PR #2797公开展示完整代码差异与4次提交历史。",
         "GitHub Actions最终结果：26项检查成功，1项按条件跳过。",
         "代码格式、Linux构建、文档构建和相关测试均通过。",
-        "比赛仓库同步提供patch、报告、PPT、复现源码、日志和SHA-256。",
+        "GitHub与GitLink材料仓库提供报告、PPT、复现源码、日志和提交包。",
       ],
       96,
       220,
@@ -294,7 +298,7 @@ async function main() {
       fontSize: 24,
     });
     addText(slide, "材料证据", 80, 390, 220, 34, { fontSize: 28, bold: true });
-    addText(slide, "公开比赛仓库 + 技术报告 + 复现日志 + 最终压缩包", 80, 440, 620, 58, {
+    addText(slide, "GitHub/GitLink公开仓库 + 技术报告 + 复现日志 + 最终压缩包", 80, 440, 660, 58, {
       fontSize: 24,
     });
     addPanel(slide, 820, 228, 320, 270, panel);

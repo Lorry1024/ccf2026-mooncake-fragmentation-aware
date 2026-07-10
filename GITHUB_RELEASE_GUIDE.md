@@ -16,7 +16,7 @@
 1. 确认`README.md`为中文入口文档。
 2. 确认`SUBMISSION.md`中的链接正确。
 3. 确认`report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`可打开。
-4. 确认`slides/Mooncake_FragmentationAware_初赛展示_更新版.pptx`存在。
+4. 确认`slides/Mooncake_FragmentationAware_初赛展示_最终版.pptx`存在。
 5. 确认`mooncake_fragmentation_aware_pr_2797_0123fa1.patch`存在。
 6. 确认`release/`中的压缩包和SHA256已更新。
 7. 视频录制完成后，补充视频链接并重新打包。

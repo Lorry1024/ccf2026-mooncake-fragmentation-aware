@@ -1,5 +1,13 @@
 # 初赛总结报告
 
+## 队伍信息
+
+- 队伍名称：KVCache Forge
+- 队长：刘神舟
+- 队员：罗荣裕、王英颖、杨俊
+- GitHub仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
+- GitLink仓库：`https://gitlink.org.cn/liushenzhou/ccf2026-mooncake-fragmentation-aware`
+
 ## 项目概述
 
 本项目面向CCF2026开源创新大赛Mooncake赛题2，完成了Mooncake Store碎片感知分配策略设计、实现、测试和提交材料整理。项目核心成果是新增`fragmentation_aware`分配策略，在混合大小KVCache对象场景下，优先选择最大连续空闲区域能够满足当前请求的segment。
