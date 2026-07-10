@@ -36,7 +36,7 @@
 | 比赛要求 | 本仓库对应材料 | 当前状态 |
 | --- | --- | --- |
 | 源代码 | Mooncake fork分支、PR#2797、`mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 已完成 |
-| 方案文档或PPT | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`、`slides/Mooncake_FragmentationAware_初赛展示.pptx` | 已完成 |
+| 方案文档或PPT | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`、`slides/Mooncake_FragmentationAware_初赛展示_更新版.pptx` | 已完成 |
 | 5分钟内作品展示视频 | 待录制，录制后补充公开链接 | 未完成 |
 | 测试和benchmark说明 | `EVALUATION.md`、`testing.md`、`logs/`、`repro/` | 已完成 |
 | 公开GitHub托管 | GitHub材料仓库和Mooncake fork | 已完成 |

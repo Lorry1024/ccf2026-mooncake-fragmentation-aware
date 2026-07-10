@@ -720,6 +720,14 @@ Mooncake上游draft PR状态如表\ref{tab:ci}所示。
 
 \section{与赛题要求的对应}
 
+本项目选择的是赛题2中的Mooncake Store性能优化方向。赛题同时关注吞吐性能、高可用功能、可扩展性以及SGLang HiCache与Mooncake Store的协同表现，因此作品不能只给出一个脱离主仓库的算法原型，而需要回答三个问题：优化是否发生在真实Store路径中，新增逻辑是否保留既有系统语义，以及结果是否具有可复现、可审查的证据。\strategy{}位于Master侧segment分配决策路径，直接作用于KVCache对象进入Store后的放置过程，因而与赛题要求具有明确的代码和场景对应关系。
+
+在性能方面，本项目没有把“减少一次错误候选尝试”直接等同于生产吞吐提升，而是先验证导致吞吐不稳定的具体中间机制。碎片化场景中，\baseline{}可能选择总空闲比例较高但无法容纳当前对象的segment，随后发生allocator拒绝和fallback。新策略通过\artifact{can\_fit}和最大连续空闲区域提高首选候选的可行性，专题仿真中fallback尝试次数从11次降至0次。该结果证明分配路径中的无效工作可以被消除，为后续真实Store吞吐和尾延迟改善提供了可解释基础。
+
+在可扩展性和高可用语义方面，本项目刻意保留Mooncake已有边界。策略只在现有有界采样集合内排序，平均候选数量保持5.00，不随全局segment数量执行线性扫描；preferred、excluded、多副本去重和best-effort fallback语义均保持不变；最终空间申请继续由allocator完成。由此，新策略不会因为碎片元数据不精确而绕过空间安全检查，也不会把性能优化建立在扩大搜索范围或削弱副本约束之上。
+
+对于SGLang HiCache场景，本项目优化的是其下游Mooncake Store后端的对象放置稳定性。HiCache把需要保存或复用的KVCache对象交给Store后，首选segment是否可直接容纳对象，会影响后端写入路径是否进入额外尝试和fallback。当前证据尚不能替代真实HiCache端到端压测，但已经完成了后端策略、配置、测试和benchmark入口，为后续使用真实推理负载测量缓存写入吞吐、P99延迟和复用效果提供了可直接启用的实现基础。
+
 \begin{longtable}{|B{3.2cm}|L{5.0cm}|L{5.0cm}|}
   \caption{赛题要求映射}\\
   \hline
@@ -732,28 +740,54 @@ Mooncake上游draft PR状态如表\ref{tab:ci}所示。
   可复现性 & 提供仿真源码、日志、技术报告和使用说明 & \artifact{repro/}、\artifact{logs/}、\artifact{EVALUATION.md} \\ \hline
 \end{longtable}
 
+\subsection{评审证据链}
+
+赛题评分中的技术完整性不仅取决于代码数量，还取决于问题、实现和验证是否闭环。本项目的证据链可以按四层理解。第一层是问题证据：最小反例和专题模型表明总空闲空间与最大连续空闲区域并不等价。第二层是实现证据：PR在策略类型、配置解析、工厂创建、核心排序、测试、benchmark和文档路径中完成正式接入。第三层是正确性证据：定向单元测试覆盖碎片化选择与preferred语义，上游CI覆盖代码格式、构建、文档和回归测试。第四层是效果证据：确定性仿真在相同候选规模下比较首选成功、fallback次数和决策开销，并公开源码和日志供复算。
+
+开源规范性则通过公开材料仓库、Mooncake fork分支和上游PR共同体现。比赛材料仓库负责托管中文报告、PPT、复现程序、日志和提交压缩包；Mooncake fork保留完整开发分支；上游PR\#2797展示代码差异、提交历史和GitHub Actions结果。这三者分别回答“成果如何阅读”“代码如何复核”和“上游工程是否接受验证”三个问题。相比只提交一个patch文件，该组织方式更便于评审者追踪来源、核对许可证并复现关键结论。
+
+创新性主要体现在把碎片形态引入请求相关的候选排序，而不是简单新增一个静态容量阈值。\artifact{can\_fit}把请求大小与最大连续空闲区域直接关联，综合score再在同一可容纳状态内兼顾连续性与空间均衡；同时采用显式开关、有界采样和allocator最终确认，将算法收益与工程风险控制结合起来。该创新边界清楚：它不是全局内存整理器，也不修改Mooncake协议，而是对Store主路径中可独立评审、可低风险合入的决策环节进行针对性优化。
+
 \section{使用与复现}
 
+本项目提供两条互补的复现路径。第一条是Mooncake正式代码路径，适用于已经具备Mooncake Store构建环境的评审者：应用PR补丁、重新构建Master，并通过启动参数显式启用新策略。第二条是轻量专题复现路径，只依赖支持C++17的编译器，用于快速重现碎片误判、候选排序和指标统计。正式路径验证工程接入和真实接口兼容，轻量路径验证问题模型和算法机制，两者使用同一组核心概念，但承担的证据职责不同。
+
+复现前应确认基础环境为主流Linux发行版，编译器支持C++17，并准备与PR基线兼容的Mooncake源码。若只运行\artifact{repro/}目录下的确定性程序，则不要求GPU、RDMA或完整SGLang环境。所有命令都应在仓库根目录执行，日志建议保存到独立文件，以便与\artifact{logs/}中的参考输出逐项比较。复现成功的最低判定标准是：程序正常退出、关键指标字段完整，并能观察到\strategy{}相对\baseline{}的首选成功改善，同时候选数量保持不变。
+
 \subsection{启用策略}
+
+完成包含本项目改动的Mooncake Store构建后，可以在启动Master时通过命令行参数显式选择新策略：
 
 \begin{lstlisting}[language=bash]
 mooncake_master --allocation_strategy=fragmentation_aware
 \end{lstlisting}
 
+该参数只改变Master侧候选segment的尝试顺序，不改变客户端协议、对象格式或已有数据。为了保证兼容性，Mooncake默认策略仍保持原值；只有明确传入\artifact{fragmentation\_aware}时才启用新逻辑。实际灰度时应同时记录分配失败次数、fallback次数、写入延迟和CPU利用率，并与相同负载下的\artifact{random}或\baseline{}实例进行对照。
+
 \subsection{应用补丁}
+
+对于没有直接检出fork分支的评审者，可以在与PR基线兼容的Mooncake源码树中应用提交包提供的补丁。第一条命令只检查补丁上下文和文件路径，不修改工作区；检查通过后再执行第二条命令，能够避免在基线不匹配时产生部分应用状态。
 
 \begin{lstlisting}[language=bash]
 git apply --check mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 git apply mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 \end{lstlisting}
 
+应用后建议先检查\artifact{git diff --stat}和\artifact{git diff --check}，确认改动范围与报告中的9个文件一致且不存在空白字符错误；随后按照Mooncake官方构建方式编译Store，并运行\artifact{allocation\_strategy\_test}。如果补丁检查失败，通常意味着本地Mooncake基线已经发生变化，此时应优先检出PR对应提交或直接使用公开fork分支，而不是强制应用补丁。
+
 \subsection{回滚补丁}
+
+若补丁尚未与其他本地修改混合提交，可以使用反向应用恢复到应用前状态：
 
 \begin{lstlisting}[language=bash]
 git apply -R mooncake_fragmentation_aware_pr_2797_0123fa1.patch
 \end{lstlisting}
 
+生产或灰度环境通常不需要回滚二进制，只需将\artifact{--allocation\_strategy}切换回原有策略并重启对应Master实例，即可恢复旧的候选选择行为。补丁级回滚主要用于源码评审和独立实验清理。执行反向应用前仍建议先运行\artifact{git apply -R --check}，避免覆盖评审者在相同文件中的其他修改。
+
 \subsection{复现实验}
+
+轻量实验由三个程序组成。\artifact{fragmentation\_aware\_sim.cpp}用于演示最小碎片化反例；\artifact{fragmentation\_aware\_metrics.cpp}统计首选成功、fallback和决策耗时；\artifact{topic\_aligned\_store\_scalability\_sim.cpp}使用赛题对齐场景验证在固定候选规模下的策略行为。使用\artifact{-O2}是为了减少调试构建带来的计时噪声，所有程序均使用固定输入，便于不同机器重复执行。
 
 \begin{lstlisting}[language=bash]
 g++ -std=c++17 -O2 repro/fragmentation_aware_sim.cpp -o fragmentation_aware_sim
@@ -765,6 +799,8 @@ g++ -std=c++17 -O2 repro/fragmentation_aware_metrics.cpp -o fragmentation_aware_
 g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligned_store_scalability_sim
 ./topic_aligned_store_scalability_sim
 \end{lstlisting}
+
+执行后应重点核对四类输出。第一，\baseline{}的大对象首选可容纳次数为0/6，而\strategy{}为6/6；第二，两者最终可容纳次数均为6/6，证明物理容量条件没有改变；第三，fallback尝试次数由11降为0；第四，平均候选数量均为5.00，证明收益并非来自扩大搜索范围。决策耗时可能随CPU型号、频率和系统负载变化，因此17.93ns应作为当前参考环境下的观测值，而不是跨硬件固定常数。若功能指标一致而绝对耗时略有波动，仍可认为问题机制和策略效果得到复现。
 
 \section{边界与后续工作}
 
@@ -800,6 +836,7 @@ g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligne
   \artifact{testing.md} & 测试说明 \\ \hline
   \artifact{usage.md} & 使用说明 \\ \hline
   \artifact{REVIEW\_GUIDE.md} & 评审阅读指南 \\ \hline
+  \artifact{screenshot\_guide.md} & GitHub与CI证据截图清单 \\ \hline
   \splitpath{mooncake\_fragmentation\_aware}{pr\_2797\_0123fa1.patch} & 当前PR补丁 \\ \hline
   \artifact{repro/} & 复现实验源码 \\ \hline
   \artifact{logs/} & 验证日志 \\ \hline

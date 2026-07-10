@@ -9,7 +9,7 @@
 5. `EVALUATION.md`：查看测试、仿真和边界说明。
 6. `mooncake_fragmentation_aware_pr_2797_0123fa1.patch`：查看精确代码diff。
 7. `repro/`和`logs/`：复现实验和验证日志。
-8. `slides/Mooncake_FragmentationAware_初赛展示.pptx`：查看答辩展示材料。
+8. `slides/Mooncake_FragmentationAware_初赛展示_更新版.pptx`：查看答辩展示材料。
 
 ## 快速链接
 

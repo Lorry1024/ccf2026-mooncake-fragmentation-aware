@@ -46,7 +46,7 @@
 | 评审指南 | `REVIEW_GUIDE.md` | 建议评审阅读顺序 |
 | 技术报告源码 | `report/technical_report.tex` | XeLaTeX报告源码 |
 | 技术报告PDF | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf` | 由LaTeX编译生成 |
-| 展示PPT | `slides/Mooncake_FragmentationAware_初赛展示.pptx` | 初赛展示材料 |
+| 展示PPT | `slides/Mooncake_FragmentationAware_初赛展示_更新版.pptx` | 初赛展示材料 |
 | 提交压缩包 | `release/CCF2026_Mooncake_FragmentationAware_initial_20260707.zip` | 平台提交候选包，视频链接补齐后需重新生成 |
 
 ## 已完成的工作

@@ -9,7 +9,7 @@ const repoRoot = process.env.SUBMISSION_REPO_ROOT
   : path.resolve(path.dirname(__filename), "..");
 const outDir = path.join(repoRoot, "slides");
 const qaDir = path.join(outDir, "qa");
-const finalPptx = path.join(outDir, "Mooncake_FragmentationAware_初赛展示.pptx");
+const finalPptx = path.join(outDir, "Mooncake_FragmentationAware_初赛展示_更新版.pptx");
 
 const W = 1280;
 const H = 720;
@@ -122,13 +122,13 @@ async function main() {
       bold: true,
       color: muted,
     });
-    addText(slide, "Fragmentation-aware allocation", 42, 170, 980, 132, {
+    addText(slide, "Mooncake Store碎片感知优化", 42, 170, 980, 132, {
       fontSize: 62,
       bold: true,
     });
     addText(
       slide,
-      "面向混合大小 KVCache 对象的 Store 分配稳定性优化",
+      "面向混合尺寸KVCache对象的请求相关segment选择",
       42,
       330,
       860,
@@ -136,13 +136,13 @@ async function main() {
       { fontSize: 26, color: muted },
     );
     addPanel(slide, 42, 510, 354, 72, panel);
-    addText(slide, "赛题2 · Mooncake Store 性能与可扩展性", 64, 530, 320, 30, {
+    addText(slide, "赛题2 · Store吞吐性能与可扩展性", 64, 530, 320, 30, {
       fontSize: 18,
       bold: true,
     });
     addPanel(slide, 940, 0, 298, 720, panel);
-    addText(slide, "opt-in", 982, 82, 200, 56, { fontSize: 42, bold: true });
-    addText(slide, "--allocation_strategy=\nfragmentation_aware", 982, 150, 230, 110, {
+    addText(slide, "PR #2797", 982, 82, 200, 56, { fontSize: 42, bold: true });
+    addText(slide, "26项通过\n1项跳过", 982, 150, 230, 110, {
       fontSize: 18,
       color: muted,
     });
@@ -152,13 +152,13 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "这次优化解决的是分配路径里的碎片误判");
+    slideTitle(slide, "总空闲很多，不代表当前大对象能够落地");
     addBullets(
       slide,
       [
-        "长期运行的 Store 会经历不同大小 KVCache 对象的频繁分配与释放。",
-        "总空闲空间较高的 segment，可能只有很多小洞，无法放下大对象。",
-        "原有 free_ratio_first 容易优先尝试这类 segment，带来失败分配和 fallback。",
+        "混合尺寸KVCache反复分配与释放，逐步产生不连续空闲区。",
+        "free_ratio_first只看总空闲比例，可能优先选择无法连续容纳请求的segment。",
+        "错误首选会触发allocator失败和fallback，并在高并发下放大额外路径开销。",
       ],
       80,
       230,
@@ -171,20 +171,20 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "新策略优先看当前请求能不能真的放进去");
+    slideTitle(slide, "先判断能否容纳，再在可用候选中平衡空间");
     addPanel(slide, 72, 230, 500, 300, panel);
     addText(slide, "free_ratio_first", 100, 260, 300, 34, { fontSize: 28, bold: true });
     addText(slide, "按总空闲比例排序", 100, 320, 360, 34, { fontSize: 22, color: muted });
-    addText(slide, "可能选择总空闲多但最大连续区不足的 segment", 100, 376, 392, 76, {
+    addText(slide, "无法区分“容量总量足够”和“最大连续区足够”", 100, 376, 392, 76, {
       fontSize: 21,
     });
     addPanel(slide, 708, 230, 500, 300, panel);
     addText(slide, "fragmentation_aware", 736, 260, 380, 34, { fontSize: 28, bold: true });
-    addText(slide, "先判断 largest free region 是否 fit", 736, 320, 400, 34, {
+    addText(slide, "can_fit优先，score用于同类候选", 736, 320, 400, 34, {
       fontSize: 22,
       color: muted,
     });
-    addText(slide, "在 bounded sampling 内排序，不引入全局扫描", 736, 376, 392, 76, {
+    addText(slide, "沿用bounded sampling、preferred/excluded和fallback", 736, 376, 392, 76, {
       fontSize: 21,
     });
     addFooter(slide, 3);
@@ -193,13 +193,13 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "实现保持小而清晰，默认行为不变");
+    slideTitle(slide, "9个文件完成策略、配置、测试与文档闭环");
     const rows = [
-      ["新增策略", "AllocationStrategyType::FRAGMENTATION_AWARE"],
-      ["入口配置", "--allocation_strategy=fragmentation_aware"],
-      ["核心实现", "allocation_strategy.h 中新增候选评分与排序"],
-      ["测试覆盖", "碎片化场景与 preferred segment 行为"],
-      ["Benchmark", "将新策略加入 allocation_strategy_bench 矩阵"],
+      ["策略类型", "新增FRAGMENTATION_AWARE枚举与工厂分支"],
+      ["启动配置", "--allocation_strategy=fragmentation_aware"],
+      ["核心排序", "can_fit → score → largest region → stable tie-break"],
+      ["正确性", "覆盖碎片反例、preferred语义与多副本去重"],
+      ["工程化", "接入benchmark、设计文档、部署文档和CI"],
     ];
     const x = 74;
     const y = 220;
@@ -222,14 +222,14 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "合成 Store 模型验证了目标失效模式");
-    addMetric(slide, "0/6", "free_ratio_first primary fit success", 74, 232);
-    addMetric(slide, "6/6", "fragmentation_aware primary fit success", 372, 232);
-    addMetric(slide, "11 → 0", "fallback attempts in deterministic model", 670, 232);
-    addMetric(slide, "5.00", "average candidates scored stays bounded", 968, 232);
+    slideTitle(slide, "相同候选规模下，错误首选与fallback被消除");
+    addMetric(slide, "0/6", "基线首选可直接容纳", 74, 232);
+    addMetric(slide, "6/6", "新策略首选可直接容纳", 372, 232);
+    addMetric(slide, "11 → 0", "fallback尝试次数", 670, 232);
+    addMetric(slide, "5.00", "平均候选segment数量", 968, 232);
     addText(
       slide,
-      "这不是生产 QPS 结论；它证明的是分配路径中“总空闲空间误导选择”的具体问题和改进方向。",
+      "最终可容纳均为6/6；收益来自排序信号变化。新增决策开销约17.93ns。",
       74,
       456,
       1070,
@@ -242,14 +242,14 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "当前提交包已经有代码、文档和复现材料");
+    slideTitle(slide, "上游PR与完整CI证明代码具备工程可审查性");
     addBullets(
       slide,
       [
-        "PR-ready patch 仍可应用到当前 Mooncake upstream main。",
-        "DESIGN.md 与 EVALUATION.md 对齐赛题仓库的文档建议。",
-        "repro/ 和 logs/ 保留了 deterministic simulation 与 metrics 证据。",
-        "SUBMISSION.md 和 GITHUB_RELEASE_GUIDE.md 指向最终平台提交路径。",
+        "Draft PR #2797公开展示完整代码差异与4次提交历史。",
+        "GitHub Actions最终结果：26项检查成功，1项按条件跳过。",
+        "代码格式、Linux构建、文档构建和相关测试均通过。",
+        "比赛仓库同步提供patch、报告、PPT、复现源码、日志和SHA-256。",
       ],
       96,
       220,
@@ -262,12 +262,12 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "还需要把证据链从可解释推进到可评测");
+    slideTitle(slide, "成果直接覆盖赛题2的核心评分维度");
     const rows = [
-      ["必须补齐", "GitHub 公共仓库、PPT、5 分钟视频、最终 zip 与 SHA256"],
-      ["强烈建议", "Mooncake fork 分支或 draft PR，而不是只提交 patch"],
-      ["性能补强", "真实 Store benchmark：put/get 吞吐、P50/P99、内存利用率"],
-      ["风险边界", "当前不声称 RDMA、官方 CI 或真实 SGLang HiCache benchmark"],
+      ["技术完整性", "真实Store路径接入策略、配置、测试、benchmark和文档"],
+      ["场景适配性", "针对混合尺寸KVCache与长期运行碎片化segment"],
+      ["创新性", "请求相关can_fit + 连续性评分，避免总空闲误判"],
+      ["边界与扩展", "不外推RDMA/HiCache端到端吞吐；接口已为实测准备"],
     ];
     rows.forEach((row, idx) => {
       const top = 222 + idx * 86;
@@ -288,20 +288,20 @@ async function main() {
   {
     const slide = deck.slides.add();
     slide.background.fill = white;
-    slideTitle(slide, "初赛提交建议采用文件加链接模式");
-    addText(slide, "提交链接", 80, 228, 220, 34, { fontSize: 28, bold: true });
-    addText(slide, "GitHub 公开仓库 + Mooncake fork 分支或 PR", 80, 278, 520, 48, {
+    slideTitle(slide, "项目已经形成可提交、可复现、可评审闭环");
+    addText(slide, "代码证据", 80, 228, 220, 34, { fontSize: 28, bold: true });
+    addText(slide, "上游PR #2797 + Lorry1024/Mooncake开发分支", 80, 278, 520, 48, {
       fontSize: 24,
     });
-    addText(slide, "提交文件", 80, 390, 220, 34, { fontSize: 28, bold: true });
-    addText(slide, "zip 包含源码 patch、文档、PPT、视频链接、repro 和 logs", 80, 440, 620, 58, {
+    addText(slide, "材料证据", 80, 390, 220, 34, { fontSize: 28, bold: true });
+    addText(slide, "公开比赛仓库 + 技术报告 + 复现日志 + 最终压缩包", 80, 440, 620, 58, {
       fontSize: 24,
     });
     addPanel(slide, 820, 228, 320, 270, panel);
-    addText(slide, "核心答辩句", 852, 258, 240, 36, { fontSize: 28, bold: true });
+    addText(slide, "核心结论", 852, 258, 240, 36, { fontSize: 28, bold: true });
     addText(
       slide,
-      "我们优化的是 Mooncake Store 的 segment allocation 决策路径，让大对象优先落到能连续 fit 的 segment。",
+      "在不改变Mooncake默认行为的前提下，碎片感知排序让大对象优先尝试真正具有足够连续空间的segment。",
       852,
       326,
       240,

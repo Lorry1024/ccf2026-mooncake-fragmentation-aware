@@ -15,6 +15,7 @@
 | `final_report.md` | 初赛总结报告 |
 | `demo_script.md` | 展示视频讲稿 |
 | `demo_points.md` | 展示视频要点 |
+| `screenshot_guide.md` | GitHub与CI证据截图清单 |
 
 ## 代码与证据
 
