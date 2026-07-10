@@ -30,6 +30,7 @@
 | GitLink比赛材料仓库 | `https://gitlink.org.cn/lorry22/ccf2026-mooncake-fragmentation-aware` |
 | Mooncake fork分支 | `https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation` |
 | Mooncake draft PR | `https://github.com/kvcache-ai/Mooncake/pull/2797` |
+| 5分钟作品展示视频 | `https://pan.baidu.com/s/1v2-jxHSaDi0RlagPGrLAiw?pwd=mxhx`，提取码：`mxhx` |
 
 ## 当前PR状态
 
@@ -46,7 +47,7 @@
 | --- | --- | --- |
 | 源代码 | Mooncake fork分支、PR#2797、`mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 已完成 |
 | 方案文档或PPT | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf`、`slides/Mooncake_FragmentationAware_初赛展示_最终版.pptx` | 已完成 |
-| 5分钟内作品展示视频 | 待录制，录制后补充公开链接 | 未完成 |
+| 5分钟内作品展示视频 | 百度网盘链接，提取码`mxhx` | 已完成 |
 | 测试和benchmark说明 | `EVALUATION.md`、`logs/`、`repro/` | 已完成 |
 | 公开GitHub托管 | GitHub材料仓库和Mooncake fork | 已完成 |
 
@@ -55,13 +56,12 @@
 ```text
 本作品由KVCache Forge队伍完成，面向CCF2026开源创新大赛Mooncake赛题2，围绕Mooncake Store在混合大小KVCache对象场景下的分配稳定性进行优化。项目新增可选的fragmentation_aware分配策略，在保持默认random策略不变的前提下，将最大连续空闲区域纳入segment排序，使Master优先选择能够直接容纳当前请求的segment，降低碎片化场景下的大对象失败尝试和fallback压力。
 
-源代码已提交至公开GitHub仓库，并以Mooncake draft PR#2797形式提交给上游项目。当前PR头提交0123fa1已通过GitHub Actions，结果为26个检查成功、1个检查跳过。提交包包含技术报告、设计与评估文档、复现实验源码、验证日志、patch文件和展示PPT。当前阶段不宣称完成真实RDMA集群或SGLang HiCache端到端压测，相关内容作为后续工作规划。
+源代码已提交至公开GitHub仓库，并以Mooncake draft PR#2797形式提交给上游项目。当前PR头提交0123fa1已通过GitHub Actions，结果为26个检查成功、1个检查跳过。提交包包含技术报告、设计与评估文档、复现实验源码、验证日志、patch文件和展示PPT；5分钟作品展示视频已上传至百度网盘，提取码为mxhx。当前阶段不宣称完成真实RDMA集群或SGLang HiCache端到端压测，相关内容作为后续工作规划。
 ```
 
 ## 提交前最后检查
 
-- 确认视频录制完成并上传到公开可访问位置。
-- 将视频链接补入本文件和`demo_script.md`。
-- 重新生成`release/`下的最终压缩包和SHA256文件。
+- 使用无登录浏览器打开视频链接并输入提取码`mxhx`，确认可以播放或下载。
+- 确认`release/`下的最终压缩包和SHA256文件与当前材料一致。
 - 确认GitHub仓库为公开状态。
 - 确认Mooncake PR链接可访问，CI状态仍为通过。
