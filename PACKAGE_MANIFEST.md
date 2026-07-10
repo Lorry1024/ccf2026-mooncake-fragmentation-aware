@@ -24,6 +24,7 @@
 | `mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 当前PR对应补丁 |
 | `repro/` | 可独立编译的复现实验源码 |
 | `logs/` | 验证日志 |
+| `tools/run_powershell_demo.ps1` | Windows PowerShell一键演示脚本 |
 | `slides/Mooncake_FragmentationAware_初赛展示_最终版.pptx` | 初赛展示PPT最终版 |
 | `slides/qa/` | PPT逐页预览和布局检查结果 |
 | `report/` | LaTeX技术报告源码和PDF |

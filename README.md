@@ -52,6 +52,7 @@
 | 评估报告 | `EVALUATION.md` | 仿真、CI、指标和边界 |
 | 测试说明 | `testing.md` | 本地复现和验证记录 |
 | 使用说明 | `usage.md` | 如何启用、应用和回滚补丁 |
+| PowerShell演示 | `tools/run_powershell_demo.ps1` | Windows下一键编译、运行并展示稳定指标 |
 | 评审指南 | `REVIEW_GUIDE.md` | 建议评审阅读顺序 |
 | 技术报告源码 | `report/technical_report.tex` | XeLaTeX报告源码 |
 | 技术报告PDF | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf` | 由LaTeX编译生成 |
