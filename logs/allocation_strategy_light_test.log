@@ -1,1 +1,0 @@
-PASS allocation_strategy_light_test: fragmentation-aware chooses contiguous-fit candidates and preserves preferred segments

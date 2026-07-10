@@ -1,6 +1,6 @@
 slides/*.inspect.ndjson
 slides/qa/*
-!slides/qa/contact_sheet.png
+slides/~$*.pptx
 tmp/
 report/*.aux
 report/*.fdb_latexmk

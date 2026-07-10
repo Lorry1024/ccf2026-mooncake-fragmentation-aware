@@ -62,7 +62,7 @@ powershell -NoProfile -ExecutionPolicy Bypass `
 
 **逐字稿：**
 
-大家好，我们是KVCache Forge，成员为刘神舟、罗荣裕、王英颖和杨俊。作品“Mooncake Store碎片感知优化”对应Mooncake赛题2。我们优化Master侧segment分配，让KVCache对象优先选择连续空间充足的位置。
+大家好，我们是KVCache Forge，成员为罗荣裕、刘神舟、王英颖和杨俊，队长是罗荣裕。作品“Mooncake Store碎片感知优化”对应Mooncake赛题2。我们优化Master侧segment分配，让KVCache对象优先选择连续空间充足的位置。
 
 ### 0:24-0:53 问题背景
 
@@ -176,7 +176,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run_powershell_demo.
 ## 六、录制后检查
 
 1. 确认成片时长不超过5分钟，建议保留5秒安全余量。
-2. 检查四名成员姓名、PR编号2797以及所有指标是否口播正确。
+2. 检查队长罗荣裕、四名成员姓名、PR编号2797以及所有指标是否口播正确。
 3. 检查浏览器画面没有私人邮箱、令牌、聊天通知或无关标签页。
 4. 检查终端输出在普通笔记本屏幕和手机横屏下仍可阅读。
 5. 检查0/6、6/6、11到0、5.00和17.93纳秒至少各出现一次。

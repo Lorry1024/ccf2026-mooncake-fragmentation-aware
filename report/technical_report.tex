@@ -5,6 +5,7 @@
 \usepackage{xeCJK}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\graphicspath{{figures/}}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
@@ -129,7 +130,7 @@
     参赛方向 & 赛题2：优化Mooncake Store吞吐性能、高可用功能和可扩展性，优化SGLang HiCache+Mooncake Store性能 \\ \hline
     作品名称 & Mooncake Store碎片感知分配策略 \\ \hline
     队伍名称 & KVCache Forge \\ \hline
-    队伍成员 & 刘神舟（队长）、罗荣裕、王英颖、杨俊 \\ \hline
+    队伍成员 & 罗荣裕（队长）、刘神舟、王英颖、杨俊 \\ \hline
     GitHub仓库 & \url{https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware} \\ \hline
     GitLink仓库 & \url{https://gitlink.org.cn/liushenzhou/ccf2026-mooncake-fragmentation-aware} \\ \hline
     上游PR & \url{https://github.com/kvcache-ai/Mooncake/pull/2797} \\ \hline
@@ -525,6 +526,15 @@ Mooncake Store并不只处理单副本写入。多副本场景下，策略需要
   \end{tabular}
 \end{table}
 
+图\ref{fig:pr-overview}给出本项目在Mooncake上游仓库中的公开PR页面。截图同时展示了PR编号2797、draft状态、目标分支\artifact{kvcache-ai:main}、来源分支\path{Lorry1024:ccf-fragmentation-aware-allocation}、4次提交和9个改动文件，使代码来源、上游目标和评审入口能够被直接核验。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.96\textwidth]{pr_2797_overview.png}
+  \caption{Mooncake上游PR\#2797总览}
+  \label{fig:pr-overview}
+\end{figure}
+
 \subsection{策略类接入}
 
 核心实现位于\artifact{mooncake-store/include/allocation\_strategy.h}。新类\artifact{FragmentationAwareAllocationStrategy}继承现有随机策略基础能力，而不是重写所有分配流程。这样做有两个好处：第一，可以复用原有单segment分配、随机fallback和排除集合处理；第二，可以把新增逻辑限制在候选评分和排序层，降低对主路径的侵入。
@@ -535,43 +545,56 @@ Mooncake Store并不只处理单副本写入。多副本场景下，策略需要
 
 从代码路径看，\strategy{}的核心执行可以分为五个阶段。第一阶段是预处理，把excluded segment和当前请求中已经成功使用的segment作为不可选集合。第二阶段是preferred尝试，按调用方传入顺序处理preferred segment。第三阶段是候选采样，沿用已有策略体系的有界采样思想，从剩余segment中得到候选集合。第四阶段是候选评分，对每个候选读取总容量、总空闲、最大连续空闲区域，并计算\artifact{can\_fit}和score。第五阶段是按排序结果尝试实际分配，成功则记录结果，失败则继续尝试后续候选；如果仍不能满足副本数，则回到原有fallback路径。
 
-\begin{lstlisting}[language=C++,caption={\strategy{}实现层执行逻辑概览}]
-Allocate(manager, slice_length, replica_num, preferred, excluded):
-    used = {}
-    result = []
+\begin{lstlisting}[language=C++,caption={候选碎片元数据与请求相关评分的实际实现}]
+const uint64_t free = capacity - used;
+const uint64_t reported_largest =
+    static_cast<uint64_t>(alloc->getLargestFreeRegion());
+const uint64_t allocator_largest =
+    reported_largest == kAllocatorUnknownFreeSpace
+        ? free
+        : std::min<uint64_t>(reported_largest, free);
 
-    for name in preferred:
-        if name in excluded or name in used:
-            continue
-        buffer = allocateSingle(manager, name, slice_length)
-        if buffer.ok:
-            result.push(buffer)
-            used.insert(name)
-        if result.size == replica_num:
-            return result
+total_capacity += capacity;
+total_free += free;
+largest_free_region =
+    std::max(largest_free_region, allocator_largest);
 
-    candidates = sampleCandidateSegments(manager, excluded, used)
-    ranked = []
-    for name in candidates:
-        metrics = collectFragmentationMetrics(manager, name)
-        ranked.push(scoreCandidate(name, metrics, slice_length))
-
-    sort(ranked, FragmentationAwareComparator)
-
-    for candidate in ranked:
-        if candidate.name in excluded or candidate.name in used:
-            continue
-        buffer = allocateSingle(manager, candidate.name, slice_length)
-        if buffer.ok:
-            result.push(buffer)
-            used.insert(candidate.name)
-        if result.size == replica_num:
-            return result
-
-    return randomBestEffortFallback(manager, result, excluded, used)
+const double free_ratio =
+    static_cast<double>(total_free) /
+    static_cast<double>(total_capacity);
+const double contiguity_ratio =
+    std::min(1.0,
+             static_cast<double>(largest_free_region) /
+             static_cast<double>(total_free));
+const bool can_fit = largest_free_region >= slice_length;
+const double score =
+    0.70 * contiguity_ratio + 0.30 * free_ratio;
 \end{lstlisting}
 
-这段逻辑体现了一个重要原则：新策略并没有接管底层空间管理，也没有绕过已有\artifact{allocateSingle}路径。preferred阶段保持调用方显式放置优先级，采样阶段沿用现有有界候选集合，评分阶段把总空闲、容量和最大连续空闲区域转化为排序字段，排序阶段按\artifact{can\_fit}、score和tie-break组织尝试顺序，分配阶段仍调用原有allocator，fallback阶段继续保留best-effort副本语义。这样做能最大限度降低行为风险，因为空间是否真的可分配仍由原有allocator确认；同时，新策略又能在排序阶段规避最明显的碎片化误判。
+第一段代码是本项目相对\baseline{}的关键差异。原策略主要使用\artifact{free\_ratio}描述“还剩多少空间”，新策略进一步读取allocator报告的最大连续空闲区域，并通过\artifact{can\_fit}把请求大小\artifact{slice\_length}直接引入决策。若某类allocator暂时无法提供精确的连续空闲信息，代码使用当前总空闲量作为保守退化值；若能够提供，则用\artifact{min(reported\_largest, free)}限制异常元数据，避免最大连续区超过实际总空闲量。连续性比例反映空闲空间是否集中，0.70与0.30的权重使同为可容纳候选时优先保护连续空间，同时保留一定空间均衡能力。
+
+\begin{lstlisting}[language=C++,caption={候选排序优先级的实际实现}]
+std::sort(candidates.begin(), candidates.end(),
+          [](const Candidate& a, const Candidate& b) {
+              if (a.can_fit != b.can_fit) {
+                  return a.can_fit > b.can_fit;
+              }
+              if (a.score != b.score) {
+                  return a.score > b.score;
+              }
+              if (a.largest_free_region !=
+                  b.largest_free_region) {
+                  return a.largest_free_region >
+                         b.largest_free_region;
+              }
+              if (a.free_ratio != b.free_ratio) {
+                  return a.free_ratio > b.free_ratio;
+              }
+              return a.name_idx < b.name_idx;
+          });
+\end{lstlisting}
+
+第二段代码给出完整排序优先级。\artifact{can\_fit}是最高优先级，从根本上阻止“总空闲较高但当前对象无法落地”的候选排在可容纳候选之前；综合score只在相同可容纳状态内比较；最大连续区域与总空闲比例继续作为细粒度tie-break；最后使用\artifact{name\_idx}形成确定性的稳定顺序，避免完全相同元数据下出现不可解释抖动。排序只改变尝试顺序，新策略没有接管底层空间管理，也没有绕过\artifact{allocateSingle}路径。preferred阶段、有界采样、excluded/used过滤、实际allocator申请和best-effort fallback均保留，因此评分元数据即使在并发下发生变化，也只会导致某次尝试失败并继续后续候选，不会突破空间安全边界。
 
 \subsection{配置和工厂接入}
 
@@ -640,6 +663,34 @@ Mooncake上游draft PR状态如表\ref{tab:ci}所示。
   \end{tabularx}
 \end{table}
 
+图\ref{fig:ci-all-checks}展示PR合并检查区域：26项检查成功，1项按条件跳过，页面明确给出“All checks have passed”。跳过项是按触发条件不执行的自动检查，不表示构建或测试失败。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.82\textwidth]{ci_all_checks_passed.png}
+  \caption{PR\#2797全部必需检查通过}
+  \label{fig:ci-all-checks}
+\end{figure}
+
+图\ref{fig:ci-build-jobs}进一步展示Linux workflow中的构建矩阵。Python 3.10/3.12构建、ARM64构建、不同编译标志、Docker镜像、wheel以及CI Gate等任务均显示为成功，说明改动没有局限在单一编译组合中。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.98\textwidth]{ci_build_jobs.png}
+  \caption{GitHub Actions Linux构建与多配置任务成功}
+  \label{fig:ci-build-jobs}
+\end{figure}
+
+图\ref{fig:ci-full-test}是\artifact{build (3.10)}任务中的测试汇总，页面显示90项测试全部通过、0项失败。该结果与定向碎片化测试共同构成“目标行为正确”和“既有功能未回归”两类证据。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.94\textwidth]{ci_full_test_passed.png}
+  \caption{build (3.10)环境下90项回归测试全部通过}
+  \label{fig:ci-full-test}
+\end{figure}
+
+\clearpage
 \subsection{专题仿真指标}
 
 专题仿真使用5个segment和6个大对象请求，模拟高总空闲但碎片化、低总空闲但连续空间充足两类segment并存的Store状态。结果如表\ref{tab:metrics}所示。
@@ -834,20 +885,17 @@ g++ -std=c++17 -O2 repro/topic_aligned_store_scalability_sim.cpp -o topic_aligne
   \hline
 \thfirst{文件或目录} & \thcell{说明} \\ \hline
 \endhead
-  \artifact{README.md} & 项目入口说明 \\ \hline
-  \artifact{SUBMISSION.md} & 平台提交说明 \\ \hline
-  \artifact{DESIGN.md} & 设计文档 \\ \hline
-  \artifact{technical\_solution.md} & 技术方案说明 \\ \hline
-  \artifact{EVALUATION.md} & 评估报告 \\ \hline
-  \artifact{testing.md} & 测试说明 \\ \hline
-  \artifact{usage.md} & 使用说明 \\ \hline
-  \artifact{REVIEW\_GUIDE.md} & 评审阅读指南 \\ \hline
-  \artifact{screenshot\_guide.md} & GitHub与CI证据截图清单 \\ \hline
+  \artifact{README.md} & 项目入口、快速使用和成果索引 \\ \hline
+  \artifact{SUBMISSION.md} & 平台提交说明与必交材料对应关系 \\ \hline
+  \artifact{DESIGN.md} & 问题、目标、算法与兼容性设计 \\ \hline
+  \artifact{EVALUATION.md} & CI、仿真指标和结论边界 \\ \hline
+  \artifact{demo\_script.md} & 5分钟作品展示逐字稿与分镜 \\ \hline
   \splitpath{mooncake\_fragmentation\_aware}{pr\_2797\_0123fa1.patch} & 当前PR补丁 \\ \hline
-  \artifact{repro/} & 复现实验源码 \\ \hline
-  \artifact{logs/} & 验证日志 \\ \hline
-  \artifact{slides/} & 初赛展示PPT \\ \hline
-  \artifact{report/} & 本技术报告源码和PDF \\ \hline
+  \artifact{repro/} & 可独立编译的复现实验源码 \\ \hline
+  \artifact{logs/} & 三份关键仿真结果日志 \\ \hline
+  \splitpath{tools}{run\_powershell\_demo.ps1} & Windows PowerShell一键演示脚本 \\ \hline
+  \artifact{slides/} & 初赛展示PPT最终版 \\ \hline
+  \artifact{report/} & 本技术报告源码、PDF和证据截图 \\ \hline
   \artifact{release/} & 提交压缩包和校验文件 \\ \hline
 \end{longtable}
 

@@ -7,8 +7,8 @@
 | 项目 | 信息 |
 | --- | --- |
 | 队伍名称 | KVCache Forge |
-| 队长 | 刘神舟 |
-| 队员 | 罗荣裕、王英颖、杨俊 |
+| 队长 | 罗荣裕 |
+| 队员 | 刘神舟、王英颖、杨俊 |
 
 ## 项目定位
 
@@ -47,13 +47,12 @@
 | 产物 | 路径 | 说明 |
 | --- | --- | --- |
 | 当前PR补丁 | `mooncake_fragmentation_aware_pr_2797_0123fa1.patch` | 与Mooncake PR#2797当前提交对应 |
-| 技术方案 | `technical_solution.md` | 中文技术方案说明 |
 | 设计文档 | `DESIGN.md` | 问题、目标、算法与兼容性 |
 | 评估报告 | `EVALUATION.md` | 仿真、CI、指标和边界 |
-| 测试说明 | `testing.md` | 本地复现和验证记录 |
-| 使用说明 | `usage.md` | 如何启用、应用和回滚补丁 |
+| 视频稿 | `demo_script.md` | 5分钟作品展示逐字稿、分镜和兜底方案 |
+| 复现源码 | `repro/` | 可独立编译的确定性实验 |
+| 关键日志 | `logs/` | 三份稳定仿真结果 |
 | PowerShell演示 | `tools/run_powershell_demo.ps1` | Windows下一键编译、运行并展示稳定指标 |
-| 评审指南 | `REVIEW_GUIDE.md` | 建议评审阅读顺序 |
 | 技术报告源码 | `report/technical_report.tex` | XeLaTeX报告源码 |
 | 技术报告PDF | `report/CCF2026_Mooncake_FragmentationAware_Technical_Report.pdf` | 由LaTeX编译生成 |
 | 展示PPT | `slides/Mooncake_FragmentationAware_初赛展示_最终版.pptx` | 初赛展示材料 |
