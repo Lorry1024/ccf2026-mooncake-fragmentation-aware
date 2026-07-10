@@ -26,7 +26,7 @@
 ## 公开仓库与PR
 
 - GitHub比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`
-- GitLink比赛材料仓库：`https://gitlink.org.cn/liushenzhou/ccf2026-mooncake-fragmentation-aware`
+- GitLink比赛材料仓库：`https://gitlink.org.cn/lorry22/ccf2026-mooncake-fragmentation-aware`
 - Mooncake fork分支：`https://github.com/Lorry1024/Mooncake/tree/ccf-fragmentation-aware-allocation`
 - Mooncake draft PR：`https://github.com/kvcache-ai/Mooncake/pull/2797`
 

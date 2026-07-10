@@ -28,7 +28,7 @@
 5. GitHub比赛材料仓库：`https://github.com/Lorry1024/ccf2026-mooncake-fragmentation-aware`。
 6. 终端，工作目录已经切换到比赛材料仓库根目录。
 
-GitLink仓库地址已经写入报告和提交说明，但当前本机凭据没有该仓库写权限。录制前如果GitLink尚未同步到最新提交，不要把GitLink页面作为“最新代码”证据；视频中以GitHub公开仓库、Mooncake fork和上游PR为当前版本依据。
+GitLink比赛材料仓库为`https://gitlink.org.cn/lorry22/ccf2026-mooncake-fragmentation-aware`。录制前应确认GitLink页面的最新提交与GitHub一致；如果尚未完成同步，不要把GitLink页面作为“最新代码”证据，视频中以GitHub公开仓库、Mooncake fork和上游PR为当前版本依据。
 
 ### 2.3 Windows PowerShell终端预演
 
